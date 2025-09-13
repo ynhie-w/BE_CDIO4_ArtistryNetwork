@@ -1,0 +1,5670 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "Artistry Network API",
+    "description": "API quản lý người dùng, tác phẩm, bình luận",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/BinhLuan": {
+      "get": {
+        "tags": [
+          "BinhLuan"
+        ],
+        "summary": "Lấy tất cả bình luận",
+        "description": "Trả về danh sách tất cả bình luận trong hệ thống (bao gồm thông tin người dùng).",
+        "responses": {
+          "200": {
+            "description": "Thành công, trả về danh sách bình luận.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BinhLuan"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BinhLuan"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BinhLuan"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "BinhLuan"
+        ],
+        "summary": "Tạo một bình luận mới",
+        "description": "Thêm một bình luận mới vào cơ sở dữ liệu và gửi thông báo cho tác giả của tác phẩm.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BinhLuan"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BinhLuan"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BinhLuan"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Bình luận được tạo thành công.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BinhLuan"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BinhLuan"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BinhLuan"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dữ liệu không hợp lệ (Id_NguoiDung hoặc Id_TacPham không tồn tại)."
+          }
+        }
+      }
+    },
+    "/api/BinhLuan/TacPham/{idTacPham}": {
+      "get": {
+        "tags": [
+          "BinhLuan"
+        ],
+        "summary": "Lấy tất cả bình luận của một tác phẩm",
+        "description": "Trả về danh sách tất cả bình luận (bao gồm thông tin người dùng) của một tác phẩm dựa trên ID tác phẩm.",
+        "parameters": [
+          {
+            "name": "idTacPham",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thành công, trả về danh sách bình luận.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BinhLuan"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BinhLuan"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BinhLuan"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Không tìm thấy bình luận nào cho tác phẩm này."
+          }
+        }
+      }
+    },
+    "/api/BinhLuan/{id}": {
+      "get": {
+        "tags": [
+          "BinhLuan"
+        ],
+        "summary": "Lấy một bình luận cụ thể",
+        "description": "Trả về thông tin chi tiết của một bình luận dựa trên ID bình luận.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thành công, trả về bình luận cụ thể.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BinhLuan"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BinhLuan"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BinhLuan"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Không tìm thấy bình luận."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "BinhLuan"
+        ],
+        "summary": "Cập nhật một bình luận",
+        "description": "Cập nhật nội dung của một bình luận đã có dựa trên ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BinhLuan"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BinhLuan"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BinhLuan"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Cập nhật thành công."
+          },
+          "400": {
+            "description": "ID không khớp."
+          },
+          "404": {
+            "description": "Không tìm thấy bình luận cần cập nhật."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "BinhLuan"
+        ],
+        "summary": "Xóa một bình luận",
+        "description": "Xóa một bình luận khỏi cơ sở dữ liệu dựa trên ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Xóa thành công."
+          },
+          "404": {
+            "description": "Không tìm thấy bình luận cần xóa."
+          }
+        }
+      }
+    },
+    "/api/CamXuc": {
+      "get": {
+        "tags": [
+          "CamXuc"
+        ],
+        "summary": "Lấy tất cả cảm xúc",
+        "description": "Trả về danh sách tất cả loại cảm xúc (chỉ Id và Tên)",
+        "responses": {
+          "200": {
+            "description": "Thành công, trả về danh sách cảm xúc.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CamXucDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CamXucDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CamXucDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "CamXuc"
+        ],
+        "summary": "Tạo cảm xúc mới",
+        "description": "Thêm một cảm xúc mới vào cơ sở dữ liệu.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CamXucDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CamXucDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CamXucDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Tạo thành công.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CamXucDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CamXucDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CamXucDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dữ liệu không hợp lệ."
+          }
+        }
+      }
+    },
+    "/api/CamXuc/{id}": {
+      "get": {
+        "tags": [
+          "CamXuc"
+        ],
+        "summary": "Lấy cảm xúc theo ID",
+        "description": "Trả về thông tin chi tiết của một cảm xúc dựa trên ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thành công, trả về cảm xúc.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CamXucDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CamXucDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CamXucDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Không tìm thấy cảm xúc."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "CamXuc"
+        ],
+        "summary": "Cập nhật cảm xúc",
+        "description": "Cập nhật tên của một cảm xúc.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CamXucDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CamXucDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CamXucDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Cập nhật thành công."
+          },
+          "400": {
+            "description": "Dữ liệu không hợp lệ."
+          },
+          "404": {
+            "description": "Không tìm thấy cảm xúc."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "CamXuc"
+        ],
+        "summary": "Xóa cảm xúc",
+        "description": "Xóa cảm xúc và các liên kết với tác phẩm nếu có.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Xóa thành công."
+          },
+          "404": {
+            "description": "Không tìm thấy cảm xúc."
+          }
+        }
+      }
+    },
+    "/api/CapDo": {
+      "get": {
+        "tags": [
+          "CapDo"
+        ],
+        "summary": "Lấy tất cả cấp độ",
+        "description": "Trả về danh sách tất cả các cấp độ (chỉ Id, ĐiểmTừ, ĐiểmĐến, Tên).",
+        "responses": {
+          "200": {
+            "description": "Thành công.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CapDoDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CapDoDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CapDoDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "CapDo"
+        ],
+        "summary": "Tạo cấp độ mới (không nhập id)",
+        "description": "Thêm một cấp độ mới vào cơ sở dữ liệu.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CapDoDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CapDoDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CapDoDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Tạo thành công.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CapDoDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CapDoDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CapDoDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dữ liệu không hợp lệ."
+          }
+        }
+      }
+    },
+    "/api/CapDo/{id}": {
+      "get": {
+        "tags": [
+          "CapDo"
+        ],
+        "summary": "Lấy cấp độ theo ID",
+        "description": "Trả về thông tin chi tiết của một cấp độ.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thành công.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CapDoDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CapDoDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CapDoDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Không tìm thấy cấp độ."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "CapDo"
+        ],
+        "summary": "Cập nhật cấp độ",
+        "description": "Cập nhật thông tin một cấp độ.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CapDoDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CapDoDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CapDoDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Cập nhật thành công."
+          },
+          "400": {
+            "description": "Dữ liệu không hợp lệ."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "CapDo"
+        ],
+        "summary": "Xóa cấp độ",
+        "description": "Xóa một cấp độ.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Xóa thành công."
+          },
+          "404": {
+            "description": "Không tìm thấy cấp độ."
+          }
+        }
+      }
+    },
+    "/api/DanhGia/TacPham/{idTacPham}": {
+      "get": {
+        "tags": [
+          "DanhGia"
+        ],
+        "parameters": [
+          {
+            "name": "idTacPham",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DanhGiaDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DanhGiaDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DanhGiaDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/DanhGia/{id}": {
+      "get": {
+        "tags": [
+          "DanhGia"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DanhGiaDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DanhGiaDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DanhGiaDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "DanhGia"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/DanhGia": {
+      "post": {
+        "tags": [
+          "DanhGia"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DanhGia"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DanhGia"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DanhGia"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/DonHang": {
+      "get": {
+        "tags": [
+          "DonHang"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DonHangDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DonHangDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DonHangDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "DonHang"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DonHang"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DonHang"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DonHang"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DonHangDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DonHangDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DonHangDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/DonHang/{id}": {
+      "get": {
+        "tags": [
+          "DonHang"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DonHangDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DonHangDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DonHangDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/DonHang/NguoiMua/{idNguoiMua}": {
+      "get": {
+        "tags": [
+          "DonHang"
+        ],
+        "parameters": [
+          {
+            "name": "idNguoiMua",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DonHangDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DonHangDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DonHangDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/DonHang/{id}/TrangThai": {
+      "put": {
+        "tags": [
+          "DonHang"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/DonHang/{id}/ChiTiet/{idTacPham}": {
+      "delete": {
+        "tags": [
+          "DonHang"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idTacPham",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/DuAn_TacPham": {
+      "get": {
+        "tags": [
+          "DuAn_TacPham"
+        ],
+        "summary": "Lấy tất cả tác phẩm dự án",
+        "description": "Lấy toàn bộ danh sách tác phẩm thuộc về các dự án.",
+        "responses": {
+          "200": {
+            "description": "Thành công, trả về danh sách tác phẩm.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TacPhamDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TacPhamDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TacPhamDTO"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Không có tác phẩm nào trong các dự án."
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "DuAn_TacPham"
+        ],
+        "summary": "Thêm tác phẩm vào dự án",
+        "description": "Thêm một tác phẩm vào một dự án cụ thể.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DuAn_TacPham"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DuAn_TacPham"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DuAn_TacPham"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Thêm thành công.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DuAn_TacPham"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DuAn_TacPham"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DuAn_TacPham"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Mối liên kết đã tồn tại."
+          },
+          "400": {
+            "description": "ID dự án hoặc ID tác phẩm không hợp lệ."
+          }
+        }
+      }
+    },
+    "/api/DuAn_TacPham/DuAn/{idDuAn}": {
+      "get": {
+        "tags": [
+          "DuAn_TacPham"
+        ],
+        "summary": "Lấy tác phẩm theo ID dự án",
+        "description": "Lấy danh sách các tác phẩm thuộc về một dự án cụ thể.",
+        "parameters": [
+          {
+            "name": "idDuAn",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thành công, trả về danh sách tác phẩm.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TacPhamDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TacPhamDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TacPhamDTO"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Dự án không tồn tại hoặc không có tác phẩm nào."
+          }
+        }
+      }
+    },
+    "/api/DuAn_TacPham/DuAn/{idDuAn}/TacPham/{idTacPham}": {
+      "delete": {
+        "tags": [
+          "DuAn_TacPham"
+        ],
+        "summary": "Xóa tác phẩm khỏi dự án",
+        "description": "Xóa một tác phẩm khỏi một dự án bằng ID dự án và ID tác phẩm.",
+        "parameters": [
+          {
+            "name": "idDuAn",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idTacPham",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Xóa thành công."
+          },
+          "404": {
+            "description": "Không tìm thấy mối liên kết để xóa."
+          }
+        }
+      }
+    },
+    "/api/DuAnCongDong": {
+      "get": {
+        "tags": [
+          "DuAnCongDong"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DuAnCongDong"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DuAnCongDong"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DuAnCongDong"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "DuAnCongDong"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DuAnCongDong"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DuAnCongDong"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DuAnCongDong"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DuAnCongDong"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DuAnCongDong"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DuAnCongDong"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/DuAnCongDong/{id}": {
+      "get": {
+        "tags": [
+          "DuAnCongDong"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DuAnCongDong"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DuAnCongDong"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DuAnCongDong"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "DuAnCongDong"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DuAnCongDong"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DuAnCongDong"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DuAnCongDong"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "DuAnCongDong"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/DuAnCongDong/{idDuAn}/ThanhVien": {
+      "get": {
+        "tags": [
+          "DuAnCongDong"
+        ],
+        "parameters": [
+          {
+            "name": "idDuAn",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ThamGiaDuAn"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ThamGiaDuAn"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ThamGiaDuAn"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/DuAnCongDong/ThamGia": {
+      "post": {
+        "tags": [
+          "DuAnCongDong"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ThamGiaDuAn"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ThamGiaDuAn"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ThamGiaDuAn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThamGiaDuAn"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThamGiaDuAn"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThamGiaDuAn"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/DuAnCongDong/ThamGia/{idDuAn}/{idNguoiDung}": {
+      "delete": {
+        "tags": [
+          "DuAnCongDong"
+        ],
+        "parameters": [
+          {
+            "name": "idDuAn",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idNguoiDung",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/GioHang/NguoiMua/{idNguoiMua}": {
+      "get": {
+        "tags": [
+          "GioHang"
+        ],
+        "parameters": [
+          {
+            "name": "idNguoiMua",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GioHangDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GioHangDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GioHangDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/GioHang": {
+      "post": {
+        "tags": [
+          "GioHang"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GioHang"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GioHang"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GioHang"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GioHangDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GioHangDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GioHangDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/GioHang/NguoiMua/{idNguoiMua}/TacPham/{idTacPham}": {
+      "delete": {
+        "tags": [
+          "GioHang"
+        ],
+        "parameters": [
+          {
+            "name": "idNguoiMua",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idTacPham",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/GioHang/NguoiMua/{idNguoiMua}/TacPham/{idTacPham}/Loai": {
+      "put": {
+        "tags": [
+          "GioHang"
+        ],
+        "parameters": [
+          {
+            "name": "idNguoiMua",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idTacPham",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Hashtags": {
+      "get": {
+        "tags": [
+          "Hashtags"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Hashtag"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Hashtag"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Hashtag"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Hashtags"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Hashtag"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Hashtag"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Hashtag"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Hashtag"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Hashtag"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Hashtag"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Hashtags/{id}": {
+      "get": {
+        "tags": [
+          "Hashtags"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Hashtag"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Hashtag"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Hashtag"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Hashtags"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Hashtags/TacPham/{idTacPham}": {
+      "get": {
+        "tags": [
+          "Hashtags"
+        ],
+        "parameters": [
+          {
+            "name": "idTacPham",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Hashtag"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Hashtag"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Hashtag"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Hashtags"
+        ],
+        "parameters": [
+          {
+            "name": "idTacPham",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Hashtags/TacPham/{idTacPham}/Hashtag/{idHashtag}": {
+      "delete": {
+        "tags": [
+          "Hashtags"
+        ],
+        "parameters": [
+          {
+            "name": "idTacPham",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idHashtag",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/HoaDon": {
+      "get": {
+        "tags": [
+          "HoaDon"
+        ],
+        "summary": "Lấy tất cả hóa đơn",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HoaDon"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HoaDon"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HoaDon"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "HoaDon"
+        ],
+        "summary": "Tạo hóa đơn mới",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HoaDon"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HoaDon"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/HoaDon"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/HoaDon"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HoaDon"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HoaDon"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/HoaDon/{id}": {
+      "get": {
+        "tags": [
+          "HoaDon"
+        ],
+        "summary": "Lấy hóa đơn theo ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/HoaDon"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HoaDon"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HoaDon"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "HoaDon"
+        ],
+        "summary": "Cập nhật hóa đơn",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HoaDon"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HoaDon"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/HoaDon"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "HoaDon"
+        ],
+        "summary": "Xóa hóa đơn",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/NguoiDung": {
+      "get": {
+        "tags": [
+          "NguoiDung"
+        ],
+        "summary": "Lấy tất cả người dùng",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NguoiDung"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NguoiDung"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NguoiDung"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "NguoiDung"
+        ],
+        "summary": "Tạo người dùng mới",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Tạo thành công",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/NguoiDung"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NguoiDung"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NguoiDung"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/NguoiDung/{id}": {
+      "get": {
+        "tags": [
+          "NguoiDung"
+        ],
+        "summary": "Lấy người dùng theo ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/NguoiDung"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NguoiDung"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NguoiDung"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Không tìm thấy người dùng"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "NguoiDung"
+        ],
+        "summary": "Cập nhật thông tin người dùng",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Cập nhật thành công"
+          },
+          "404": {
+            "description": "Không tìm thấy người dùng"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "NguoiDung"
+        ],
+        "summary": "Xóa người dùng",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Xóa thành công"
+          },
+          "404": {
+            "description": "Không tìm thấy người dùng"
+          }
+        }
+      }
+    },
+    "/api/NguoiDung/Login": {
+      "post": {
+        "tags": [
+          "NguoiDung"
+        ],
+        "summary": "Đăng nhập",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Đăng nhập thành công",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Email hoặc mật khẩu không đúng"
+          }
+        }
+      }
+    },
+    "/api/NguoiDung/PhanQuyen/{id}": {
+      "get": {
+        "tags": [
+          "NguoiDung"
+        ],
+        "summary": "Lấy quyền người dùng",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PhanQuyenResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PhanQuyenResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PhanQuyenResponseDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Không tìm thấy người dùng"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "NguoiDung"
+        ],
+        "summary": "Cập nhật quyền người dùng",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PhanQuyenUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PhanQuyenUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PhanQuyenUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cập nhật thành công",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PhanQuyenResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PhanQuyenResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PhanQuyenResponseDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Không tìm thấy người dùng"
+          }
+        }
+      }
+    },
+    "/api/Quyen": {
+      "get": {
+        "tags": [
+          "Quyen"
+        ],
+        "summary": "Lấy tất cả các quyền",
+        "description": "Trả về danh sách tất cả các quyền có trong hệ thống.",
+        "responses": {
+          "200": {
+            "description": "Thành công, trả về danh sách quyền.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Quyen"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Quyen"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Quyen"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Quyen"
+        ],
+        "summary": "Tạo quyền mới",
+        "description": "Thêm một quyền mới vào cơ sở dữ liệu.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Quyen"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Quyen"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Quyen"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Tạo thành công, trả về quyền đã tạo.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Quyen"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Quyen"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Quyen"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dữ liệu đầu vào không hợp lệ."
+          }
+        }
+      }
+    },
+    "/api/Quyen/{id}": {
+      "get": {
+        "tags": [
+          "Quyen"
+        ],
+        "summary": "Lấy quyền theo ID",
+        "description": "Trả về thông tin chi tiết của một quyền dựa trên ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thành công, trả về quyền cụ thể.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Quyen"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Quyen"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Quyen"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Không tìm thấy quyền."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Quyen"
+        ],
+        "summary": "Cập nhật quyền",
+        "description": "Cập nhật thông tin của một quyền đã có dựa trên ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Quyen"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Quyen"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Quyen"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Cập nhật thành công."
+          },
+          "400": {
+            "description": "ID không khớp hoặc dữ liệu không hợp lệ."
+          },
+          "404": {
+            "description": "Không tìm thấy quyền để cập nhật."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Quyen"
+        ],
+        "summary": "Xóa quyền",
+        "description": "Xóa một quyền khỏi cơ sở dữ liệu dựa trên ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Xóa thành công."
+          },
+          "404": {
+            "description": "Không tìm thấy quyền để xóa."
+          }
+        }
+      }
+    },
+    "/api/TacPham/insert": {
+      "post": {
+        "tags": [
+          "TacPham"
+        ],
+        "summary": "Thêm tác phẩm mới",
+        "description": "Thêm một tác phẩm mới vào hệ thống (gồm tên, mô tả, ảnh, thể loại, hashtags, giá, loại, trạng thái).",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "Gia",
+                  "NguoiTao.CapDo.DiemDen",
+                  "NguoiTao.CapDo.DiemTu",
+                  "NguoiTao.CapDo.Ten",
+                  "NguoiTao.Email",
+                  "NguoiTao.MatKhau",
+                  "NguoiTao.Quyen.Ten",
+                  "NguoiTao.Ten",
+                  "Ten",
+                  "TheLoai.Ten"
+                ],
+                "type": "object",
+                "properties": {
+                  "Id": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "Ten": {
+                    "maxLength": 100,
+                    "type": "string"
+                  },
+                  "MoTa": {
+                    "type": "string"
+                  },
+                  "Anh": {
+                    "maxLength": 255,
+                    "type": "string"
+                  },
+                  "Id_TheLoai": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "TrangThai": {
+                    "maxLength": 20,
+                    "type": "string"
+                  },
+                  "Id_NguoiTao": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "NgayTao": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "Gia": {
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "Loai": {
+                    "maxLength": 20,
+                    "type": "string"
+                  },
+                  "LuotXem": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "NguoiTao.Id": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "NguoiTao.Ten": {
+                    "maxLength": 50,
+                    "minLength": 0,
+                    "type": "string"
+                  },
+                  "NguoiTao.AnhDaiDien": {
+                    "maxLength": 255,
+                    "minLength": 0,
+                    "type": "string"
+                  },
+                  "NguoiTao.Sdt": {
+                    "maxLength": 15,
+                    "minLength": 0,
+                    "type": "string"
+                  },
+                  "NguoiTao.Email": {
+                    "maxLength": 100,
+                    "minLength": 0,
+                    "type": "string"
+                  },
+                  "NguoiTao.MatKhau": {
+                    "type": "string",
+                    "format": "byte"
+                  },
+                  "NguoiTao.DiemThuong": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "NguoiTao.NgayTao": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "NguoiTao.Id_CapDo": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "NguoiTao.CapDo.Id": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "NguoiTao.CapDo.Ten": {
+                    "maxLength": 20,
+                    "type": "string"
+                  },
+                  "NguoiTao.CapDo.DiemTu": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "NguoiTao.CapDo.DiemDen": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "NguoiTao.CapDo.NguoiDungs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/NguoiDung"
+                    }
+                  },
+                  "NguoiTao.Id_PhanQuyen": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "NguoiTao.Quyen.Id": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "NguoiTao.Quyen.Ten": {
+                    "maxLength": 50,
+                    "type": "string"
+                  },
+                  "NguoiTao.Quyen.MoTa": {
+                    "maxLength": 255,
+                    "type": "string"
+                  },
+                  "NguoiTao.Quyen.NguoiDungs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/NguoiDung"
+                    }
+                  },
+                  "NguoiTao.TacPhams": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/TacPham"
+                    }
+                  },
+                  "NguoiTao.GioHangs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/GioHang"
+                    }
+                  },
+                  "NguoiTao.DonHangs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/DonHang"
+                    }
+                  },
+                  "NguoiTao.BinhLuans": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/BinhLuan"
+                    }
+                  },
+                  "NguoiTao.TacPham_CamXucs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/TacPham_CamXuc"
+                    }
+                  },
+                  "NguoiTao.DanhGias": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/DanhGia"
+                    }
+                  },
+                  "NguoiTao.ThongBaos": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ThongBao"
+                    }
+                  },
+                  "NguoiTao.DuAnQuanLy": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/DuAnCongDong"
+                    }
+                  },
+                  "NguoiTao.ThamGiaDuAns": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ThamGiaDuAn"
+                    }
+                  },
+                  "TheLoai.Id": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "TheLoai.Ten": {
+                    "maxLength": 100,
+                    "type": "string"
+                  },
+                  "TheLoai.TacPhams": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/TacPham"
+                    }
+                  },
+                  "TacPham_Hashtags": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/TacPham_Hashtags"
+                    }
+                  },
+                  "TacPham_CamXucs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/TacPham_CamXuc"
+                    }
+                  },
+                  "DonHang_ChiTiets": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/DonHang_ChiTiet"
+                    }
+                  },
+                  "HoaDon_ChiTiets": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/HoaDon_ChiTiet"
+                    }
+                  },
+                  "GioHangs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/GioHang"
+                    }
+                  },
+                  "BinhLuans": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/BinhLuan"
+                    }
+                  },
+                  "DuAn_TacPhams": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/DuAn_TacPham"
+                    }
+                  },
+                  "DanhGias": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/DanhGia"
+                    }
+                  },
+                  "tenTheLoai": {
+                    "type": "string"
+                  },
+                  "hashtags": {
+                    "type": "string"
+                  }
+                }
+              },
+              "encoding": {
+                "Id": {
+                  "style": "form"
+                },
+                "Ten": {
+                  "style": "form"
+                },
+                "MoTa": {
+                  "style": "form"
+                },
+                "Anh": {
+                  "style": "form"
+                },
+                "Id_TheLoai": {
+                  "style": "form"
+                },
+                "TrangThai": {
+                  "style": "form"
+                },
+                "Id_NguoiTao": {
+                  "style": "form"
+                },
+                "NgayTao": {
+                  "style": "form"
+                },
+                "Gia": {
+                  "style": "form"
+                },
+                "Loai": {
+                  "style": "form"
+                },
+                "LuotXem": {
+                  "style": "form"
+                },
+                "NguoiTao.Id": {
+                  "style": "form"
+                },
+                "NguoiTao.Ten": {
+                  "style": "form"
+                },
+                "NguoiTao.AnhDaiDien": {
+                  "style": "form"
+                },
+                "NguoiTao.Sdt": {
+                  "style": "form"
+                },
+                "NguoiTao.Email": {
+                  "style": "form"
+                },
+                "NguoiTao.MatKhau": {
+                  "style": "form"
+                },
+                "NguoiTao.DiemThuong": {
+                  "style": "form"
+                },
+                "NguoiTao.NgayTao": {
+                  "style": "form"
+                },
+                "NguoiTao.Id_CapDo": {
+                  "style": "form"
+                },
+                "NguoiTao.CapDo.Id": {
+                  "style": "form"
+                },
+                "NguoiTao.CapDo.Ten": {
+                  "style": "form"
+                },
+                "NguoiTao.CapDo.DiemTu": {
+                  "style": "form"
+                },
+                "NguoiTao.CapDo.DiemDen": {
+                  "style": "form"
+                },
+                "NguoiTao.CapDo.NguoiDungs": {
+                  "style": "form"
+                },
+                "NguoiTao.Id_PhanQuyen": {
+                  "style": "form"
+                },
+                "NguoiTao.Quyen.Id": {
+                  "style": "form"
+                },
+                "NguoiTao.Quyen.Ten": {
+                  "style": "form"
+                },
+                "NguoiTao.Quyen.MoTa": {
+                  "style": "form"
+                },
+                "NguoiTao.Quyen.NguoiDungs": {
+                  "style": "form"
+                },
+                "NguoiTao.TacPhams": {
+                  "style": "form"
+                },
+                "NguoiTao.GioHangs": {
+                  "style": "form"
+                },
+                "NguoiTao.DonHangs": {
+                  "style": "form"
+                },
+                "NguoiTao.BinhLuans": {
+                  "style": "form"
+                },
+                "NguoiTao.TacPham_CamXucs": {
+                  "style": "form"
+                },
+                "NguoiTao.DanhGias": {
+                  "style": "form"
+                },
+                "NguoiTao.ThongBaos": {
+                  "style": "form"
+                },
+                "NguoiTao.DuAnQuanLy": {
+                  "style": "form"
+                },
+                "NguoiTao.ThamGiaDuAns": {
+                  "style": "form"
+                },
+                "TheLoai.Id": {
+                  "style": "form"
+                },
+                "TheLoai.Ten": {
+                  "style": "form"
+                },
+                "TheLoai.TacPhams": {
+                  "style": "form"
+                },
+                "TacPham_Hashtags": {
+                  "style": "form"
+                },
+                "TacPham_CamXucs": {
+                  "style": "form"
+                },
+                "DonHang_ChiTiets": {
+                  "style": "form"
+                },
+                "HoaDon_ChiTiets": {
+                  "style": "form"
+                },
+                "GioHangs": {
+                  "style": "form"
+                },
+                "BinhLuans": {
+                  "style": "form"
+                },
+                "DuAn_TacPhams": {
+                  "style": "form"
+                },
+                "DanhGias": {
+                  "style": "form"
+                },
+                "tenTheLoai": {
+                  "style": "form"
+                },
+                "hashtags": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Thêm tác phẩm thành công"
+          },
+          "400": {
+            "description": "Dữ liệu không hợp lệ"
+          }
+        }
+      }
+    },
+    "/api/TacPham/update/{id}": {
+      "put": {
+        "tags": [
+          "TacPham"
+        ],
+        "summary": "Cập nhật tác phẩm",
+        "description": "Cập nhật thông tin của một tác phẩm theo ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "Gia",
+                  "NguoiTao.CapDo.DiemDen",
+                  "NguoiTao.CapDo.DiemTu",
+                  "NguoiTao.CapDo.Ten",
+                  "NguoiTao.Email",
+                  "NguoiTao.MatKhau",
+                  "NguoiTao.Quyen.Ten",
+                  "NguoiTao.Ten",
+                  "Ten",
+                  "TheLoai.Ten"
+                ],
+                "type": "object",
+                "properties": {
+                  "Id": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "Ten": {
+                    "maxLength": 100,
+                    "type": "string"
+                  },
+                  "MoTa": {
+                    "type": "string"
+                  },
+                  "Anh": {
+                    "maxLength": 255,
+                    "type": "string"
+                  },
+                  "Id_TheLoai": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "TrangThai": {
+                    "maxLength": 20,
+                    "type": "string"
+                  },
+                  "Id_NguoiTao": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "NgayTao": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "Gia": {
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "Loai": {
+                    "maxLength": 20,
+                    "type": "string"
+                  },
+                  "LuotXem": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "NguoiTao.Id": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "NguoiTao.Ten": {
+                    "maxLength": 50,
+                    "minLength": 0,
+                    "type": "string"
+                  },
+                  "NguoiTao.AnhDaiDien": {
+                    "maxLength": 255,
+                    "minLength": 0,
+                    "type": "string"
+                  },
+                  "NguoiTao.Sdt": {
+                    "maxLength": 15,
+                    "minLength": 0,
+                    "type": "string"
+                  },
+                  "NguoiTao.Email": {
+                    "maxLength": 100,
+                    "minLength": 0,
+                    "type": "string"
+                  },
+                  "NguoiTao.MatKhau": {
+                    "type": "string",
+                    "format": "byte"
+                  },
+                  "NguoiTao.DiemThuong": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "NguoiTao.NgayTao": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "NguoiTao.Id_CapDo": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "NguoiTao.CapDo.Id": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "NguoiTao.CapDo.Ten": {
+                    "maxLength": 20,
+                    "type": "string"
+                  },
+                  "NguoiTao.CapDo.DiemTu": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "NguoiTao.CapDo.DiemDen": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "NguoiTao.CapDo.NguoiDungs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/NguoiDung"
+                    }
+                  },
+                  "NguoiTao.Id_PhanQuyen": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "NguoiTao.Quyen.Id": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "NguoiTao.Quyen.Ten": {
+                    "maxLength": 50,
+                    "type": "string"
+                  },
+                  "NguoiTao.Quyen.MoTa": {
+                    "maxLength": 255,
+                    "type": "string"
+                  },
+                  "NguoiTao.Quyen.NguoiDungs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/NguoiDung"
+                    }
+                  },
+                  "NguoiTao.TacPhams": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/TacPham"
+                    }
+                  },
+                  "NguoiTao.GioHangs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/GioHang"
+                    }
+                  },
+                  "NguoiTao.DonHangs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/DonHang"
+                    }
+                  },
+                  "NguoiTao.BinhLuans": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/BinhLuan"
+                    }
+                  },
+                  "NguoiTao.TacPham_CamXucs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/TacPham_CamXuc"
+                    }
+                  },
+                  "NguoiTao.DanhGias": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/DanhGia"
+                    }
+                  },
+                  "NguoiTao.ThongBaos": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ThongBao"
+                    }
+                  },
+                  "NguoiTao.DuAnQuanLy": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/DuAnCongDong"
+                    }
+                  },
+                  "NguoiTao.ThamGiaDuAns": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ThamGiaDuAn"
+                    }
+                  },
+                  "TheLoai.Id": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "TheLoai.Ten": {
+                    "maxLength": 100,
+                    "type": "string"
+                  },
+                  "TheLoai.TacPhams": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/TacPham"
+                    }
+                  },
+                  "TacPham_Hashtags": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/TacPham_Hashtags"
+                    }
+                  },
+                  "TacPham_CamXucs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/TacPham_CamXuc"
+                    }
+                  },
+                  "DonHang_ChiTiets": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/DonHang_ChiTiet"
+                    }
+                  },
+                  "HoaDon_ChiTiets": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/HoaDon_ChiTiet"
+                    }
+                  },
+                  "GioHangs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/GioHang"
+                    }
+                  },
+                  "BinhLuans": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/BinhLuan"
+                    }
+                  },
+                  "DuAn_TacPhams": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/DuAn_TacPham"
+                    }
+                  },
+                  "DanhGias": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/DanhGia"
+                    }
+                  },
+                  "tenTheLoai": {
+                    "type": "string"
+                  },
+                  "hashtags": {
+                    "type": "string"
+                  }
+                }
+              },
+              "encoding": {
+                "Id": {
+                  "style": "form"
+                },
+                "Ten": {
+                  "style": "form"
+                },
+                "MoTa": {
+                  "style": "form"
+                },
+                "Anh": {
+                  "style": "form"
+                },
+                "Id_TheLoai": {
+                  "style": "form"
+                },
+                "TrangThai": {
+                  "style": "form"
+                },
+                "Id_NguoiTao": {
+                  "style": "form"
+                },
+                "NgayTao": {
+                  "style": "form"
+                },
+                "Gia": {
+                  "style": "form"
+                },
+                "Loai": {
+                  "style": "form"
+                },
+                "LuotXem": {
+                  "style": "form"
+                },
+                "NguoiTao.Id": {
+                  "style": "form"
+                },
+                "NguoiTao.Ten": {
+                  "style": "form"
+                },
+                "NguoiTao.AnhDaiDien": {
+                  "style": "form"
+                },
+                "NguoiTao.Sdt": {
+                  "style": "form"
+                },
+                "NguoiTao.Email": {
+                  "style": "form"
+                },
+                "NguoiTao.MatKhau": {
+                  "style": "form"
+                },
+                "NguoiTao.DiemThuong": {
+                  "style": "form"
+                },
+                "NguoiTao.NgayTao": {
+                  "style": "form"
+                },
+                "NguoiTao.Id_CapDo": {
+                  "style": "form"
+                },
+                "NguoiTao.CapDo.Id": {
+                  "style": "form"
+                },
+                "NguoiTao.CapDo.Ten": {
+                  "style": "form"
+                },
+                "NguoiTao.CapDo.DiemTu": {
+                  "style": "form"
+                },
+                "NguoiTao.CapDo.DiemDen": {
+                  "style": "form"
+                },
+                "NguoiTao.CapDo.NguoiDungs": {
+                  "style": "form"
+                },
+                "NguoiTao.Id_PhanQuyen": {
+                  "style": "form"
+                },
+                "NguoiTao.Quyen.Id": {
+                  "style": "form"
+                },
+                "NguoiTao.Quyen.Ten": {
+                  "style": "form"
+                },
+                "NguoiTao.Quyen.MoTa": {
+                  "style": "form"
+                },
+                "NguoiTao.Quyen.NguoiDungs": {
+                  "style": "form"
+                },
+                "NguoiTao.TacPhams": {
+                  "style": "form"
+                },
+                "NguoiTao.GioHangs": {
+                  "style": "form"
+                },
+                "NguoiTao.DonHangs": {
+                  "style": "form"
+                },
+                "NguoiTao.BinhLuans": {
+                  "style": "form"
+                },
+                "NguoiTao.TacPham_CamXucs": {
+                  "style": "form"
+                },
+                "NguoiTao.DanhGias": {
+                  "style": "form"
+                },
+                "NguoiTao.ThongBaos": {
+                  "style": "form"
+                },
+                "NguoiTao.DuAnQuanLy": {
+                  "style": "form"
+                },
+                "NguoiTao.ThamGiaDuAns": {
+                  "style": "form"
+                },
+                "TheLoai.Id": {
+                  "style": "form"
+                },
+                "TheLoai.Ten": {
+                  "style": "form"
+                },
+                "TheLoai.TacPhams": {
+                  "style": "form"
+                },
+                "TacPham_Hashtags": {
+                  "style": "form"
+                },
+                "TacPham_CamXucs": {
+                  "style": "form"
+                },
+                "DonHang_ChiTiets": {
+                  "style": "form"
+                },
+                "HoaDon_ChiTiets": {
+                  "style": "form"
+                },
+                "GioHangs": {
+                  "style": "form"
+                },
+                "BinhLuans": {
+                  "style": "form"
+                },
+                "DuAn_TacPhams": {
+                  "style": "form"
+                },
+                "DanhGias": {
+                  "style": "form"
+                },
+                "tenTheLoai": {
+                  "style": "form"
+                },
+                "hashtags": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cập nhật tác phẩm thành công"
+          },
+          "404": {
+            "description": "Không tìm thấy tác phẩm"
+          }
+        }
+      }
+    },
+    "/api/TacPham/delete/{id}": {
+      "delete": {
+        "tags": [
+          "TacPham"
+        ],
+        "summary": "Xóa tác phẩm",
+        "description": "Xóa một tác phẩm theo ID, kiểm tra quyền của người thực hiện.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idNguoiThucHien",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Xóa tác phẩm thành công"
+          },
+          "403": {
+            "description": "Không có quyền xóa tác phẩm"
+          },
+          "404": {
+            "description": "Không tìm thấy tác phẩm"
+          }
+        }
+      }
+    },
+    "/api/TacPham_CamXuc/nguoidung/{idNguoiDung}/tacpham/{idTacPham}": {
+      "get": {
+        "tags": [
+          "TacPham_CamXuc"
+        ],
+        "summary": "Lấy cảm xúc của một người dùng đối với một tác phẩm",
+        "description": "Trả về cảm xúc của người dùng (nếu có) đối với một tác phẩm cụ thể.",
+        "parameters": [
+          {
+            "name": "idNguoiDung",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idTacPham",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thành công, trả về cảm xúc của người dùng.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TacPham_CamXuc"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TacPham_CamXuc"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TacPham_CamXuc"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Người dùng chưa có cảm xúc cho tác phẩm này."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "TacPham_CamXuc"
+        ],
+        "summary": "Xóa cảm xúc của người dùng đối với một tác phẩm",
+        "description": "Xóa một cảm xúc cụ thể của người dùng đối với một tác phẩm.",
+        "parameters": [
+          {
+            "name": "idNguoiDung",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idTacPham",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Xóa thành công."
+          },
+          "404": {
+            "description": "Không tìm thấy cảm xúc để xóa."
+          }
+        }
+      }
+    },
+    "/api/TacPham_CamXuc": {
+      "post": {
+        "tags": [
+          "TacPham_CamXuc"
+        ],
+        "summary": "Tạo hoặc cập nhật cảm xúc cho tác phẩm",
+        "description": "Thêm một cảm xúc mới vào tác phẩm hoặc thay đổi cảm xúc đã có.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TacPham_CamXuc"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TacPham_CamXuc"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TacPham_CamXuc"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cập nhật thành công."
+          },
+          "201": {
+            "description": "Tạo mới thành công."
+          },
+          "400": {
+            "description": "Dữ liệu không hợp lệ."
+          }
+        }
+      }
+    },
+    "/api/TacPham_Hashtags/TacPham/{idTacPham}": {
+      "get": {
+        "tags": [
+          "TacPham_Hashtags"
+        ],
+        "parameters": [
+          {
+            "name": "idTacPham",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Hashtag"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Hashtag"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Hashtag"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/TacPham_Hashtags": {
+      "post": {
+        "tags": [
+          "TacPham_Hashtags"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TacPham_Hashtags"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TacPham_Hashtags"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TacPham_Hashtags"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TacPham_Hashtags"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TacPham_Hashtags"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TacPham_Hashtags"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/TacPham_Hashtags/TacPham/{idTacPham}/Hashtag/{idHashtag}": {
+      "delete": {
+        "tags": [
+          "TacPham_Hashtags"
+        ],
+        "parameters": [
+          {
+            "name": "idTacPham",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idHashtag",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ThanhToan/DonHang/{idDonHang}": {
+      "get": {
+        "tags": [
+          "ThanhToan"
+        ],
+        "parameters": [
+          {
+            "name": "idDonHang",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ThanhToan"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ThanhToan"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ThanhToan"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ThanhToan/{id}": {
+      "get": {
+        "tags": [
+          "ThanhToan"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThanhToan"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThanhToan"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThanhToan"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ThanhToan"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ThanhToan": {
+      "post": {
+        "tags": [
+          "ThanhToan"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ThanhToan"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ThanhToan"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ThanhToan"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThanhToan"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThanhToan"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThanhToan"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ThanhToan/{id}/TrangThai": {
+      "put": {
+        "tags": [
+          "ThanhToan"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TheLoai": {
+      "get": {
+        "tags": [
+          "TheLoai"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TheLoai"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TheLoai"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TheLoai"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "TheLoai"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TheLoai"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TheLoai"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TheLoai"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TheLoai"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TheLoai"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TheLoai"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/TheLoai/{id}": {
+      "get": {
+        "tags": [
+          "TheLoai"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TheLoai"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TheLoai"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TheLoai"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "TheLoai"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TheLoai"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TheLoai"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TheLoai"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "TheLoai"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ThongBao/NguoiDung/{idNguoiDung}": {
+      "get": {
+        "tags": [
+          "ThongBao"
+        ],
+        "parameters": [
+          {
+            "name": "idNguoiDung",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ThongBao"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ThongBao"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ThongBao"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ThongBao/{id}": {
+      "get": {
+        "tags": [
+          "ThongBao"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThongBao"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThongBao"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThongBao"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ThongBao"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ThongBao": {
+      "post": {
+        "tags": [
+          "ThongBao"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ThongBao"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ThongBao"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ThongBao"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThongBao"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThongBao"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThongBao"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ThongBao/{id}/Read": {
+      "put": {
+        "tags": [
+          "ThongBao"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BinhLuan": {
+        "required": [
+          "noiDung"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_TacPham": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_NguoiDung": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "noiDung": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "ngayTao": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "level": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CamXuc": {
+        "required": [
+          "ten"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ten": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CamXucDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ten": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CapDo": {
+        "required": [
+          "diemDen",
+          "diemTu",
+          "ten"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ten": {
+            "maxLength": 20,
+            "minLength": 1,
+            "type": "string"
+          },
+          "diemTu": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "diemDen": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nguoiDungs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NguoiDung"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CapDoDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ten": {
+            "type": "string",
+            "nullable": true
+          },
+          "diemTu": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "diemDen": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateUserDto": {
+        "type": "object",
+        "properties": {
+          "ten": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "sdt": {
+            "type": "string",
+            "nullable": true
+          },
+          "matKhau": {
+            "type": "string",
+            "nullable": true
+          },
+          "id_PhanQuyen": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DanhGia": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_TacPham": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_NguoiDung": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "diem": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ngayTao": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "nguoiDanhGia": {
+            "$ref": "#/components/schemas/NguoiDung"
+          },
+          "tacPham": {
+            "$ref": "#/components/schemas/TacPham"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DanhGiaDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_TacPham": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "diem": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ngayTao": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "tenNguoiDung": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DonHang": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_NguoiMua": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ngayMua": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "trangThai": {
+            "type": "string",
+            "nullable": true
+          },
+          "tongTien": {
+            "type": "number",
+            "format": "double"
+          },
+          "giamGia": {
+            "type": "number",
+            "format": "double"
+          },
+          "nguoiMua": {
+            "$ref": "#/components/schemas/NguoiDung"
+          },
+          "donHang_ChiTiets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DonHang_ChiTiet"
+            },
+            "nullable": true
+          },
+          "thanhToans": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ThanhToan"
+            },
+            "nullable": true
+          },
+          "hoaDons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HoaDon"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DonHangChiTietDTO": {
+        "type": "object",
+        "properties": {
+          "id_TacPham": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tenTacPham": {
+            "type": "string",
+            "nullable": true
+          },
+          "gia": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DonHangDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ngayMua": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "trangThai": {
+            "type": "string",
+            "nullable": true
+          },
+          "tongTien": {
+            "type": "number",
+            "format": "double"
+          },
+          "donHang_ChiTiets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DonHangChiTietDTO"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DonHang_ChiTiet": {
+        "type": "object",
+        "properties": {
+          "id_DonHang": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_TacPham": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "donHang": {
+            "$ref": "#/components/schemas/DonHang"
+          },
+          "tacPham": {
+            "$ref": "#/components/schemas/TacPham"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DuAnCongDong": {
+        "required": [
+          "tenDuAn"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tenDuAn": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          },
+          "moTa": {
+            "type": "string",
+            "nullable": true
+          },
+          "ngayTao": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ngayBatDau": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "ngayKetThuc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "id_QuanLy": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "trangThai": {
+            "maxLength": 20,
+            "type": "string",
+            "nullable": true
+          },
+          "thamGiaDuAns": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ThamGiaDuAn"
+            },
+            "nullable": true
+          },
+          "duAn_TacPhams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DuAn_TacPham"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DuAn_TacPham": {
+        "type": "object",
+        "properties": {
+          "id_TacPham": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_DuAn": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "trangThai": {
+            "type": "string",
+            "nullable": true
+          },
+          "ngayDang": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "duAn": {
+            "$ref": "#/components/schemas/DuAnCongDong"
+          },
+          "tacPham": {
+            "$ref": "#/components/schemas/TacPham"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GioHang": {
+        "type": "object",
+        "properties": {
+          "id_NguoiMua": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_TacPham": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ngayThem": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "loai": {
+            "type": "string",
+            "nullable": true
+          },
+          "nguoiMua": {
+            "$ref": "#/components/schemas/NguoiDung"
+          },
+          "tacPham": {
+            "$ref": "#/components/schemas/TacPham"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GioHangDto": {
+        "type": "object",
+        "properties": {
+          "idNguoiMua": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idTacPham": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "loai": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenTacPham": {
+            "type": "string",
+            "nullable": true
+          },
+          "gia": {
+            "type": "number",
+            "format": "double"
+          },
+          "anh": {
+            "type": "string",
+            "nullable": true
+          },
+          "ngayThem": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Hashtag": {
+        "required": [
+          "ten"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ten": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string"
+          },
+          "tacPham_hashtags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TacPham_Hashtags"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "HoaDon": {
+        "required": [
+          "soHoaDon"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_DonHang": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "donHang": {
+            "$ref": "#/components/schemas/DonHang"
+          },
+          "soHoaDon": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string"
+          },
+          "ngayLap": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "nguoiLap": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tongTien": {
+            "type": "number",
+            "format": "double"
+          },
+          "ghiChu": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "nguoiLapHoaDon": {
+            "$ref": "#/components/schemas/NguoiDung"
+          },
+          "hoaDon_ChiTiets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HoaDon_ChiTiet"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "HoaDon_ChiTiet": {
+        "required": [
+          "thanhTien"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_HoaDon": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_TacPham": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "thanhTien": {
+            "type": "number",
+            "format": "double"
+          },
+          "hoaDon": {
+            "$ref": "#/components/schemas/HoaDon"
+          },
+          "tacPham": {
+            "$ref": "#/components/schemas/TacPham"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LoginModel": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "matKhau": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LoginResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ten": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "id_PhanQuyen": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "NguoiDung": {
+        "required": [
+          "email",
+          "matKhau",
+          "ten"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ten": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string"
+          },
+          "anhDaiDien": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "sdt": {
+            "maxLength": 15,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          },
+          "matKhau": {
+            "type": "string",
+            "format": "byte"
+          },
+          "diemThuong": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ngayTao": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id_CapDo": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "capDo": {
+            "$ref": "#/components/schemas/CapDo"
+          },
+          "id_PhanQuyen": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PhanQuyenResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_PhanQuyen": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PhanQuyenUpdateDto": {
+        "type": "object",
+        "properties": {
+          "id_PhanQuyen": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Quyen": {
+        "required": [
+          "ten"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ten": {
+            "maxLength": 50,
+            "minLength": 1,
+            "type": "string"
+          },
+          "moTa": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          },
+          "nguoiDungs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NguoiDung"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TacPham": {
+        "required": [
+          "gia",
+          "ten"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ten": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
+          },
+          "moTa": {
+            "type": "string",
+            "nullable": true
+          },
+          "anh": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          },
+          "id_TheLoai": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "trangThai": {
+            "maxLength": 20,
+            "type": "string",
+            "nullable": true
+          },
+          "id_NguoiTao": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ngayTao": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "gia": {
+            "type": "number",
+            "format": "double"
+          },
+          "loai": {
+            "maxLength": 20,
+            "type": "string",
+            "nullable": true
+          },
+          "luotXem": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nguoiTao": {
+            "$ref": "#/components/schemas/NguoiDung"
+          },
+          "theLoai": {
+            "$ref": "#/components/schemas/TheLoai"
+          },
+          "tacPham_Hashtags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TacPham_Hashtags"
+            },
+            "nullable": true
+          },
+          "tacPham_CamXucs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TacPham_CamXuc"
+            },
+            "nullable": true
+          },
+          "donHang_ChiTiets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DonHang_ChiTiet"
+            },
+            "nullable": true
+          },
+          "hoaDon_ChiTiets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HoaDon_ChiTiet"
+            },
+            "nullable": true
+          },
+          "gioHangs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GioHang"
+            },
+            "nullable": true
+          },
+          "duAn_TacPhams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DuAn_TacPham"
+            },
+            "nullable": true
+          },
+          "danhGias": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DanhGia"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TacPhamDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ten": {
+            "type": "string",
+            "nullable": true
+          },
+          "moTa": {
+            "type": "string",
+            "nullable": true
+          },
+          "anh": {
+            "type": "string",
+            "nullable": true
+          },
+          "gia": {
+            "type": "number",
+            "format": "double"
+          },
+          "trangThai": {
+            "type": "string",
+            "nullable": true
+          },
+          "loai": {
+            "type": "string",
+            "nullable": true
+          },
+          "ngayTao": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "luotXem": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tenTheLoai": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenNguoiTao": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TacPham_CamXuc": {
+        "type": "object",
+        "properties": {
+          "id_NguoiDung": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_TacPham": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_CamXuc": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ngayTao": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "nguoiDung": {
+            "$ref": "#/components/schemas/NguoiDung"
+          },
+          "tacPham": {
+            "$ref": "#/components/schemas/TacPham"
+          },
+          "camXuc": {
+            "$ref": "#/components/schemas/CamXuc"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TacPham_Hashtags": {
+        "required": [
+          "id_Hashtag",
+          "id_TacPham"
+        ],
+        "type": "object",
+        "properties": {
+          "id_TacPham": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_Hashtag": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tacPham": {
+            "$ref": "#/components/schemas/TacPham"
+          },
+          "hashtag": {
+            "$ref": "#/components/schemas/Hashtag"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ThamGiaDuAn": {
+        "required": [
+          "vaiTro"
+        ],
+        "type": "object",
+        "properties": {
+          "id_DuAn": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_NguoiDung": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "vaiTro": {
+            "maxLength": 20,
+            "minLength": 1,
+            "type": "string"
+          },
+          "ngayThamGia": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "nguoiDung": {
+            "$ref": "#/components/schemas/NguoiDung"
+          },
+          "duAnCongDong": {
+            "$ref": "#/components/schemas/DuAnCongDong"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ThanhToan": {
+        "required": [
+          "id_DonHang",
+          "phuongThuc",
+          "trangThai"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_DonHang": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "phuongThuc": {
+            "maxLength": 20,
+            "minLength": 1,
+            "type": "string"
+          },
+          "trangThai": {
+            "maxLength": 20,
+            "minLength": 1,
+            "type": "string"
+          },
+          "ngayTT": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "donHang": {
+            "$ref": "#/components/schemas/DonHang"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TheLoai": {
+        "required": [
+          "ten"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ten": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
+          },
+          "tacPhams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TacPham"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ThongBao": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_NguoiDung": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "noiDung": {
+            "type": "string",
+            "nullable": true
+          },
+          "daDoc": {
+            "type": "boolean"
+          },
+          "ngayTao": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "nguoiDung": {
+            "$ref": "#/components/schemas/NguoiDung"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateUserDto": {
+        "type": "object",
+        "properties": {
+          "ten": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "sdt": {
+            "type": "string",
+            "nullable": true
+          },
+          "matKhau": {
+            "type": "string",
+            "nullable": true
+          },
+          "id_PhanQuyen": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "Nhập JWT token",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    { }
+  ]
+}

@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\CODE_CDIO4.props" />
+</Project>

@@ -1,0 +1,6 @@
+@CODE_CDIO4_HostAddress = http://localhost:5044
+
+GET {{CODE_CDIO4_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
