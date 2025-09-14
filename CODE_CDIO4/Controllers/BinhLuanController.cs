@@ -4,6 +4,8 @@ using CODE_CDIO4.Repository;
 using CODE_CDIO4.Models;
 using CODE_CDIO4.Services;
 using Swashbuckle.AspNetCore.Annotations;
+using CODE_CDIO4.DTOs;
+using Microsoft.Data.SqlClient;
 
 namespace CODE_CDIO4.Controllers
 {
@@ -37,9 +39,6 @@ namespace CODE_CDIO4.Controllers
 
             return Ok(binhLuans);
         }
-
-        // ==================== LẤY BÌNH LUẬN theo TÁC PHẨM ====================
-
         [HttpGet("TacPham/{idTacPham}")]
         [SwaggerOperation(Summary = "Lấy tất cả bình luận của một tác phẩm", Description = "Trả về danh sách tất cả bình luận (bao gồm thông tin người dùng) của một tác phẩm dựa trên ID tác phẩm.")]
         [SwaggerResponse(StatusCodes.Status200OK, "Thành công, trả về danh sách bình luận.")]
@@ -76,86 +75,140 @@ namespace CODE_CDIO4.Controllers
             return Ok(binhLuan);
         }
 
-        // ==================== TẠO MỚI BÌNH LUẬN ====================
-
+        // ==================== TẠO MỚI BÌNH LUẬN (DTO) ====================
         [HttpPost]
-        [SwaggerOperation(Summary = "Tạo một bình luận mới", Description = "Thêm một bình luận mới vào cơ sở dữ liệu và gửi thông báo cho tác giả của tác phẩm.")]
+        [SwaggerOperation(
+            Summary = "Tạo một bình luận mới",
+            Description = "Thêm một bình luận mới vào cơ sở dữ liệu và gửi thông báo cho tác giả của tác phẩm."
+        )]
         [SwaggerResponse(StatusCodes.Status201Created, "Bình luận được tạo thành công.")]
-        [SwaggerResponse(StatusCodes.Status400BadRequest, "Dữ liệu không hợp lệ (Id_NguoiDung hoặc Id_TacPham không tồn tại).")]
-        public async Task<ActionResult<BinhLuan>> PostBinhLuan(BinhLuan binhLuan)
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Dữ liệu không hợp lệ (IdNguoiDung hoặc IdTacPham không tồn tại).")]
+        [HttpPost]
+        public async Task<ActionResult<BinhLuan>> PostBinhLuan([FromBody] BinhLuanInsertDTO dto)
         {
-            var nguoiDung = await _context.NguoiDungs.FindAsync(binhLuan.Id_NguoiDung);
-            var tacPham = await _context.TacPhams.FindAsync(binhLuan.Id_TacPham);
+            // Kiểm tra dữ liệu đầu vào
+            var nguoiDung = await _context.NguoiDungs.FindAsync(dto.IdNguoiDung);
+            var tacPham = await _context.TacPhams.FindAsync(dto.IdTacPham);
 
             if (nguoiDung == null || tacPham == null)
+                return BadRequest("IdNguoiDung hoặc IdTacPham không hợp lệ.");
+
+            // Dùng stored procedure để insert bình luận và lấy ID
+            int newBinhLuanId;
+            var connection = _context.Database.GetDbConnection();
+            await using (var command = connection.CreateCommand())
             {
-                return BadRequest("Id_NguoiDung hoặc Id_TacPham không hợp lệ.");
+                command.CommandText = "insert_BinhLuan";
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                command.Parameters.Add(new SqlParameter("@id_tacpham", dto.IdTacPham));
+                command.Parameters.Add(new SqlParameter("@id_nguoidung", dto.IdNguoiDung));
+                command.Parameters.Add(new SqlParameter("@noidung", dto.NoiDung));
+                command.Parameters.Add(new SqlParameter("@level", dto.Level));
+
+                if (connection.State != System.Data.ConnectionState.Open)
+                    await connection.OpenAsync();
+
+                var result = await command.ExecuteScalarAsync();
+                newBinhLuanId = Convert.ToInt32(result); // chuyển object? sang int
             }
 
-            binhLuan.NgayTao = DateTime.Now;
-            _context.BinhLuans.Add(binhLuan);
-            await _context.SaveChangesAsync();
+            if (newBinhLuanId == 0)
+                return StatusCode(500, "Không thể thêm bình luận.");
 
+            // Tạo thông báo cho chủ tác phẩm
             await _notificationService.CreateThongBaoAsync(
                 tacPham.Id_NguoiTao,
                 $"{nguoiDung.Ten} đã bình luận về tác phẩm của bạn."
             );
 
-            return CreatedAtAction(nameof(GetBinhLuan), new { id = binhLuan.Id }, binhLuan);
+            // Lấy lại bình luận vừa tạo để trả về
+            var newBinhLuan = await _context.BinhLuans.FindAsync(newBinhLuanId);
+
+            return CreatedAtAction(nameof(GetBinhLuan), new { id = newBinhLuan.Id }, newBinhLuan);
         }
 
+
         // ==================== CẬP NHẬT BÌNH LUẬN ====================
-
         [HttpPut("{id}")]
-        [SwaggerOperation(Summary = "Cập nhật một bình luận", Description = "Cập nhật nội dung của một bình luận đã có dựa trên ID.")]
+        [SwaggerOperation(Summary = "Cập nhật nội dung bình luận", Description = "Chỉ cập nhật nội dung của bình luận dựa trên ID và DTO.")]
         [SwaggerResponse(StatusCodes.Status204NoContent, "Cập nhật thành công.")]
-        [SwaggerResponse(StatusCodes.Status400BadRequest, "ID không khớp.")]
-        [SwaggerResponse(StatusCodes.Status404NotFound, "Không tìm thấy bình luận cần cập nhật.")]
-        public async Task<IActionResult> PutBinhLuan(int id, BinhLuan binhLuan)
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "ID không khớp hoặc dữ liệu không hợp lệ.")]
+        [SwaggerResponse(StatusCodes.Status403Forbidden, "Người dùng không có quyền sửa bình luận.")]
+        [SwaggerResponse(StatusCodes.Status404NotFound, "Không tìm thấy bình luận.")]
+        public async Task<IActionResult> PutBinhLuan(int id, [FromBody] BinhLuanUpdateDTO dto)
         {
-            if (id != binhLuan.Id)
-            {
-                return BadRequest("ID không khớp.");
-            }
+            var binhLuan = await _context.BinhLuans.FindAsync(id);
+            if (binhLuan == null)
+                return NotFound("Không tìm thấy bình luận.");
 
-            // ⚠️ Cần thêm logic xác minh quyền sở hữu ở đây
+            // Kiểm tra quyền: chỉ người tạo bình luận mới được sửa
+            if (binhLuan.Id_NguoiDung != dto.IdNguoiDung)
+                return Forbid("Bạn không có quyền sửa bình luận này.");
 
-            _context.Entry(binhLuan).State = EntityState.Modified;
+            // Gọi stored procedure chỉ update nội dung
+            var connection = _context.Database.GetDbConnection();
+            await using (var command = connection.CreateCommand())
+            {
+                command.CommandText = "update_BinhLuan";
+                command.CommandType = System.Data.CommandType.StoredProcedure;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!BinhLuanExists(id))
+                command.Parameters.Add(new SqlParameter("@id_binhluan", id));
+                command.Parameters.Add(new SqlParameter("@id_nguoidung", dto.IdNguoiDung));
+                command.Parameters.Add(new SqlParameter("@noidungmoi", dto.NoiDungMoi));
+
+                if (connection.State != System.Data.ConnectionState.Open)
+                    await connection.OpenAsync();
+
+                try
                 {
-                    return NotFound();
+                    await command.ExecuteNonQueryAsync();
                 }
-                else
+                catch (SqlException ex)
                 {
-                    throw;
+                    return BadRequest(ex.Message); // Lỗi từ RAISERROR trong SP
                 }
             }
 
             return NoContent();
         }
 
+
         // ==================== XÓA BÌNH LUẬN ====================
 
         [HttpDelete("{id}")]
-        [SwaggerOperation(Summary = "Xóa một bình luận", Description = "Xóa một bình luận khỏi cơ sở dữ liệu dựa trên ID.")]
+        [SwaggerOperation(
+    Summary = "Xóa một bình luận (xóa mềm)",
+    Description = "Chỉ người tạo bình luận hoặc chủ tác phẩm mới có quyền xóa. Dùng stored procedure để xóa mềm."
+)]
         [SwaggerResponse(StatusCodes.Status204NoContent, "Xóa thành công.")]
-        [SwaggerResponse(StatusCodes.Status404NotFound, "Không tìm thấy bình luận cần xóa.")]
-        public async Task<IActionResult> DeleteBinhLuan(int id)
+        [SwaggerResponse(StatusCodes.Status403Forbidden, "Người dùng không có quyền xóa bình luận.")]
+        [SwaggerResponse(StatusCodes.Status404NotFound, "Không tìm thấy bình luận.")]
+        public async Task<IActionResult> DeleteBinhLuan(int id, [FromBody] BinhLuanDeleteDTO dto)
         {
             var binhLuan = await _context.BinhLuans.FindAsync(id);
             if (binhLuan == null)
+                return NotFound("Không tìm thấy bình luận.");
+
+            var connection = _context.Database.GetDbConnection();
+            await using var command = connection.CreateCommand();
+            command.CommandText = "delete_BinhLuan";
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+
+            command.Parameters.Add(new SqlParameter("@id_binhluan", id));
+            command.Parameters.Add(new SqlParameter("@id_nguoidung", dto.IdNguoiDung));
+
+            if (connection.State != System.Data.ConnectionState.Open)
+                await connection.OpenAsync();
+
+            try
             {
-                return NotFound();
+                await command.ExecuteNonQueryAsync();
             }
-            _context.BinhLuans.Remove(binhLuan);
-            await _context.SaveChangesAsync();
+            catch (SqlException ex)
+            {
+                return Forbid(ex.Message); // RAISERROR trong SP
+            }
 
             return NoContent();
         }
@@ -166,5 +219,7 @@ namespace CODE_CDIO4.Controllers
         {
             return _context.BinhLuans.Any(e => e.Id == id);
         }
+
+
     }
 }

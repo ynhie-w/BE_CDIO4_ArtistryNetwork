@@ -21,9 +21,11 @@ namespace CODE_CDIO4.Models
 
             [Column("ngaytao")]
             public DateTime NgayTao { get; set; }
+        [Column("trangthai")]
+        public bool TrangThai { get; set; } = true;
 
-    // 🔹 Navigation
-    [ForeignKey(nameof(Id_NguoiDung))]
+        // 🔹 Navigation
+        [ForeignKey(nameof(Id_NguoiDung))]
         public NguoiDung? NguoiDung { get; set; }
     }
 }

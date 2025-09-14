@@ -7,7 +7,7 @@
         public string? MoTa { get; set; }
         public string? Anh { get; set; }
         public decimal Gia { get; set; }
-        public string TrangThai { get; set; } = "Công khai";
+        public bool TrangThai { get; set; }
         public string Loai { get; set; } = "Bán";
         public DateTime NgayTao { get; set; }
         public int LuotXem { get; set; }

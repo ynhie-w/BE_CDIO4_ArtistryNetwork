@@ -170,3 +170,4 @@ C:\nhi\CDIO4\CODE_CDIO4\CODE_CDIO4\obj\Debug\net9.0\CODE_CDIO4.genruntimeconfig.
 C:\nhi\CDIO4\CODE_CDIO4\CODE_CDIO4\obj\Debug\net9.0\ref\CODE_CDIO4.dll
 C:\nhi\CDIO4\CODE_CDIO4\CODE_CDIO4\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\nhi\CDIO4\CODE_CDIO4\CODE_CDIO4\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\nhi\CDIO4\CODE_CDIO4\CODE_CDIO4\obj\Debug\net9.0\CODE_CDIO4.sourcelink.json

@@ -6,6 +6,7 @@ using Swashbuckle.AspNetCore.Annotations;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CODE_CDIO4.DTOs;
 
 namespace CODE_CDIO4.Controllers
 {
@@ -66,16 +67,14 @@ namespace CODE_CDIO4.Controllers
         [SwaggerOperation(Summary = "Tạo cấp độ mới (không nhập id)", Description = "Thêm một cấp độ mới vào cơ sở dữ liệu.")]
         [SwaggerResponse(StatusCodes.Status201Created, "Tạo thành công.", typeof(CapDoDTO))]
         [SwaggerResponse(StatusCodes.Status400BadRequest, "Dữ liệu không hợp lệ.")]
-        public async Task<ActionResult<CapDoDTO>> Create([FromBody] CapDoDTO dto)
+        public async Task<ActionResult<CapDoDTO>> Create([FromBody] CapDoInsertDTO dto)
         {
             if (dto.DiemTu >= dto.DiemDen)
                 return BadRequest("Điểm 'Từ' phải nhỏ hơn Điểm 'Đến'.");
 
-            // Kiểm tra tên đã tồn tại
             if (await _context.CapDos.AnyAsync(c => c.Ten == dto.Ten))
                 return BadRequest("Tên cấp độ đã tồn tại.");
 
-            // Kiểm tra điểm trùng hoặc chồng lấn
             if (await _context.CapDos.AnyAsync(c =>
                    (dto.DiemTu >= c.DiemTu && dto.DiemTu <= c.DiemDen) ||
                    (dto.DiemDen >= c.DiemTu && dto.DiemDen <= c.DiemDen) ||
@@ -94,31 +93,35 @@ namespace CODE_CDIO4.Controllers
             _context.CapDos.Add(capDo);
             await _context.SaveChangesAsync();
 
-            dto.Id = capDo.Id;
-            return CreatedAtAction(nameof(GetById), new { id = dto.Id }, dto);
-        }
+            var result = new CapDoDTO
+            {
+                Id = capDo.Id,
+                Ten = capDo.Ten,
+                DiemTu = capDo.DiemTu,
+                DiemDen = capDo.DiemDen
+            };
 
+            return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
+        }
 
         // ==================== CẬP NHẬT ====================
         [HttpPut("{id}")]
         [SwaggerOperation(Summary = "Cập nhật cấp độ", Description = "Cập nhật thông tin một cấp độ.")]
         [SwaggerResponse(StatusCodes.Status204NoContent, "Cập nhật thành công.")]
         [SwaggerResponse(StatusCodes.Status400BadRequest, "Dữ liệu không hợp lệ.")]
-
-        public async Task<IActionResult> Update(int id, [FromBody] CapDoDTO dto)
+        [SwaggerResponse(StatusCodes.Status404NotFound, "Không tìm thấy cấp độ.")]
+        public async Task<IActionResult> Update(int id, [FromBody] CapDoUpdateDTO dto)
         {
-            if (id != dto.Id || dto.DiemTu >= dto.DiemDen)
-                return BadRequest("ID không khớp hoặc Điểm 'Từ' phải nhỏ hơn Điểm 'Đến'.");
-
             var capDo = await _context.CapDos.FindAsync(id);
             if (capDo == null)
                 return NotFound("Không tìm thấy cấp độ.");
 
-            // Kiểm tra tên trùng với cấp độ khác
+            if (dto.DiemTu >= dto.DiemDen)
+                return BadRequest("Điểm 'Từ' phải nhỏ hơn Điểm 'Đến'.");
+
             if (await _context.CapDos.AnyAsync(c => c.Id != id && c.Ten == dto.Ten))
                 return BadRequest("Tên cấp độ đã tồn tại.");
 
-            // Kiểm tra điểm trùng/chồng lấn với các cấp độ khác
             if (await _context.CapDos.AnyAsync(c => c.Id != id &&
                    ((dto.DiemTu >= c.DiemTu && dto.DiemTu <= c.DiemDen) ||
                     (dto.DiemDen >= c.DiemTu && dto.DiemDen <= c.DiemDen) ||
@@ -154,12 +157,5 @@ namespace CODE_CDIO4.Controllers
         }
     }
 
-    // ==================== DTO ====================
-    public class CapDoDTO
-    {
-        public int Id { get; set; }
-        public string Ten { get; set; } = string.Empty;
-        public int DiemTu { get; set; }
-        public int DiemDen { get; set; }
-    }
+
 }

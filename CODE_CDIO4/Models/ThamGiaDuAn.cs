@@ -18,7 +18,10 @@ namespace CODE_CDIO4.Models
         public string VaiTro { get; set; } = "Tham gia";
 
         [Column("ngaythamgia")]
-        public DateTime NgayThamGia { get; set; } = DateTime.Now;
+        public DateTime NgayThamGia { get; set; }
+
+        [Column("trangthai")]
+        public bool TrangThai { get; set; } = true;
 
         // 🔹 Navigation
         [ForeignKey(nameof(Id_NguoiDung))]

@@ -22,10 +22,14 @@ namespace CODE_CDIO4.Models
         public string NoiDung { get; set; } = string.Empty;
 
         [Column("ngaytao")]
-        public DateTime NgayTao { get; set; } = DateTime.Now;
+        public DateTime NgayTao { get; set; }
+
 
         [Column("level")]
         public int Level { get; set; } = 0;
+        [Column("trangthai")]
+        public bool TrangThai { get; set; } = true;
+
 
         // 🔹 Navigation properties
         [ForeignKey(nameof(Id_NguoiDung))]

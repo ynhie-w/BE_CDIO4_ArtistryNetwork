@@ -14,14 +14,9 @@
             Lấy tất cả các tác phẩm của một dự án theo ID
             </summary>
         </member>
-        <member name="M:CODE_CDIO4.Controllers.DuAn_TacPhamController.AddTacPhamToDuAn(CODE_CDIO4.Models.DuAn_TacPham)">
+        <member name="M:CODE_CDIO4.Controllers.DuAn_TacPhamController.AddTacPhamToDuAnUsingSP(CODE_CDIO4.Models.DuAn_TacPham)">
             <summary>
-            Thêm một tác phẩm vào dự án
-            </summary>
-        </member>
-        <member name="M:CODE_CDIO4.Controllers.DuAn_TacPhamController.RemoveTacPhamFromDuAn(System.Int32,System.Int32)">
-            <summary>
-            Xóa một tác phẩm khỏi dự án
+            Thêm một tác phẩm vào dự án bằng SP
             </summary>
         </member>
         <member name="T:CODE_CDIO4.Migrations.InitialCreate">

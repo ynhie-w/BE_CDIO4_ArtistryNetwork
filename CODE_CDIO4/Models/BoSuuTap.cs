@@ -1,30 +1,31 @@
-﻿using System;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace CODE_CDIO4.Models
 {
-    [Table("GIOHANG")]
-    public class GioHang
+    [Table("BOSUUTAP")]
+    public class BoSuuTap
     {
-        [Column("id_nguoimua")]
-        public int Id_NguoiMua { get; set; }
+        [Column("id_nguoidung")]
+        public int Id_NguoiDung { get; set; }
 
         [Column("id_tacpham")]
         public int Id_TacPham { get; set; }
 
         [Column("ngaythem")]
-        public DateTime NgayThem { get; set; } = DateTime.Now;
+        public DateTime NgayThem { get; set; }
 
-        [Column("loai")]
-        public string Loai { get; set; } = "Giỏ hàng";
         [Column("trangthai")]
         public bool TrangThai { get; set; } = true;
+
         // 🔹 Navigation properties
-        [ForeignKey(nameof(Id_NguoiMua))]
-        public NguoiDung? NguoiMua { get; set; }
+        [ForeignKey(nameof(Id_NguoiDung))]
+        [JsonIgnore]
+        public NguoiDung? NguoiDung { get; set; }
 
         [ForeignKey(nameof(Id_TacPham))]
+        [JsonIgnore]
         public TacPham? TacPham { get; set; }
     }
 }
-

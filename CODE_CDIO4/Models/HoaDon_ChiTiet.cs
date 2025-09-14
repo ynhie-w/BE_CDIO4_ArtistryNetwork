@@ -19,7 +19,8 @@ namespace CODE_CDIO4.Models
         [Required]
         [Column("thanhtien", TypeName = "decimal(12,2)")]
         public decimal ThanhTien { get; set; }
-
+        [Column("trangthai")]
+        public bool TrangThai { get; set; } = true;
         // 🔹 Navigation
         [ForeignKey(nameof(Id_HoaDon))]
         public HoaDon? HoaDon { get; set; }

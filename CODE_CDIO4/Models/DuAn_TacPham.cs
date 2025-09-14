@@ -17,7 +17,7 @@ namespace CODE_CDIO4.Models
         public int Id_DuAn { get; set; }
 
         [Column("trangthai")]
-        public string TrangThai { get; set; } = "Đang bán"; // default value
+        public string TrangThai { get; set; }  
 
         [Column("ngaydang")]
         public DateTime NgayDang { get; set; }

@@ -13,7 +13,8 @@ namespace CODE_CDIO4.Models
         [Required]
         [Column("id_hashtag")]
         public int Id_Hashtag { get; set; }
-
+        [Column("trangthai")]
+        public bool TrangThai { get; set; } = true;
         // 🔹 Navigation
         [ForeignKey(nameof(Id_TacPham))]
         public TacPham? TacPham { get; set; }

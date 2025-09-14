@@ -20,13 +20,14 @@ namespace CODE_CDIO4.Models
         public DateTime NgayLap { get; set; }
         [Column("nguoilap")]
         public int NguoiLap { get; set; }
-        [Column("tongtien", TypeName = "decimal(12,2)")]
-        public decimal TongTien { get; set; }
+        [Column("thanhtien", TypeName = "decimal(12,2)")]
+        public decimal ThanhTien { get; set; }
 
         [Column("ghichu")]
         [StringLength(255)]
         public string? GhiChu { get; set; }
-
+        [Column("trangthai")]
+        public bool TrangThai { get; set; } = true;
         // Navigation
         [ForeignKey(nameof(NguoiLap))]
         public NguoiDung? NguoiLapHoaDon { get; set; }

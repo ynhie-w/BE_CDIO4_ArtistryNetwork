@@ -55,17 +55,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/BinhLuan"
+                "$ref": "#/components/schemas/BinhLuanInsertDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/BinhLuan"
+                "$ref": "#/components/schemas/BinhLuanInsertDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/BinhLuan"
+                "$ref": "#/components/schemas/BinhLuanInsertDTO"
               }
             }
           }
@@ -92,7 +92,7 @@
             }
           },
           "400": {
-            "description": "Dữ liệu không hợp lệ (Id_NguoiDung hoặc Id_TacPham không tồn tại)."
+            "description": "Dữ liệu không hợp lệ (IdNguoiDung hoặc IdTacPham không tồn tại)."
           }
         }
       }
@@ -199,8 +199,8 @@
         "tags": [
           "BinhLuan"
         ],
-        "summary": "Cập nhật một bình luận",
-        "description": "Cập nhật nội dung của một bình luận đã có dựa trên ID.",
+        "summary": "Cập nhật nội dung bình luận",
+        "description": "Chỉ cập nhật nội dung của bình luận dựa trên ID và DTO.",
         "parameters": [
           {
             "name": "id",
@@ -216,17 +216,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/BinhLuan"
+                "$ref": "#/components/schemas/BinhLuanUpdateDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/BinhLuan"
+                "$ref": "#/components/schemas/BinhLuanUpdateDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/BinhLuan"
+                "$ref": "#/components/schemas/BinhLuanUpdateDTO"
               }
             }
           }
@@ -236,10 +236,13 @@
             "description": "Cập nhật thành công."
           },
           "400": {
-            "description": "ID không khớp."
+            "description": "ID không khớp hoặc dữ liệu không hợp lệ."
+          },
+          "403": {
+            "description": "Người dùng không có quyền sửa bình luận."
           },
           "404": {
-            "description": "Không tìm thấy bình luận cần cập nhật."
+            "description": "Không tìm thấy bình luận."
           }
         }
       },
@@ -247,8 +250,8 @@
         "tags": [
           "BinhLuan"
         ],
-        "summary": "Xóa một bình luận",
-        "description": "Xóa một bình luận khỏi cơ sở dữ liệu dựa trên ID.",
+        "summary": "Xóa một bình luận (xóa mềm)",
+        "description": "Chỉ người tạo bình luận hoặc chủ tác phẩm mới có quyền xóa. Dùng stored procedure để xóa mềm.",
         "parameters": [
           {
             "name": "id",
@@ -260,12 +263,34 @@
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BinhLuanDeleteDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BinhLuanDeleteDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BinhLuanDeleteDTO"
+              }
+            }
+          }
+        },
         "responses": {
           "204": {
             "description": "Xóa thành công."
           },
+          "403": {
+            "description": "Người dùng không có quyền xóa bình luận."
+          },
           "404": {
-            "description": "Không tìm thấy bình luận cần xóa."
+            "description": "Không tìm thấy bình luận."
           }
         }
       }
@@ -276,10 +301,10 @@
           "CamXuc"
         ],
         "summary": "Lấy tất cả cảm xúc",
-        "description": "Trả về danh sách tất cả loại cảm xúc (chỉ Id và Tên)",
+        "description": "Trả về danh sách tất cả loại cảm xúc (chỉ Id và Tên).",
         "responses": {
           "200": {
-            "description": "Thành công, trả về danh sách cảm xúc.",
+            "description": "Thành công.",
             "content": {
               "text/plain": {
                 "schema": {
@@ -319,17 +344,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CamXucDTO"
+                "$ref": "#/components/schemas/CamXucInsertDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CamXucDTO"
+                "$ref": "#/components/schemas/CamXucInsertDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CamXucDTO"
+                "$ref": "#/components/schemas/CamXucInsertDTO"
               }
             }
           }
@@ -367,7 +392,7 @@
           "CamXuc"
         ],
         "summary": "Lấy cảm xúc theo ID",
-        "description": "Trả về thông tin chi tiết của một cảm xúc dựa trên ID.",
+        "description": "Trả về thông tin chi tiết của một cảm xúc.",
         "parameters": [
           {
             "name": "id",
@@ -381,7 +406,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Thành công, trả về cảm xúc.",
+            "description": "Thành công.",
             "content": {
               "text/plain": {
                 "schema": {
@@ -426,17 +451,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CamXucDTO"
+                "$ref": "#/components/schemas/CamXucUpdateDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CamXucDTO"
+                "$ref": "#/components/schemas/CamXucUpdateDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CamXucDTO"
+                "$ref": "#/components/schemas/CamXucUpdateDTO"
               }
             }
           }
@@ -529,17 +554,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CapDoDTO"
+                "$ref": "#/components/schemas/CapDoInsertDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CapDoDTO"
+                "$ref": "#/components/schemas/CapDoInsertDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CapDoDTO"
+                "$ref": "#/components/schemas/CapDoInsertDTO"
               }
             }
           }
@@ -636,17 +661,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CapDoDTO"
+                "$ref": "#/components/schemas/CapDoUpdateDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CapDoDTO"
+                "$ref": "#/components/schemas/CapDoUpdateDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CapDoDTO"
+                "$ref": "#/components/schemas/CapDoUpdateDTO"
               }
             }
           }
@@ -657,6 +682,9 @@
           },
           "400": {
             "description": "Dữ liệu không hợp lệ."
+          },
+          "404": {
+            "description": "Không tìm thấy cấp độ."
           }
         }
       },
@@ -711,7 +739,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/DanhGiaDto"
+                    "$ref": "#/components/schemas/DanhGiaDTO"
                   }
                 }
               },
@@ -719,7 +747,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/DanhGiaDto"
+                    "$ref": "#/components/schemas/DanhGiaDTO"
                   }
                 }
               },
@@ -727,7 +755,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/DanhGiaDto"
+                    "$ref": "#/components/schemas/DanhGiaDTO"
                   }
                 }
               }
@@ -758,17 +786,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/DanhGiaDto"
+                  "$ref": "#/components/schemas/DanhGiaDTO"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DanhGiaDto"
+                  "$ref": "#/components/schemas/DanhGiaDTO"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DanhGiaDto"
+                  "$ref": "#/components/schemas/DanhGiaDTO"
                 }
               }
             }
@@ -784,6 +812,14 @@
             "name": "id",
             "in": "path",
             "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idNguoiDung",
+            "in": "query",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -806,17 +842,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/DanhGia"
+                "$ref": "#/components/schemas/DanhGiaCreateUpdateDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/DanhGia"
+                "$ref": "#/components/schemas/DanhGiaCreateUpdateDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/DanhGia"
+                "$ref": "#/components/schemas/DanhGiaCreateUpdateDTO"
               }
             }
           }
@@ -1116,60 +1152,6 @@
             "description": "Không có tác phẩm nào trong các dự án."
           }
         }
-      },
-      "post": {
-        "tags": [
-          "DuAn_TacPham"
-        ],
-        "summary": "Thêm tác phẩm vào dự án",
-        "description": "Thêm một tác phẩm vào một dự án cụ thể.",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DuAn_TacPham"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DuAn_TacPham"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/DuAn_TacPham"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Thêm thành công.",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/DuAn_TacPham"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DuAn_TacPham"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DuAn_TacPham"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Mối liên kết đã tồn tại."
-          },
-          "400": {
-            "description": "ID dự án hoặc ID tác phẩm không hợp lệ."
-          }
-        }
       }
     },
     "/api/DuAn_TacPham/DuAn/{idDuAn}": {
@@ -1226,16 +1208,45 @@
         }
       }
     },
-    "/api/DuAn_TacPham/DuAn/{idDuAn}/TacPham/{idTacPham}": {
-      "delete": {
+    "/api/DuAn_TacPham/DuAn/SP": {
+      "post": {
         "tags": [
           "DuAn_TacPham"
         ],
-        "summary": "Xóa tác phẩm khỏi dự án",
-        "description": "Xóa một tác phẩm khỏi một dự án bằng ID dự án và ID tác phẩm.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DuAn_TacPham"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DuAn_TacPham"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DuAn_TacPham"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/DuAn_TacPham/DuAn/SP/{id}": {
+      "put": {
+        "tags": [
+          "DuAn_TacPham"
+        ],
         "parameters": [
           {
-            "name": "idDuAn",
+            "name": "id",
             "in": "path",
             "required": true,
             "schema": {
@@ -1244,9 +1255,58 @@
             }
           },
           {
-            "name": "idTacPham",
+            "name": "idNguoiDung",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/DuAn_TacPham/DuAn/TacPham/{id}": {
+      "delete": {
+        "tags": [
+          "DuAn_TacPham"
+        ],
+        "parameters": [
+          {
+            "name": "id",
             "in": "path",
             "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idNguoiDung",
+            "in": "query",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -1254,11 +1314,8 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "Xóa thành công."
-          },
-          "404": {
-            "description": "Không tìm thấy mối liên kết để xóa."
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -2826,10 +2883,6 @@
                     "type": "integer",
                     "format": "int32"
                   },
-                  "TrangThai": {
-                    "maxLength": 20,
-                    "type": "string"
-                  },
                   "Id_NguoiTao": {
                     "type": "integer",
                     "format": "int32"
@@ -2842,13 +2895,12 @@
                     "type": "number",
                     "format": "double"
                   },
-                  "Loai": {
-                    "maxLength": 20,
-                    "type": "string"
-                  },
                   "LuotXem": {
                     "type": "integer",
                     "format": "int32"
+                  },
+                  "TrangThai": {
+                    "type": "boolean"
                   },
                   "NguoiTao.Id": {
                     "type": "integer",
@@ -2882,10 +2934,6 @@
                     "type": "integer",
                     "format": "int32"
                   },
-                  "NguoiTao.NgayTao": {
-                    "type": "string",
-                    "format": "date-time"
-                  },
                   "NguoiTao.Id_CapDo": {
                     "type": "integer",
                     "format": "int32"
@@ -2915,6 +2963,13 @@
                   "NguoiTao.Id_PhanQuyen": {
                     "type": "integer",
                     "format": "int32"
+                  },
+                  "NguoiTao.NgayTao": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "NguoiTao.TrangThai": {
+                    "type": "boolean"
                   },
                   "NguoiTao.Quyen.Id": {
                     "type": "integer",
@@ -2988,6 +3043,12 @@
                       "$ref": "#/components/schemas/ThamGiaDuAn"
                     }
                   },
+                  "NguoiTao.BoSuuTaps": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/BoSuuTap"
+                    }
+                  },
                   "TheLoai.Id": {
                     "type": "integer",
                     "format": "int32"
@@ -2995,6 +3056,9 @@
                   "TheLoai.Ten": {
                     "maxLength": 100,
                     "type": "string"
+                  },
+                  "TheLoai.TrangThai": {
+                    "type": "boolean"
                   },
                   "TheLoai.TacPhams": {
                     "type": "array",
@@ -3024,6 +3088,12 @@
                     "type": "array",
                     "items": {
                       "$ref": "#/components/schemas/HoaDon_ChiTiet"
+                    }
+                  },
+                  "BoSuuTaps": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/BoSuuTap"
                     }
                   },
                   "GioHangs": {
@@ -3074,9 +3144,6 @@
                 "Id_TheLoai": {
                   "style": "form"
                 },
-                "TrangThai": {
-                  "style": "form"
-                },
                 "Id_NguoiTao": {
                   "style": "form"
                 },
@@ -3086,10 +3153,10 @@
                 "Gia": {
                   "style": "form"
                 },
-                "Loai": {
+                "LuotXem": {
                   "style": "form"
                 },
-                "LuotXem": {
+                "TrangThai": {
                   "style": "form"
                 },
                 "NguoiTao.Id": {
@@ -3113,9 +3180,6 @@
                 "NguoiTao.DiemThuong": {
                   "style": "form"
                 },
-                "NguoiTao.NgayTao": {
-                  "style": "form"
-                },
                 "NguoiTao.Id_CapDo": {
                   "style": "form"
                 },
@@ -3135,6 +3199,12 @@
                   "style": "form"
                 },
                 "NguoiTao.Id_PhanQuyen": {
+                  "style": "form"
+                },
+                "NguoiTao.NgayTao": {
+                  "style": "form"
+                },
+                "NguoiTao.TrangThai": {
                   "style": "form"
                 },
                 "NguoiTao.Quyen.Id": {
@@ -3176,10 +3246,16 @@
                 "NguoiTao.ThamGiaDuAns": {
                   "style": "form"
                 },
+                "NguoiTao.BoSuuTaps": {
+                  "style": "form"
+                },
                 "TheLoai.Id": {
                   "style": "form"
                 },
                 "TheLoai.Ten": {
+                  "style": "form"
+                },
+                "TheLoai.TrangThai": {
                   "style": "form"
                 },
                 "TheLoai.TacPhams": {
@@ -3195,6 +3271,9 @@
                   "style": "form"
                 },
                 "HoaDon_ChiTiets": {
+                  "style": "form"
+                },
+                "BoSuuTaps": {
                   "style": "form"
                 },
                 "GioHangs": {
@@ -3284,10 +3363,6 @@
                     "type": "integer",
                     "format": "int32"
                   },
-                  "TrangThai": {
-                    "maxLength": 20,
-                    "type": "string"
-                  },
                   "Id_NguoiTao": {
                     "type": "integer",
                     "format": "int32"
@@ -3300,13 +3375,12 @@
                     "type": "number",
                     "format": "double"
                   },
-                  "Loai": {
-                    "maxLength": 20,
-                    "type": "string"
-                  },
                   "LuotXem": {
                     "type": "integer",
                     "format": "int32"
+                  },
+                  "TrangThai": {
+                    "type": "boolean"
                   },
                   "NguoiTao.Id": {
                     "type": "integer",
@@ -3340,10 +3414,6 @@
                     "type": "integer",
                     "format": "int32"
                   },
-                  "NguoiTao.NgayTao": {
-                    "type": "string",
-                    "format": "date-time"
-                  },
                   "NguoiTao.Id_CapDo": {
                     "type": "integer",
                     "format": "int32"
@@ -3373,6 +3443,13 @@
                   "NguoiTao.Id_PhanQuyen": {
                     "type": "integer",
                     "format": "int32"
+                  },
+                  "NguoiTao.NgayTao": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "NguoiTao.TrangThai": {
+                    "type": "boolean"
                   },
                   "NguoiTao.Quyen.Id": {
                     "type": "integer",
@@ -3446,6 +3523,12 @@
                       "$ref": "#/components/schemas/ThamGiaDuAn"
                     }
                   },
+                  "NguoiTao.BoSuuTaps": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/BoSuuTap"
+                    }
+                  },
                   "TheLoai.Id": {
                     "type": "integer",
                     "format": "int32"
@@ -3453,6 +3536,9 @@
                   "TheLoai.Ten": {
                     "maxLength": 100,
                     "type": "string"
+                  },
+                  "TheLoai.TrangThai": {
+                    "type": "boolean"
                   },
                   "TheLoai.TacPhams": {
                     "type": "array",
@@ -3482,6 +3568,12 @@
                     "type": "array",
                     "items": {
                       "$ref": "#/components/schemas/HoaDon_ChiTiet"
+                    }
+                  },
+                  "BoSuuTaps": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/BoSuuTap"
                     }
                   },
                   "GioHangs": {
@@ -3532,9 +3624,6 @@
                 "Id_TheLoai": {
                   "style": "form"
                 },
-                "TrangThai": {
-                  "style": "form"
-                },
                 "Id_NguoiTao": {
                   "style": "form"
                 },
@@ -3544,10 +3633,10 @@
                 "Gia": {
                   "style": "form"
                 },
-                "Loai": {
+                "LuotXem": {
                   "style": "form"
                 },
-                "LuotXem": {
+                "TrangThai": {
                   "style": "form"
                 },
                 "NguoiTao.Id": {
@@ -3571,9 +3660,6 @@
                 "NguoiTao.DiemThuong": {
                   "style": "form"
                 },
-                "NguoiTao.NgayTao": {
-                  "style": "form"
-                },
                 "NguoiTao.Id_CapDo": {
                   "style": "form"
                 },
@@ -3593,6 +3679,12 @@
                   "style": "form"
                 },
                 "NguoiTao.Id_PhanQuyen": {
+                  "style": "form"
+                },
+                "NguoiTao.NgayTao": {
+                  "style": "form"
+                },
+                "NguoiTao.TrangThai": {
                   "style": "form"
                 },
                 "NguoiTao.Quyen.Id": {
@@ -3634,10 +3726,16 @@
                 "NguoiTao.ThamGiaDuAns": {
                   "style": "form"
                 },
+                "NguoiTao.BoSuuTaps": {
+                  "style": "form"
+                },
                 "TheLoai.Id": {
                   "style": "form"
                 },
                 "TheLoai.Ten": {
+                  "style": "form"
+                },
+                "TheLoai.TrangThai": {
                   "style": "form"
                 },
                 "TheLoai.TacPhams": {
@@ -3653,6 +3751,9 @@
                   "style": "form"
                 },
                 "HoaDon_ChiTiets": {
+                  "style": "form"
+                },
+                "BoSuuTaps": {
                   "style": "form"
                 },
                 "GioHangs": {
@@ -4581,6 +4682,96 @@
           "level": {
             "type": "integer",
             "format": "int32"
+          },
+          "trangThai": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BinhLuanDeleteDTO": {
+        "type": "object",
+        "properties": {
+          "idNguoiDung": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BinhLuanInsertDTO": {
+        "required": [
+          "idNguoiDung",
+          "idTacPham",
+          "level",
+          "noiDung"
+        ],
+        "type": "object",
+        "properties": {
+          "idTacPham": {
+            "type": "integer",
+            "description": "ID tác phẩm mà bình luận thuộc về",
+            "format": "int32"
+          },
+          "idNguoiDung": {
+            "type": "integer",
+            "description": "ID người dùng tạo bình luận",
+            "format": "int32"
+          },
+          "noiDung": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string",
+            "description": "Nội dung bình luận"
+          },
+          "level": {
+            "maximum": 5,
+            "minimum": 0,
+            "type": "integer",
+            "description": "Level của bình luận",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BinhLuanUpdateDTO": {
+        "required": [
+          "idNguoiDung",
+          "noiDungMoi"
+        ],
+        "type": "object",
+        "properties": {
+          "noiDungMoi": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string",
+            "description": "Nội dung bình luận mới"
+          },
+          "idNguoiDung": {
+            "type": "integer",
+            "description": "ID người dùng yêu cầu sửa",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BoSuuTap": {
+        "type": "object",
+        "properties": {
+          "id_NguoiDung": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_TacPham": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ngayThem": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "trangThai": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -4613,6 +4804,32 @@
           "ten": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CamXucInsertDTO": {
+        "required": [
+          "ten"
+        ],
+        "type": "object",
+        "properties": {
+          "ten": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CamXucUpdateDTO": {
+        "required": [
+          "ten"
+        ],
+        "type": "object",
+        "properties": {
+          "ten": {
+            "minLength": 1,
+            "type": "string"
           }
         },
         "additionalProperties": false
@@ -4659,6 +4876,42 @@
             "type": "integer",
             "format": "int32"
           },
+          "ten": {
+            "type": "string",
+            "nullable": true
+          },
+          "diemTu": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "diemDen": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CapDoInsertDTO": {
+        "type": "object",
+        "properties": {
+          "ten": {
+            "type": "string",
+            "nullable": true
+          },
+          "diemTu": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "diemDen": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CapDoUpdateDTO": {
+        "type": "object",
+        "properties": {
           "ten": {
             "type": "string",
             "nullable": true
@@ -4723,6 +4976,9 @@
             "type": "string",
             "format": "date-time"
           },
+          "trangThai": {
+            "type": "boolean"
+          },
           "nguoiDanhGia": {
             "$ref": "#/components/schemas/NguoiDung"
           },
@@ -4732,7 +4988,31 @@
         },
         "additionalProperties": false
       },
-      "DanhGiaDto": {
+      "DanhGiaCreateUpdateDTO": {
+        "required": [
+          "id_NguoiDung",
+          "id_TacPham"
+        ],
+        "type": "object",
+        "properties": {
+          "id_TacPham": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_NguoiDung": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "diem": {
+            "maximum": 5,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DanhGiaDTO": {
         "type": "object",
         "properties": {
           "id": {
@@ -4985,6 +5265,9 @@
             "type": "string",
             "nullable": true
           },
+          "trangThai": {
+            "type": "boolean"
+          },
           "nguoiMua": {
             "$ref": "#/components/schemas/NguoiDung"
           },
@@ -5043,6 +5326,9 @@
             "minLength": 0,
             "type": "string"
           },
+          "trangThai": {
+            "type": "boolean"
+          },
           "tacPham_hashtags": {
             "type": "array",
             "items": {
@@ -5083,7 +5369,7 @@
             "type": "integer",
             "format": "int32"
           },
-          "tongTien": {
+          "thanhTien": {
             "type": "number",
             "format": "double"
           },
@@ -5092,6 +5378,9 @@
             "minLength": 0,
             "type": "string",
             "nullable": true
+          },
+          "trangThai": {
+            "type": "boolean"
           },
           "nguoiLapHoaDon": {
             "$ref": "#/components/schemas/NguoiDung"
@@ -5127,6 +5416,9 @@
           "thanhTien": {
             "type": "number",
             "format": "double"
+          },
+          "trangThai": {
+            "type": "boolean"
           },
           "hoaDon": {
             "$ref": "#/components/schemas/HoaDon"
@@ -5215,10 +5507,6 @@
             "type": "integer",
             "format": "int32"
           },
-          "ngayTao": {
-            "type": "string",
-            "format": "date-time"
-          },
           "id_CapDo": {
             "type": "integer",
             "format": "int32"
@@ -5229,6 +5517,20 @@
           "id_PhanQuyen": {
             "type": "integer",
             "format": "int32"
+          },
+          "ngayTao": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "trangThai": {
+            "type": "boolean"
+          },
+          "boSuuTaps": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BoSuuTap"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -5317,11 +5619,6 @@
             "format": "int32",
             "nullable": true
           },
-          "trangThai": {
-            "maxLength": 20,
-            "type": "string",
-            "nullable": true
-          },
           "id_NguoiTao": {
             "type": "integer",
             "format": "int32"
@@ -5334,14 +5631,12 @@
             "type": "number",
             "format": "double"
           },
-          "loai": {
-            "maxLength": 20,
-            "type": "string",
-            "nullable": true
-          },
           "luotXem": {
             "type": "integer",
             "format": "int32"
+          },
+          "trangThai": {
+            "type": "boolean"
           },
           "nguoiTao": {
             "$ref": "#/components/schemas/NguoiDung"
@@ -5374,6 +5669,13 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/HoaDon_ChiTiet"
+            },
+            "nullable": true
+          },
+          "boSuuTaps": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BoSuuTap"
             },
             "nullable": true
           },
@@ -5425,8 +5727,7 @@
             "format": "double"
           },
           "trangThai": {
-            "type": "string",
-            "nullable": true
+            "type": "boolean"
           },
           "loai": {
             "type": "string",
@@ -5470,6 +5771,9 @@
             "type": "string",
             "format": "date-time"
           },
+          "trangThai": {
+            "type": "boolean"
+          },
           "nguoiDung": {
             "$ref": "#/components/schemas/NguoiDung"
           },
@@ -5496,6 +5800,9 @@
           "id_Hashtag": {
             "type": "integer",
             "format": "int32"
+          },
+          "trangThai": {
+            "type": "boolean"
           },
           "tacPham": {
             "$ref": "#/components/schemas/TacPham"
@@ -5528,6 +5835,9 @@
           "ngayThamGia": {
             "type": "string",
             "format": "date-time"
+          },
+          "trangThai": {
+            "type": "boolean"
           },
           "nguoiDung": {
             "$ref": "#/components/schemas/NguoiDung"
@@ -5589,6 +5899,9 @@
             "minLength": 1,
             "type": "string"
           },
+          "trangThai": {
+            "type": "boolean"
+          },
           "tacPhams": {
             "type": "array",
             "items": {
@@ -5620,6 +5933,9 @@
           "ngayTao": {
             "type": "string",
             "format": "date-time"
+          },
+          "trangThai": {
+            "type": "boolean"
           },
           "nguoiDung": {
             "$ref": "#/components/schemas/NguoiDung"

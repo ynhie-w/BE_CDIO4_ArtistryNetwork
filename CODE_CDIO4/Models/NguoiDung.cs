@@ -34,8 +34,7 @@ namespace CODE_CDIO4.Models
 
         [Column("diemthuong")]
         public int DiemThuong { get; set; } = 0;
-        [Column("ngaytao")]
-        public DateTime NgayTao { get; set; } = DateTime.Now;
+        
 
         [Column("id_capdo")]
         public int Id_CapDo { get; set; }
@@ -44,6 +43,11 @@ namespace CODE_CDIO4.Models
 
         [Column("id_phanquyen")]
         public int Id_PhanQuyen { get; set; }
+       [Column("ngaytao")]
+        public DateTime NgayTao { get; set; }
+
+        [Column("trangthai")]
+        public bool TrangThai { get; set; } = true;
         [ForeignKey(nameof(Id_PhanQuyen))]
         [JsonIgnore] // Ngăn vòng lặp khi serialize
         public Quyen? Quyen { get; set; }
@@ -66,5 +70,6 @@ namespace CODE_CDIO4.Models
         public ICollection<DuAnCongDong>? DuAnQuanLy { get; set; }
         [JsonIgnore]
         public ICollection<ThamGiaDuAn>? ThamGiaDuAns { get; set; }
+        public ICollection<BoSuuTap>? BoSuuTaps { get; set; }
     }
 }

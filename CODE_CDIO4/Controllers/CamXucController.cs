@@ -6,6 +6,8 @@ using Swashbuckle.AspNetCore.Annotations;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using CODE_CDIO4.DTOs;
 
 namespace CODE_CDIO4.Controllers
 {
@@ -22,8 +24,8 @@ namespace CODE_CDIO4.Controllers
 
         // ==================== LẤY DANH SÁCH ====================
         [HttpGet]
-        [SwaggerOperation(Summary = "Lấy tất cả cảm xúc", Description = "Trả về danh sách tất cả loại cảm xúc (chỉ Id và Tên)")]
-        [SwaggerResponse(StatusCodes.Status200OK, "Thành công, trả về danh sách cảm xúc.", typeof(IEnumerable<CamXucDTO>))]
+        [SwaggerOperation(Summary = "Lấy tất cả cảm xúc", Description = "Trả về danh sách tất cả loại cảm xúc (chỉ Id và Tên).")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Thành công.", typeof(IEnumerable<CamXucDTO>))]
         public async Task<ActionResult<IEnumerable<CamXucDTO>>> GetAll()
         {
             var camXucs = await _context.CamXucs
@@ -38,8 +40,8 @@ namespace CODE_CDIO4.Controllers
         }
 
         [HttpGet("{id}")]
-        [SwaggerOperation(Summary = "Lấy cảm xúc theo ID", Description = "Trả về thông tin chi tiết của một cảm xúc dựa trên ID.")]
-        [SwaggerResponse(StatusCodes.Status200OK, "Thành công, trả về cảm xúc.", typeof(CamXucDTO))]
+        [SwaggerOperation(Summary = "Lấy cảm xúc theo ID", Description = "Trả về thông tin chi tiết của một cảm xúc.")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Thành công.", typeof(CamXucDTO))]
         [SwaggerResponse(StatusCodes.Status404NotFound, "Không tìm thấy cảm xúc.")]
         public async Task<ActionResult<CamXucDTO>> GetById(int id)
         {
@@ -64,7 +66,7 @@ namespace CODE_CDIO4.Controllers
         [SwaggerOperation(Summary = "Tạo cảm xúc mới", Description = "Thêm một cảm xúc mới vào cơ sở dữ liệu.")]
         [SwaggerResponse(StatusCodes.Status201Created, "Tạo thành công.", typeof(CamXucDTO))]
         [SwaggerResponse(StatusCodes.Status400BadRequest, "Dữ liệu không hợp lệ.")]
-        public async Task<ActionResult<CamXucDTO>> Create([FromBody] CamXucDTO dto)
+        public async Task<ActionResult<CamXucDTO>> Create([FromBody] CamXucInsertDTO dto)
         {
             if (string.IsNullOrWhiteSpace(dto.Ten))
                 return BadRequest("Tên cảm xúc không được để trống.");
@@ -73,8 +75,8 @@ namespace CODE_CDIO4.Controllers
             _context.CamXucs.Add(camXuc);
             await _context.SaveChangesAsync();
 
-            dto.Id = camXuc.Id;
-            return CreatedAtAction(nameof(GetById), new { id = dto.Id }, dto);
+            var result = new CamXucDTO { Id = camXuc.Id, Ten = camXuc.Ten };
+            return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
         }
 
         // ==================== CẬP NHẬT ====================
@@ -83,14 +85,14 @@ namespace CODE_CDIO4.Controllers
         [SwaggerResponse(StatusCodes.Status204NoContent, "Cập nhật thành công.")]
         [SwaggerResponse(StatusCodes.Status400BadRequest, "Dữ liệu không hợp lệ.")]
         [SwaggerResponse(StatusCodes.Status404NotFound, "Không tìm thấy cảm xúc.")]
-        public async Task<IActionResult> Update(int id, [FromBody] CamXucDTO dto)
+        public async Task<IActionResult> Update(int id, [FromBody] CamXucUpdateDTO dto)
         {
-            if (id != dto.Id || string.IsNullOrWhiteSpace(dto.Ten))
-                return BadRequest("ID không khớp hoặc tên cảm xúc không hợp lệ.");
-
             var camXuc = await _context.CamXucs.FindAsync(id);
             if (camXuc == null)
                 return NotFound("Không tìm thấy loại cảm xúc.");
+
+            if (string.IsNullOrWhiteSpace(dto.Ten))
+                return BadRequest("Tên cảm xúc không hợp lệ.");
 
             camXuc.Ten = dto.Ten;
             _context.Entry(camXuc).State = EntityState.Modified;
@@ -113,7 +115,6 @@ namespace CODE_CDIO4.Controllers
             if (camXuc == null)
                 return NotFound("Không tìm thấy loại cảm xúc.");
 
-            // Xóa tất cả liên kết với TacPham_CamXuc trước
             _context.TacPham_CamXucs.RemoveRange(camXuc.TacPham_CamXucs);
             _context.CamXucs.Remove(camXuc);
 
@@ -122,10 +123,4 @@ namespace CODE_CDIO4.Controllers
         }
     }
 
-    // ==================== DTO ====================
-    public class CamXucDTO
-    {
-        public int Id { get; set; }
-        public string Ten { get; set; } = string.Empty;
-    }
 }

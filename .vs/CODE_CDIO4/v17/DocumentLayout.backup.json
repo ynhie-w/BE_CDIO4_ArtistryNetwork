@@ -7,48 +7,48 @@
       "RelativeMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|solutionrelative:code_cdio4\\controllers\\binhluancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|c:\\nhi\\cdio4\\code_cdio4\\code_cdio4\\models\\nguoidung.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|solutionrelative:code_cdio4\\models\\nguoidung.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|c:\\nhi\\cdio4\\code_cdio4\\code_cdio4\\dtos\\binhluandto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|solutionrelative:code_cdio4\\dtos\\binhluandto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|c:\\nhi\\cdio4\\code_cdio4\\code_cdio4\\controllers\\nguoidungcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|solutionrelative:code_cdio4\\controllers\\nguoidungcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|c:\\nhi\\cdio4\\code_cdio4\\code_cdio4\\controllers\\quyencontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|solutionrelative:code_cdio4\\controllers\\quyencontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|c:\\nhi\\cdio4\\code_cdio4\\code_cdio4\\controllers\\danhgiacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|solutionrelative:code_cdio4\\controllers\\danhgiacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|c:\\nhi\\cdio4\\code_cdio4\\code_cdio4\\controllers\\hoadoncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|solutionrelative:code_cdio4\\controllers\\hoadoncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|c:\\nhi\\cdio4\\code_cdio4\\code_cdio4\\controllers\\camxuccontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|solutionrelative:code_cdio4\\controllers\\camxuccontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|c:\\nhi\\cdio4\\code_cdio4\\code_cdio4\\controllers\\capdocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|solutionrelative:code_cdio4\\controllers\\capdocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|c:\\nhi\\cdio4\\code_cdio4\\code_cdio4\\controllers\\theloaicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|solutionrelative:code_cdio4\\controllers\\theloaicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|c:\\nhi\\cdio4\\code_cdio4\\code_cdio4\\controllers\\donhangcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|solutionrelative:code_cdio4\\controllers\\donhangcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|c:\\nhi\\cdio4\\code_cdio4\\code_cdio4\\controllers\\thongbaocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|solutionrelative:code_cdio4\\controllers\\thongbaocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|c:\\nhi\\cdio4\\code_cdio4\\code_cdio4\\controllers\\danhgiacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|solutionrelative:code_cdio4\\controllers\\danhgiacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|c:\\nhi\\cdio4\\code_cdio4\\code_cdio4\\controllers\\thanhtoancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|solutionrelative:code_cdio4\\controllers\\thanhtoancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|c:\\nhi\\cdio4\\code_cdio4\\code_cdio4\\models\\binhluan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|solutionrelative:code_cdio4\\models\\binhluan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|c:\\nhi\\cdio4\\code_cdio4\\code_cdio4\\models\\hoadon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|solutionrelative:code_cdio4\\models\\hoadon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|c:\\nhi\\cdio4\\code_cdio4\\code_cdio4\\models\\danhgia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|solutionrelative:code_cdio4\\models\\danhgia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|c:\\nhi\\cdio4\\code_cdio4\\code_cdio4\\controllers\\camxuccontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|solutionrelative:code_cdio4\\controllers\\camxuccontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|c:\\nhi\\cdio4\\code_cdio4\\code_cdio4\\dtos\\danhgiadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|solutionrelative:code_cdio4\\dtos\\danhgiadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|c:\\nhi\\cdio4\\code_cdio4\\code_cdio4\\dtos\\donhangdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|solutionrelative:code_cdio4\\dtos\\donhangdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|c:\\nhi\\cdio4\\code_cdio4\\code_cdio4\\dtos\\capdodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|solutionrelative:code_cdio4\\dtos\\capdodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|c:\\nhi\\cdio4\\code_cdio4\\code_cdio4\\dtos\\camxucdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D8BAB3F-B5BF-4655-89C4-282ED655A403}|CODE_CDIO4\\CODE_CDIO4.csproj|solutionrelative:code_cdio4\\dtos\\camxucdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -61,55 +61,46 @@
           "SelectedChildIndex": 4,
           "Children": [
             {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "NguoiDung.cs",
-              "DocumentMoniker": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\Models\\NguoiDung.cs",
-              "RelativeDocumentMoniker": "CODE_CDIO4\\Models\\NguoiDung.cs",
-              "ToolTip": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\Models\\NguoiDung.cs",
-              "RelativeToolTip": "CODE_CDIO4\\Models\\NguoiDung.cs",
-              "ViewState": "AgIAACMAAAAAAAAAAAAAADEAAAAUAAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "DonHangController.cs",
+              "DocumentMoniker": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\Controllers\\DonHangController.cs",
+              "RelativeDocumentMoniker": "CODE_CDIO4\\Controllers\\DonHangController.cs",
+              "ToolTip": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\Controllers\\DonHangController.cs",
+              "RelativeToolTip": "CODE_CDIO4\\Controllers\\DonHangController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-12T00:10:39.881Z",
+              "WhenOpened": "2025-09-14T06:52:12.669Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "QuyenController.cs",
-              "DocumentMoniker": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\Controllers\\QuyenController.cs",
-              "RelativeDocumentMoniker": "CODE_CDIO4\\Controllers\\QuyenController.cs",
-              "ToolTip": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\Controllers\\QuyenController.cs",
-              "RelativeToolTip": "CODE_CDIO4\\Controllers\\QuyenController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "CapDoController.cs",
+              "DocumentMoniker": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\Controllers\\CapDoController.cs",
+              "RelativeDocumentMoniker": "CODE_CDIO4\\Controllers\\CapDoController.cs",
+              "ToolTip": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\Controllers\\CapDoController.cs",
+              "RelativeToolTip": "CODE_CDIO4\\Controllers\\CapDoController.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAAA5wAgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-12T00:10:33.068Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "DanhGiaController.cs",
-              "DocumentMoniker": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\Controllers\\DanhGiaController.cs",
-              "RelativeDocumentMoniker": "CODE_CDIO4\\Controllers\\DanhGiaController.cs",
-              "ToolTip": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\Controllers\\DanhGiaController.cs*",
-              "RelativeToolTip": "CODE_CDIO4\\Controllers\\DanhGiaController.cs*",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAswCMAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-12T00:07:46.823Z",
+              "WhenOpened": "2025-09-14T06:33:48.175Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "NguoiDungController.cs",
-              "DocumentMoniker": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\Controllers\\NguoiDungController.cs",
-              "RelativeDocumentMoniker": "CODE_CDIO4\\Controllers\\NguoiDungController.cs",
-              "ToolTip": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\Controllers\\NguoiDungController.cs*",
-              "RelativeToolTip": "CODE_CDIO4\\Controllers\\NguoiDungController.cs*",
-              "ViewState": "AgIAAIsAAAAAAAAAAADwvwYAAAApAAAAAAAAAA==",
+              "Title": "CamXucController.cs",
+              "DocumentMoniker": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\Controllers\\CamXucController.cs",
+              "RelativeDocumentMoniker": "CODE_CDIO4\\Controllers\\CamXucController.cs",
+              "ToolTip": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\Controllers\\CamXucController.cs",
+              "RelativeToolTip": "CODE_CDIO4\\Controllers\\CamXucController.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAmwB8AAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-11T07:38:45.359Z",
+              "WhenOpened": "2025-09-14T06:31:54.571Z",
               "EditorCaption": ""
             },
             {
@@ -118,96 +109,116 @@
               "Title": "BinhLuanController.cs",
               "DocumentMoniker": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\Controllers\\BinhLuanController.cs",
               "RelativeDocumentMoniker": "CODE_CDIO4\\Controllers\\BinhLuanController.cs",
-              "ToolTip": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\Controllers\\BinhLuanController.cs*",
-              "RelativeToolTip": "CODE_CDIO4\\Controllers\\BinhLuanController.cs*",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAmwBwAAABIAAAAAAAAAA==",
+              "ToolTip": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\Controllers\\BinhLuanController.cs",
+              "RelativeToolTip": "CODE_CDIO4\\Controllers\\BinhLuanController.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAmwCIAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-11T07:23:26.563Z",
+              "WhenOpened": "2025-09-14T05:50:12.585Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "BinhLuanDTO.cs",
+              "DocumentMoniker": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\DTOs\\BinhLuanDTO.cs",
+              "RelativeDocumentMoniker": "CODE_CDIO4\\DTOs\\BinhLuanDTO.cs",
+              "ToolTip": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\DTOs\\BinhLuanDTO.cs",
+              "RelativeToolTip": "CODE_CDIO4\\DTOs\\BinhLuanDTO.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAACgAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-14T05:56:58.713Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "DanhGiaController.cs",
+              "DocumentMoniker": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\Controllers\\DanhGiaController.cs",
+              "RelativeDocumentMoniker": "CODE_CDIO4\\Controllers\\DanhGiaController.cs",
+              "ToolTip": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\Controllers\\DanhGiaController.cs",
+              "RelativeToolTip": "CODE_CDIO4\\Controllers\\DanhGiaController.cs",
+              "ViewState": "AgIAAHoAAAAAAAAAAAArwD4AAABPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-14T06:40:38.988Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "BinhLuan.cs",
+              "DocumentMoniker": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\Models\\BinhLuan.cs",
+              "RelativeDocumentMoniker": "CODE_CDIO4\\Models\\BinhLuan.cs",
+              "ToolTip": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\Models\\BinhLuan.cs",
+              "RelativeToolTip": "CODE_CDIO4\\Models\\BinhLuan.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-14T05:48:44.367Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "DanhGia.cs",
+              "DocumentMoniker": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\Models\\DanhGia.cs",
+              "RelativeDocumentMoniker": "CODE_CDIO4\\Models\\DanhGia.cs",
+              "ToolTip": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\Models\\DanhGia.cs",
+              "RelativeToolTip": "CODE_CDIO4\\Models\\DanhGia.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-14T07:01:47.113Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 8,
-              "Title": "ThongBaoController.cs",
-              "DocumentMoniker": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\Controllers\\ThongBaoController.cs",
-              "RelativeDocumentMoniker": "CODE_CDIO4\\Controllers\\ThongBaoController.cs",
-              "ToolTip": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\Controllers\\ThongBaoController.cs",
-              "RelativeToolTip": "CODE_CDIO4\\Controllers\\ThongBaoController.cs",
-              "ViewState": "AgIAAAEAAAAAAAAAAAAmwFgAAAAcAAAAAAAAAA==",
+              "Title": "DanhGiaDTO.cs",
+              "DocumentMoniker": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\DTOs\\DanhGiaDTO.cs",
+              "RelativeDocumentMoniker": "CODE_CDIO4\\DTOs\\DanhGiaDTO.cs",
+              "ToolTip": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\DTOs\\DanhGiaDTO.cs",
+              "RelativeToolTip": "CODE_CDIO4\\DTOs\\DanhGiaDTO.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAzwBQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-11T07:35:21.733Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "TheLoaiController.cs",
-              "DocumentMoniker": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\Controllers\\TheLoaiController.cs",
-              "RelativeDocumentMoniker": "CODE_CDIO4\\Controllers\\TheLoaiController.cs",
-              "ToolTip": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\Controllers\\TheLoaiController.cs",
-              "RelativeToolTip": "CODE_CDIO4\\Controllers\\TheLoaiController.cs",
-              "ViewState": "AgIAAEYAAAAAAAAAAAAmwG0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-11T07:35:13.855Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "CapDoController.cs",
-              "DocumentMoniker": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\Controllers\\CapDoController.cs",
-              "RelativeDocumentMoniker": "CODE_CDIO4\\Controllers\\CapDoController.cs",
-              "ToolTip": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\Controllers\\CapDoController.cs",
-              "RelativeToolTip": "CODE_CDIO4\\Controllers\\CapDoController.cs",
-              "ViewState": "AgIAAFIAAAAAAAAAAAAqwEQAAABRAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-11T07:26:25.977Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "HoaDonController.cs",
-              "DocumentMoniker": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\Controllers\\HoaDonController.cs",
-              "RelativeDocumentMoniker": "CODE_CDIO4\\Controllers\\HoaDonController.cs",
-              "ToolTip": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\Controllers\\HoaDonController.cs",
-              "RelativeToolTip": "CODE_CDIO4\\Controllers\\HoaDonController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAE0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-11T07:34:19.342Z"
+              "WhenOpened": "2025-09-14T06:40:30.761Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 9,
-              "Title": "ThanhToanController.cs",
-              "DocumentMoniker": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\Controllers\\ThanhToanController.cs",
-              "RelativeDocumentMoniker": "CODE_CDIO4\\Controllers\\ThanhToanController.cs",
-              "ToolTip": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\Controllers\\ThanhToanController.cs",
-              "RelativeToolTip": "CODE_CDIO4\\Controllers\\ThanhToanController.cs",
-              "ViewState": "AgIAAFkAAAAAAAAAAAAYwHoAAAAAAAAAAAAAAA==",
+              "Title": "DonHangDTO.cs",
+              "DocumentMoniker": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\DTOs\\DonHangDTO.cs",
+              "RelativeDocumentMoniker": "CODE_CDIO4\\DTOs\\DonHangDTO.cs",
+              "ToolTip": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\DTOs\\DonHangDTO.cs",
+              "RelativeToolTip": "CODE_CDIO4\\DTOs\\DonHangDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-11T07:34:59.326Z"
+              "WhenOpened": "2025-09-14T06:53:58.031Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 10,
-              "Title": "HoaDon.cs",
-              "DocumentMoniker": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\Models\\HoaDon.cs",
-              "RelativeDocumentMoniker": "CODE_CDIO4\\Models\\HoaDon.cs",
-              "ToolTip": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\Models\\HoaDon.cs",
-              "RelativeToolTip": "CODE_CDIO4\\Models\\HoaDon.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAowB0AAAAVAAAAAAAAAA==",
+              "Title": "CapDoDTO.cs",
+              "DocumentMoniker": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\DTOs\\CapDoDTO.cs",
+              "RelativeDocumentMoniker": "CODE_CDIO4\\DTOs\\CapDoDTO.cs",
+              "ToolTip": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\DTOs\\CapDoDTO.cs",
+              "RelativeToolTip": "CODE_CDIO4\\DTOs\\CapDoDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-11T07:34:37.566Z"
+              "WhenOpened": "2025-09-14T06:41:16.623Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 11,
-              "Title": "CamXucController.cs",
-              "DocumentMoniker": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\Controllers\\CamXucController.cs",
-              "RelativeDocumentMoniker": "CODE_CDIO4\\Controllers\\CamXucController.cs",
-              "ToolTip": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\Controllers\\CamXucController.cs",
-              "RelativeToolTip": "CODE_CDIO4\\Controllers\\CamXucController.cs",
-              "ViewState": "AgIAAGIAAAAAAAAAAAAYwHEAAABAAAAAAAAAAA==",
+              "Title": "CamXucDTO.cs",
+              "DocumentMoniker": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\DTOs\\CamXucDTO.cs",
+              "RelativeDocumentMoniker": "CODE_CDIO4\\DTOs\\CamXucDTO.cs",
+              "ToolTip": "C:\\nhi\\CDIO4\\CODE_CDIO4\\CODE_CDIO4\\DTOs\\CamXucDTO.cs",
+              "RelativeToolTip": "CODE_CDIO4\\DTOs\\CamXucDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-11T07:23:35.207Z"
+              "WhenOpened": "2025-09-14T06:38:58.743Z",
+              "EditorCaption": ""
             }
           ]
         },

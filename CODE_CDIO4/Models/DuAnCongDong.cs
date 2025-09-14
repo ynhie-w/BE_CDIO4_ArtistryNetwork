@@ -19,7 +19,7 @@ namespace CODE_CDIO4.Models
         public string? MoTa { get; set; }
 
         [Column("ngaytao")]
-        public DateTime NgayTao { get; set; } = DateTime.Now;
+        public DateTime NgayTao { get; set; }
 
         [Column("ngaybatdau")]
         public DateTime? NgayBatDau { get; set; }   
@@ -32,7 +32,7 @@ namespace CODE_CDIO4.Models
 
         [Column("trangthai")]
         [MaxLength(20)]
-        public string TrangThai { get; set; } = "Đang mở";
+        public string TrangThai { get; set; } 
         [JsonIgnore]
         // 🔹 Navigation properties
         [ForeignKey(nameof(Id_QuanLy))]

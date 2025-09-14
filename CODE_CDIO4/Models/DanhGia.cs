@@ -22,7 +22,8 @@ namespace CODE_CDIO4.Models
 
         [Column("ngaytao")]
         public DateTime NgayTao { get; set; }
-
+        [Column("trangthai")]
+        public bool TrangThai { get; set; } = true;
         // 🔹 Navigation properties
         [ForeignKey(nameof(Id_NguoiDung))]
         public NguoiDung? NguoiDanhGia { get; set; }

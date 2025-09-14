@@ -14,6 +14,8 @@ namespace CODE_CDIO4.Models
         [Column("ten")]
         [MaxLength(100)]
         public string Ten { get; set; } = string.Empty;
+        [Column("trangthai")]
+        public bool TrangThai { get; set; } = true;
 
         // 🔹 Navigation
         public ICollection<TacPham>? TacPhams { get; set; } = new List<TacPham>();

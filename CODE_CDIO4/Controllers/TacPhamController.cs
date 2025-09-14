@@ -32,10 +32,9 @@ namespace CODE_CDIO4.Controllers
                 new SqlParameter("@anh", (object?)model.Anh ?? DBNull.Value),
                 new SqlParameter("@ten_theloai", tenTheLoai),
                 new SqlParameter("@hashtags", hashtags ?? string.Empty),
-                new SqlParameter("@trangthai", model.TrangThai ?? "Công khai"),
+                new SqlParameter("@trangthai", model.TrangThai),
                 new SqlParameter("@id_nguoitao", model.Id_NguoiTao),
                 new SqlParameter("@gia", model.Gia),
-                new SqlParameter("@loai", model.Loai ?? "Bán"),
             };
 
             var result = await _context.TacPhams
@@ -60,9 +59,8 @@ namespace CODE_CDIO4.Controllers
                 new SqlParameter("@anh", (object?)model.Anh ?? DBNull.Value),
                 new SqlParameter("@ten_theloai", tenTheLoai),
                 new SqlParameter("@hashtags", hashtags ?? string.Empty),
-                new SqlParameter("@trangthai", model.TrangThai ?? "Công khai"),
-                new SqlParameter("@gia", model.Gia),
-                new SqlParameter("@loai", model.Loai ?? "Bán"),
+                new SqlParameter("@trangthai", model.TrangThai),
+                new SqlParameter("@gia", model.Gia)
             };
 
             await _context.Database.ExecuteSqlRawAsync("EXEC update_TacPham @id, @ten, @mota, @anh, @ten_theloai, @hashtags, @trangthai, @gia, @loai", parameters);

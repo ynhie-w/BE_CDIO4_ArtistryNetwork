@@ -20,6 +20,7 @@ namespace CODE_CDIO4.Controllers
         {
             _context = context;
         }
+
         /// <summary>
         /// Lấy tất cả tác phẩm trong các dự án
         /// </summary>
@@ -41,7 +42,6 @@ namespace CODE_CDIO4.Controllers
                     MoTa = datp.TacPham.MoTa,
                     Gia = datp.TacPham.Gia,
                     TrangThai = datp.TacPham.TrangThai,
-                    Loai = datp.TacPham.Loai,
                     NgayTao = datp.TacPham.NgayTao,
                     TenTheLoai = datp.TacPham.TheLoai.Ten,
                     TenNguoiTao = datp.TacPham.NguoiTao.Ten
@@ -67,9 +67,7 @@ namespace CODE_CDIO4.Controllers
         {
             var duAn = await _context.DuAnCongDongs.FindAsync(idDuAn);
             if (duAn == null)
-            {
                 return NotFound("Không tìm thấy dự án với ID đã cho.");
-            }
 
             var tacPhams = await _context.DuAn_TacPhams
                 .Where(datp => datp.Id_DuAn == idDuAn)
@@ -83,73 +81,102 @@ namespace CODE_CDIO4.Controllers
                     Ten = datp.TacPham.Ten,
                     MoTa = datp.TacPham.MoTa,
                     Gia = datp.TacPham.Gia,
-                    TrangThai = datp.TacPham.TrangThai,
-                    Loai = datp.TacPham.Loai,
+                    TrangThai = datp.TacPham.TrangThai, 
                     NgayTao = datp.TacPham.NgayTao,
-                    TenTheLoai = datp.TacPham.TheLoai.Ten, // ✅ sửa ở đây
+                    TenTheLoai = datp.TacPham.TheLoai.Ten,
                     TenNguoiTao = datp.TacPham.NguoiTao.Ten
                 })
                 .ToListAsync();
 
             if (!tacPhams.Any())
-            {
                 return NotFound(new { message = "Dự án này không có tác phẩm nào." });
-            }
 
             return Ok(tacPhams);
         }
 
         /// <summary>
-        /// Thêm một tác phẩm vào dự án
+        /// Thêm một tác phẩm vào dự án bằng SP
         /// </summary>
-        [HttpPost]
-        [SwaggerOperation(Summary = "Thêm tác phẩm vào dự án", Description = "Thêm một tác phẩm vào một dự án cụ thể.")]
-        [SwaggerResponse(StatusCodes.Status200OK, "Thêm thành công.", typeof(DuAn_TacPham))]
-        [SwaggerResponse(StatusCodes.Status409Conflict, "Mối liên kết đã tồn tại.")]
-        [SwaggerResponse(StatusCodes.Status400BadRequest, "ID dự án hoặc ID tác phẩm không hợp lệ.")]
-        public async Task<ActionResult<DuAn_TacPham>> AddTacPhamToDuAn(DuAn_TacPham duAnTacPham)
+        [HttpPost("DuAn/SP")]
+        public async Task<ActionResult> AddTacPhamToDuAnUsingSP(DuAn_TacPham duAnTacPham)
         {
             var duAnExists = await _context.DuAnCongDongs.AnyAsync(da => da.Id == duAnTacPham.Id_DuAn);
             var tacPhamExists = await _context.TacPhams.AnyAsync(tp => tp.Id == duAnTacPham.Id_TacPham);
 
             if (!duAnExists || !tacPhamExists)
-            {
                 return BadRequest("ID dự án hoặc ID tác phẩm không tồn tại.");
-            }
 
-            var exists = await _context.DuAn_TacPhams
-                .AnyAsync(datp => datp.Id_DuAn == duAnTacPham.Id_DuAn && datp.Id_TacPham == duAnTacPham.Id_TacPham);
-            if (exists)
+            // đảm bảo TrangThai hợp lệ
+            var trangThaiHopLe = new List<string> { "Đang bán", "Đã bán", "Ẩn" };
+            if (!trangThaiHopLe.Contains(duAnTacPham.TrangThai))
+                duAnTacPham.TrangThai = "Đang bán";
+
+            try
             {
-                return Conflict("Mối liên kết giữa dự án và tác phẩm này đã tồn tại.");
+                await _context.Database.ExecuteSqlInterpolatedAsync($@"
+                EXEC insert_DuAn_TacPham 
+                    @id_tacpham = {duAnTacPham.Id_TacPham}, 
+                    @id_duan = {duAnTacPham.Id_DuAn}, 
+                    @trangthai = {duAnTacPham.TrangThai}");
             }
-
-            duAnTacPham.NgayDang = DateTime.Now;
-            _context.DuAn_TacPhams.Add(duAnTacPham);
-            await _context.SaveChangesAsync();
+            catch (Exception ex)
+            {
+                return Conflict(ex.Message);
+            }
 
             return Ok(duAnTacPham);
         }
 
-        /// <summary>
-        /// Xóa một tác phẩm khỏi dự án
-        /// </summary>
-        [HttpDelete("DuAn/{idDuAn}/TacPham/{idTacPham}")]
-        [SwaggerOperation(Summary = "Xóa tác phẩm khỏi dự án", Description = "Xóa một tác phẩm khỏi một dự án bằng ID dự án và ID tác phẩm.")]
-        [SwaggerResponse(StatusCodes.Status204NoContent, "Xóa thành công.")]
-        [SwaggerResponse(StatusCodes.Status404NotFound, "Không tìm thấy mối liên kết để xóa.")]
-        public async Task<IActionResult> RemoveTacPhamFromDuAn(int idDuAn, int idTacPham)
+        [HttpPut("DuAn/SP/{id}")]
+        public async Task<ActionResult> UpdateTrangThaiTacPhamSP(int id, [FromBody] string trangthai, int idNguoiDung)
         {
-            var duAnTacPham = await _context.DuAn_TacPhams.FindAsync(idDuAn, idTacPham);
-            if (duAnTacPham == null)
+            // kiểm tra giá trị hợp lệ
+            var trangThaiHopLe = new List<string> { "Đang bán", "Đã bán", "Ẩn" };
+            if (!trangThaiHopLe.Contains(trangthai))
+                return BadRequest("Trạng thái không hợp lệ.");
+
+            try
             {
-                return NotFound("Không tìm thấy mối liên kết này.");
+                var result = await _context.Set<MessageResult>()
+                    .FromSqlInterpolated($@"
+                    EXEC update_DuAn_TacPham 
+                        @id = {id}, 
+                        @id_nguoidung = {idNguoiDung}, 
+                        @trangthai = {trangthai}")
+                    .FirstOrDefaultAsync();
+
+                return Ok(result?.Message ?? "Cập nhật thành công");
             }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
-            _context.DuAn_TacPhams.Remove(duAnTacPham);
-            await _context.SaveChangesAsync();
+        [HttpDelete("DuAn/TacPham/{id}")]
+        public async Task<ActionResult> DeleteSoftTacPhamSP(int id, int idNguoiDung)
+        {
+            try
+            {
+                var result = await _context.Set<MessageResult>()
+                    .FromSqlInterpolated($@"
+                    EXEC deleteSoft_DuAn_TacPham 
+                        @id = {id}, 
+                        @id_nguoidung = {idNguoiDung}")
+                    .FirstOrDefaultAsync();
 
-            return NoContent();
+                return Ok(result?.Message ?? "Xóa mềm thành công");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        // DTO tạm để nhận message từ SP
+        public class MessageResult
+        {
+            public string Message { get; set; } = string.Empty;
         }
     }
 }
