@@ -14,9 +14,11 @@ namespace CODE_CDIO4.Models
         [Column("ten")]
         [StringLength(50)]
         public string Ten { get; set; } = string.Empty;
+
         [Column("trangthai")]
         public bool TrangThai { get; set; } = true;
+
         // 🔹 Navigation
-        public ICollection<TacPham_Hashtags>? TacPham_hashtags { get; set; } = new List<TacPham_Hashtags>();
+        public ICollection<TacPham_Hashtags>? TacPham_Hashtags { get; set; } = new List<TacPham_Hashtags>();
     }
 }

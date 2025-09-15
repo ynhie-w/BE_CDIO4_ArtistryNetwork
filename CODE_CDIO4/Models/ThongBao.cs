@@ -4,23 +4,24 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace CODE_CDIO4.Models
 {
     [Table("THONGBAO")]
-       public class ThongBao
-        {
-            [Key]
-            [Column("id")]
-            public int Id { get; set; }
+    public class ThongBao
+    {
+        [Key]
+        [Column("id")]
+        public int Id { get; set; }
 
-            [Column("id_nguoidung")]
-            public int Id_NguoiDung { get; set; }
+        [Column("id_nguoidung")]
+        public int Id_NguoiDung { get; set; }
 
-            [Column("noidung", TypeName = "NVARCHAR(MAX)")]
-            public string? NoiDung { get; set; }
+        [Column("noidung", TypeName = "NVARCHAR(MAX)")]
+        public string? NoiDung { get; set; }
 
-            [Column("dadoc")]
-            public bool DaDoc { get; set; } = false;
+        [Column("dadoc")]
+        public bool DaDoc { get; set; } = false;
 
-            [Column("ngaytao")]
-            public DateTime NgayTao { get; set; }
+        [Column("ngaytao")]
+        public DateTime NgayTao { get; set; }
+
         [Column("trangthai")]
         public bool TrangThai { get; set; } = true;
 

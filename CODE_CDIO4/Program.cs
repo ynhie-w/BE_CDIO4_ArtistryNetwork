@@ -32,12 +32,15 @@ builder.Services.AddAuthentication(options =>
 // ==================== DI SERVICES ====================
 builder.Services.AddScoped<NotificationService>();
 
-// Add DbContext
+// ==================== DATABASE ====================
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Add Controllers
-builder.Services.AddControllers();
+// ==================== CONTROLLERS + JSON OPTIONS ====================
+builder.Services.AddControllers()
+    .AddJsonOptions(x =>
+        x.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles
+    );
 
 // ==================== SWAGGER ====================
 builder.Services.AddEndpointsApiExplorer();
@@ -85,7 +88,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// ⚠️ Lưu ý: Authentication phải trước Authorization
+// ⚠️ Authentication phải trước Authorization
 app.UseAuthentication();
 app.UseAuthorization();
 

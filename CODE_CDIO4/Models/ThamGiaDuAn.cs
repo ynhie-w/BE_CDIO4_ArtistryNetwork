@@ -6,10 +6,10 @@ namespace CODE_CDIO4.Models
     [Table("THAMGIADUAN")]
     public class ThamGiaDuAn
     {
-        [Column("id_duan")]
+        [Key, Column("id_duan", Order = 0)]
         public int Id_DuAn { get; set; }
 
-        [Column("id_nguoidung")]
+        [Key, Column("id_nguoidung", Order = 1)]
         public int Id_NguoiDung { get; set; }
 
         [Required]
@@ -18,7 +18,7 @@ namespace CODE_CDIO4.Models
         public string VaiTro { get; set; } = "Tham gia";
 
         [Column("ngaythamgia")]
-        public DateTime NgayThamGia { get; set; }
+        public DateTime NgayThamGia { get; set; } = DateTime.Now;
 
         [Column("trangthai")]
         public bool TrangThai { get; set; } = true;

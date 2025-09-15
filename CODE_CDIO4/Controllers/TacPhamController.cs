@@ -20,7 +20,7 @@ namespace CODE_CDIO4.Controllers
 
         // ================== INSERT ==================
         [HttpPost("insert")]
-        [SwaggerOperation(Summary = "Thêm tác phẩm mới", Description = "Thêm một tác phẩm mới vào hệ thống (gồm tên, mô tả, ảnh, thể loại, hashtags, giá, loại, trạng thái).")]
+        [SwaggerOperation(Summary = "Thêm tác phẩm mới", Description = "Thêm một tác phẩm mới vào hệ thống (gồm tên, mô tả, ảnh, thể loại, giá, trạng thái).")]
         [SwaggerResponse(StatusCodes.Status200OK, "Thêm tác phẩm thành công")]
         [SwaggerResponse(StatusCodes.Status400BadRequest, "Dữ liệu không hợp lệ")]
         public async Task<IActionResult> InsertTacPham([FromForm] TacPham model, [FromForm] string tenTheLoai, [FromForm] string hashtags)
@@ -29,16 +29,16 @@ namespace CODE_CDIO4.Controllers
             {
                 new SqlParameter("@ten", model.Ten),
                 new SqlParameter("@mota", (object?)model.MoTa ?? DBNull.Value),
-                new SqlParameter("@anh", (object?)model.Anh ?? DBNull.Value),
+                new SqlParameter("@anh", model.Anh),
                 new SqlParameter("@ten_theloai", tenTheLoai),
                 new SqlParameter("@hashtags", hashtags ?? string.Empty),
                 new SqlParameter("@trangthai", model.TrangThai),
                 new SqlParameter("@id_nguoitao", model.Id_NguoiTao),
-                new SqlParameter("@gia", model.Gia),
+                new SqlParameter("@gia", (object?)model.Gia ?? DBNull.Value)
             };
 
             var result = await _context.TacPhams
-                .FromSqlRaw("EXEC insert_TacPham @ten, @mota, @anh, @ten_theloai, @hashtags, @trangthai, @id_nguoitao, @gia, @loai", parameters)
+                .FromSqlRaw("EXEC insert_TacPham @ten, @mota, @anh, @ten_theloai, @hashtags, @trangthai, @id_nguoitao, @gia", parameters)
                 .ToListAsync();
 
             return Ok(new { message = "Thêm tác phẩm thành công", data = result });
@@ -56,14 +56,14 @@ namespace CODE_CDIO4.Controllers
                 new SqlParameter("@id", id),
                 new SqlParameter("@ten", model.Ten),
                 new SqlParameter("@mota", (object?)model.MoTa ?? DBNull.Value),
-                new SqlParameter("@anh", (object?)model.Anh ?? DBNull.Value),
+                new SqlParameter("@anh", model.Anh),
                 new SqlParameter("@ten_theloai", tenTheLoai),
                 new SqlParameter("@hashtags", hashtags ?? string.Empty),
                 new SqlParameter("@trangthai", model.TrangThai),
-                new SqlParameter("@gia", model.Gia)
+                new SqlParameter("@gia", (object?)model.Gia ?? DBNull.Value)
             };
 
-            await _context.Database.ExecuteSqlRawAsync("EXEC update_TacPham @id, @ten, @mota, @anh, @ten_theloai, @hashtags, @trangthai, @gia, @loai", parameters);
+            await _context.Database.ExecuteSqlRawAsync("EXEC update_TacPham @id, @ten, @mota, @anh, @ten_theloai, @hashtags, @trangthai, @gia", parameters);
 
             return Ok(new { message = "Cập nhật tác phẩm thành công" });
         }

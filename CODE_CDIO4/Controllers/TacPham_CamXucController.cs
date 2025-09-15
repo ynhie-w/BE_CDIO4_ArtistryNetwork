@@ -2,8 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using CODE_CDIO4.Repository;
 using CODE_CDIO4.Models;
-using System.Linq;
-using System.Threading.Tasks;
+using CODE_CDIO4.DTOs;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace CODE_CDIO4.Controllers
@@ -20,96 +19,97 @@ namespace CODE_CDIO4.Controllers
         }
 
         // ==================== LẤY CẢM XÚC ====================
-
-        // GET: api/TacPham_CamXuc/nguoidung/1/tacpham/10
         [HttpGet("nguoidung/{idNguoiDung}/tacpham/{idTacPham}")]
-        [SwaggerOperation(
-            Summary = "Lấy cảm xúc của một người dùng đối với một tác phẩm",
-            Description = "Trả về cảm xúc của người dùng (nếu có) đối với một tác phẩm cụ thể."
-        )]
-        [SwaggerResponse(StatusCodes.Status200OK, "Thành công, trả về cảm xúc của người dùng.", typeof(TacPham_CamXuc))]
-        [SwaggerResponse(StatusCodes.Status404NotFound, "Người dùng chưa có cảm xúc cho tác phẩm này.")]
-        public async Task<ActionResult<TacPham_CamXuc>> GetCamXucCuaTacPham(int idNguoiDung, int idTacPham)
+        [SwaggerOperation(Summary = "Lấy cảm xúc của một người dùng đối với một tác phẩm")]
+        public async Task<ActionResult<TacPhamCamXucDTO>> GetCamXucCuaTacPham(int idNguoiDung, int idTacPham)
         {
             var camXuc = await _context.TacPham_CamXucs
                                        .AsNoTracking()
-                                       .SingleOrDefaultAsync(cx => cx.Id_NguoiDung == idNguoiDung && cx.Id_TacPham == idTacPham);
+                                       .SingleOrDefaultAsync(cx => cx.Id_NguoiDung == idNguoiDung
+                                                                && cx.Id_TacPham == idTacPham
+                                                                && cx.TrangThai);
 
             if (camXuc == null)
-            {
                 return NotFound("Người dùng chưa có cảm xúc cho tác phẩm này.");
-            }
 
-            return Ok(camXuc);
+            var dto = new TacPhamCamXucDTO
+            {
+                Id_NguoiDung = camXuc.Id_NguoiDung,
+                Id_TacPham = camXuc.Id_TacPham,
+                Id_CamXuc = camXuc.Id_CamXuc,
+                NgayTao = camXuc.NgayTao
+            };
+
+            return Ok(dto);
         }
 
-        // ==================== TẠO VÀ CẬP NHẬT CẢM XÚC (UPSERT) ====================
-
-        // POST: api/TacPham_CamXuc
+        // ==================== TẠO HOẶC CẬP NHẬT (UPSERT) ====================
         [HttpPost]
-        [SwaggerOperation(
-            Summary = "Tạo hoặc cập nhật cảm xúc cho tác phẩm",
-            Description = "Thêm một cảm xúc mới vào tác phẩm hoặc thay đổi cảm xúc đã có."
-        )]
-        [SwaggerResponse(StatusCodes.Status200OK, "Cập nhật thành công.")]
-        [SwaggerResponse(StatusCodes.Status201Created, "Tạo mới thành công.")]
-        [SwaggerResponse(StatusCodes.Status400BadRequest, "Dữ liệu không hợp lệ.")]
-        public async Task<IActionResult> UpsertCamXuc([FromBody] TacPham_CamXuc tacPhamCamXuc)
+        [SwaggerOperation(Summary = "Thêm hoặc cập nhật cảm xúc cho tác phẩm")]
+        public async Task<IActionResult> UpsertCamXuc([FromBody] TacPhamCamXucRequest request)
         {
-            // Kiểm tra tính hợp lệ của Id_NguoiDung, Id_TacPham và Id_CamXuc
-            var nguoiDung = await _context.NguoiDungs.FindAsync(tacPhamCamXuc.Id_NguoiDung);
-            var tacPham = await _context.TacPhams.FindAsync(tacPhamCamXuc.Id_TacPham);
-            var camXuc = await _context.CamXucs.FindAsync(tacPhamCamXuc.Id_CamXuc);
-
-            if (nguoiDung == null || tacPham == null || camXuc == null)
-            {
-                return BadRequest("Id_NguoiDung, Id_TacPham, hoặc Id_CamXuc không tồn tại.");
-            }
-
-            // Tìm xem cảm xúc đã tồn tại chưa
             var existingCamXuc = await _context.TacPham_CamXucs
-                                               .SingleOrDefaultAsync(cx => cx.Id_NguoiDung == tacPhamCamXuc.Id_NguoiDung && cx.Id_TacPham == tacPhamCamXuc.Id_TacPham);
+                                               .SingleOrDefaultAsync(cx => cx.Id_NguoiDung == request.Id_NguoiDung
+                                                                        && cx.Id_TacPham == request.Id_TacPham);
 
             if (existingCamXuc == null)
             {
-                // Nếu chưa tồn tại, thêm mới
-                tacPhamCamXuc.NgayTao = DateTime.Now;
-                _context.TacPham_CamXucs.Add(tacPhamCamXuc);
+                var newCamXuc = new TacPham_CamXuc
+                {
+                    Id_NguoiDung = request.Id_NguoiDung,
+                    Id_TacPham = request.Id_TacPham,
+                    Id_CamXuc = request.Id_CamXuc,
+                    NgayTao = DateTime.Now,
+                    TrangThai = true
+                };
+
+                _context.TacPham_CamXucs.Add(newCamXuc);
                 await _context.SaveChangesAsync();
-                return CreatedAtAction(nameof(GetCamXucCuaTacPham), new { idNguoiDung = tacPhamCamXuc.Id_NguoiDung, idTacPham = tacPhamCamXuc.Id_TacPham }, tacPhamCamXuc);
+
+                return CreatedAtAction(nameof(GetCamXucCuaTacPham),
+                    new { idNguoiDung = newCamXuc.Id_NguoiDung, idTacPham = newCamXuc.Id_TacPham },
+                    new TacPhamCamXucDTO
+                    {
+                        Id_NguoiDung = newCamXuc.Id_NguoiDung,
+                        Id_TacPham = newCamXuc.Id_TacPham,
+                        Id_CamXuc = newCamXuc.Id_CamXuc,
+                        NgayTao = newCamXuc.NgayTao
+                    });
             }
             else
             {
-                // Nếu đã tồn tại, cập nhật
-                existingCamXuc.Id_CamXuc = tacPhamCamXuc.Id_CamXuc;
+                existingCamXuc.Id_CamXuc = request.Id_CamXuc;
                 existingCamXuc.NgayTao = DateTime.Now;
+                existingCamXuc.TrangThai = true;
+
                 _context.Entry(existingCamXuc).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
-                return Ok(existingCamXuc);
+
+                return Ok(new TacPhamCamXucDTO
+                {
+                    Id_NguoiDung = existingCamXuc.Id_NguoiDung,
+                    Id_TacPham = existingCamXuc.Id_TacPham,
+                    Id_CamXuc = existingCamXuc.Id_CamXuc,
+                    NgayTao = existingCamXuc.NgayTao
+                });
             }
         }
 
-        // ==================== XÓA CẢM XÚC ====================
-
-        // DELETE: api/TacPham_CamXuc/nguoidung/1/tacpham/10
+        // ==================== XÓA CẢM XÚC (SOFT DELETE) ====================
         [HttpDelete("nguoidung/{idNguoiDung}/tacpham/{idTacPham}")]
-        [SwaggerOperation(
-            Summary = "Xóa cảm xúc của người dùng đối với một tác phẩm",
-            Description = "Xóa một cảm xúc cụ thể của người dùng đối với một tác phẩm."
-        )]
-        [SwaggerResponse(StatusCodes.Status204NoContent, "Xóa thành công.")]
-        [SwaggerResponse(StatusCodes.Status404NotFound, "Không tìm thấy cảm xúc để xóa.")]
+        [SwaggerOperation(Summary = "Xóa cảm xúc (soft delete)")]
         public async Task<IActionResult> DeleteCamXuc(int idNguoiDung, int idTacPham)
         {
             var camXuc = await _context.TacPham_CamXucs
-                                       .SingleOrDefaultAsync(cx => cx.Id_NguoiDung == idNguoiDung && cx.Id_TacPham == idTacPham);
+                                       .SingleOrDefaultAsync(cx => cx.Id_NguoiDung == idNguoiDung
+                                                                && cx.Id_TacPham == idTacPham
+                                                                && cx.TrangThai);
 
             if (camXuc == null)
-            {
                 return NotFound("Không tìm thấy cảm xúc để xóa.");
-            }
 
-            _context.TacPham_CamXucs.Remove(camXuc);
+            camXuc.TrangThai = false;
+            _context.Entry(camXuc).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
             return NoContent();

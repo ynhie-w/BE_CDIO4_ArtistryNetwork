@@ -3,6 +3,19 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace CODE_CDIO4.DTOs
 {
+    public class BinhLuanViewDTO
+    {
+        public int Id { get; set; }
+        public int IdTacPham { get; set; }
+        public int IdNguoiDung { get; set; }
+        public string NoiDung { get; set; } = string.Empty;
+        public DateTime NgayTao { get; set; }
+
+        // Thông tin người bình luận
+        public string TenNguoiBinhLuan { get; set; } = string.Empty;
+        public string? AnhDaiDien { get; set; }
+    }
+
     public class BinhLuanInsertDTO
     {
         [Required]

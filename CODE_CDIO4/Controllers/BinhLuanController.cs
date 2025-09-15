@@ -39,25 +39,39 @@ namespace CODE_CDIO4.Controllers
 
             return Ok(binhLuans);
         }
+
+        // ================= LẤY TẤT CẢ BÌNH LUẬN CỦA MỘT TÁC PHẨM ===============
         [HttpGet("TacPham/{idTacPham}")]
-        [SwaggerOperation(Summary = "Lấy tất cả bình luận của một tác phẩm", Description = "Trả về danh sách tất cả bình luận (bao gồm thông tin người dùng) của một tác phẩm dựa trên ID tác phẩm.")]
+        [SwaggerOperation(
+     Summary = "Lấy tất cả bình luận của một tác phẩm",
+     Description = "Trả về danh sách tất cả bình luận (bao gồm tên, ảnh đại diện của người dùng) của một tác phẩm."
+ )]
         [SwaggerResponse(StatusCodes.Status200OK, "Thành công, trả về danh sách bình luận.")]
         [SwaggerResponse(StatusCodes.Status404NotFound, "Không tìm thấy bình luận nào cho tác phẩm này.")]
-        public async Task<ActionResult<IEnumerable<BinhLuan>>> GetBinhLuansByTacPham(int idTacPham)
+        public async Task<ActionResult<IEnumerable<BinhLuanViewDTO>>> GetBinhLuansByTacPham(int idTacPham)
         {
             var binhLuans = await _context.BinhLuans
                 .Where(b => b.Id_TacPham == idTacPham)
                 .Include(b => b.NguoiBinhLuan)
                 .OrderByDescending(b => b.NgayTao)
+                .Select(b => new BinhLuanViewDTO
+                {
+                    Id = b.Id,
+                    IdTacPham = b.Id_TacPham,
+                    IdNguoiDung = b.Id_NguoiDung,
+                    NoiDung = b.NoiDung,
+                    NgayTao = b.NgayTao,
+                    TenNguoiBinhLuan = b.NguoiBinhLuan.Ten,
+                    AnhDaiDien = b.NguoiBinhLuan.AnhDaiDien
+                })
                 .ToListAsync();
 
             if (!binhLuans.Any())
-            {
                 return NotFound("Không tìm thấy bình luận nào cho tác phẩm này.");
-            }
 
             return Ok(binhLuans);
         }
+
         // ==================== LẤY BÌNH LUẬN cụ thể ====================
         [HttpGet("{id}")]
         [SwaggerOperation(Summary = "Lấy một bình luận cụ thể", Description = "Trả về thông tin chi tiết của một bình luận dựa trên ID bình luận.")]

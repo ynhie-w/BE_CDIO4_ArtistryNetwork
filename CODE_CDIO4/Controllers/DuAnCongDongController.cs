@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using CODE_CDIO4.Repository;
 using CODE_CDIO4.Models;
+using CODE_CDIO4.DTOs;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace CODE_CDIO4.Controllers
 {
@@ -18,134 +20,118 @@ namespace CODE_CDIO4.Controllers
 
         // =================== DỰ ÁN ===================
 
-        // GET: api/DuAnCongDong
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<DuAnCongDong>>> GetDuAnCongDongs()
+        [SwaggerOperation(Summary = "Lấy danh sách dự án cộng đồng", Description = "Trả về tất cả dự án kèm thông tin quản lý.")]
+        public async Task<ActionResult<IEnumerable<DuAnCongDongResponseDTO>>> GetDuAnCongDongs()
         {
             var duAn = await _context.DuAnCongDongs
                                      .Include(da => da.QuanLy)
+                                     .Select(da => new DuAnCongDongResponseDTO
+                                     {
+                                         Id = da.Id,
+                                         TenDuAn = da.TenDuAn,
+                                         MoTa = da.MoTa,
+                                         NgayTao = da.NgayTao,
+                                         NgayBatDau = da.NgayBatDau,
+                                         NgayKetThuc = da.NgayKetThuc,
+                                         TrangThai = da.TrangThai,
+                                         TenQuanLy = da.QuanLy.Ten
+                                     })
                                      .ToListAsync();
 
             return Ok(duAn);
         }
 
-        // GET: api/DuAnCongDong/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<DuAnCongDong>> GetDuAnCongDong(int id)
+        [SwaggerOperation(Summary = "Chi tiết dự án cộng đồng", Description = "Trả về chi tiết một dự án theo ID.")]
+        public async Task<ActionResult<DuAnCongDongResponseDTO>> GetDuAnCongDong(int id)
         {
             var duAn = await _context.DuAnCongDongs
                                      .Include(da => da.QuanLy)
-                                     .Include(da => da.DuAn_TacPhams)
-                                        .ThenInclude(datp => datp.TacPham)
-                                     .Include(da => da.ThamGiaDuAns) // ✅ lấy cả thành viên tham gia
-                                        .ThenInclude(tg => tg.NguoiDung)
                                      .FirstOrDefaultAsync(da => da.Id == id);
 
             if (duAn == null)
                 return NotFound("Không tìm thấy dự án này.");
 
-            return Ok(duAn);
+            var dto = new DuAnCongDongResponseDTO
+            {
+                Id = duAn.Id,
+                TenDuAn = duAn.TenDuAn,
+                MoTa = duAn.MoTa,
+                NgayTao = duAn.NgayTao,
+                NgayBatDau = duAn.NgayBatDau,
+                NgayKetThuc = duAn.NgayKetThuc,
+                TrangThai = duAn.TrangThai,
+                TenQuanLy = duAn.QuanLy?.Ten
+            };
+
+            return Ok(dto);
         }
 
-        // POST: api/DuAnCongDong
-        [HttpPost]
-        public async Task<ActionResult<DuAnCongDong>> PostDuAnCongDong(DuAnCongDong duAn)
+        [HttpPost("SP")]
+        [SwaggerOperation(Summary = "Thêm dự án (SP)", Description = "Dùng stored procedure để thêm mới dự án.")]
+        public async Task<ActionResult> PostDuAnCongDongSP(DuAnCongDongRequestDTO dto)
         {
-            _context.DuAnCongDongs.Add(duAn);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetDuAnCongDong), new { id = duAn.Id }, duAn);
-        }
-
-        // PUT: api/DuAnCongDong/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutDuAnCongDong(int id, DuAnCongDong duAn)
-        {
-            if (id != duAn.Id)
-                return BadRequest("ID trong URL không khớp với ID của đối tượng.");
-
-            _context.Entry(duAn).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _context.Database.ExecuteSqlInterpolatedAsync($@"
+                    EXEC insert_DuAnCongDong 
+                        @tenduan = {dto.TenDuAn}, 
+                        @mota = {dto.MoTa}, 
+                        @ngaybatdau = {dto.NgayBatDau}, 
+                        @ngayketthuc = {dto.NgayKetThuc}, 
+                        @id_quanly = {dto.Id_QuanLy}");
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
-                if (!DuAnCongDongExists(id))
-                    return NotFound("Không tìm thấy dự án để cập nhật.");
-                else
-                    throw;
+                return BadRequest(ex.Message);
             }
 
-            return NoContent();
+            return Ok("Thêm dự án thành công");
         }
 
-        // DELETE: api/DuAnCongDong/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteDuAnCongDong(int id)
+        [HttpPut("SP/{id}")]
+        [SwaggerOperation(Summary = "Cập nhật dự án (SP)", Description = "Chỉ quản lý mới có quyền cập nhật.")]
+        public async Task<ActionResult> PutDuAnCongDongSP(int id, [FromQuery] int idNguoiDung, [FromBody] DuAnCongDongRequestDTO dto)
         {
-            var duAn = await _context.DuAnCongDongs.FindAsync(id);
-            if (duAn == null)
-                return NotFound("Không tìm thấy dự án để xóa.");
+            try
+            {
+                var result = await _context.Set<MessageResult>()
+                    .FromSqlInterpolated($@"
+                        EXEC update_DuAnCongDong 
+                            @id = {id}, 
+                            @id_nguoidung = {idNguoiDung}, 
+                            @tenduan = {dto.TenDuAn}, 
+                            @mota = {dto.MoTa}, 
+                            @ngaybatdau = {dto.NgayBatDau}, 
+                            @ngayketthuc = {dto.NgayKetThuc}, 
+                            @trangthai = {dto.TrangThai}")
+                    .FirstOrDefaultAsync();
 
-            _context.DuAnCongDongs.Remove(duAn);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+                return Ok(result?.Message ?? "Cập nhật thành công");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        private bool DuAnCongDongExists(int id)
+        [HttpDelete("SP/{id}")]
+        [SwaggerOperation(Summary = "Xóa mềm dự án (SP)", Description = "Đánh dấu trạng thái dự án là 'Đóng'.")]
+        public async Task<ActionResult> DeleteDuAnCongDongSP(int id)
         {
-            return _context.DuAnCongDongs.Any(e => e.Id == id);
-        }
+            try
+            {
+                var result = await _context.Set<MessageResult>()
+                    .FromSqlInterpolated($@"EXEC delete_DuAnCongDong @id = {id}")
+                    .FirstOrDefaultAsync();
 
-        // =================== THAM GIA DỰ ÁN ===================
-
-        // GET: api/DuAnCongDong/5/ThanhVien
-        [HttpGet("{idDuAn}/ThanhVien")]
-        public async Task<ActionResult<IEnumerable<ThamGiaDuAn>>> GetThanhVien(int idDuAn)
-        {
-            var thanhVien = await _context.ThamGiaDuAns
-                                          .Where(tg => tg.Id_DuAn == idDuAn)
-                                          .Include(tg => tg.NguoiDung)
-                                          .ToListAsync();
-
-            if (!thanhVien.Any())
-                return NotFound("Chưa có ai tham gia dự án này.");
-
-            return Ok(thanhVien);
-        }
-
-        // POST: api/DuAnCongDong/ThamGia
-        [HttpPost("ThamGia")]
-        public async Task<ActionResult<ThamGiaDuAn>> ThamGiaDuAn([FromBody] ThamGiaDuAn thamGia)
-        {
-            // kiểm tra trùng
-            var exists = await _context.ThamGiaDuAns
-                                       .AnyAsync(tg => tg.Id_DuAn == thamGia.Id_DuAn
-                                                    && tg.Id_NguoiDung == thamGia.Id_NguoiDung);
-            if (exists)
-                return Conflict("Người dùng đã tham gia dự án này.");
-
-            _context.ThamGiaDuAns.Add(thamGia);
-            await _context.SaveChangesAsync();
-
-            return Ok(thamGia);
-        }
-
-        // DELETE: api/DuAnCongDong/ThamGia/1/5
-        [HttpDelete("ThamGia/{idDuAn}/{idNguoiDung}")]
-        public async Task<IActionResult> HuyThamGia(int idDuAn, int idNguoiDung)
-        {
-            var thamGia = await _context.ThamGiaDuAns.FindAsync(idDuAn, idNguoiDung);
-            if (thamGia == null)
-                return NotFound("Không tìm thấy mối quan hệ tham gia.");
-
-            _context.ThamGiaDuAns.Remove(thamGia);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+                return Ok(result?.Message ?? "Xóa mềm thành công");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

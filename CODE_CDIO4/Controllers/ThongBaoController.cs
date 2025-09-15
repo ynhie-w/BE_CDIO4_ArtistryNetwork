@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using CODE_CDIO4.Repository;
 using CODE_CDIO4.Models;
+using CODE_CDIO4.DTOs;
+using Swashbuckle.AspNetCore.Annotations;
+using CODE_CDIO4.Repository;
 
 namespace CODE_CDIO4.Controllers
 {
@@ -16,15 +19,15 @@ namespace CODE_CDIO4.Controllers
             _context = context;
         }
 
-        // ==================== GET ====================
-
         // GET: api/ThongBao/NguoiDung/5
-        // Lấy tất cả thông báo của 1 người dùng
         [HttpGet("NguoiDung/{idNguoiDung}")]
+        [SwaggerOperation(Summary = "Lấy tất cả thông báo của người dùng")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Truy xuất thành công.", typeof(IEnumerable<ThongBao>))]
+        [SwaggerResponse(StatusCodes.Status404NotFound, "Người dùng chưa có thông báo nào.")]
         public async Task<ActionResult<IEnumerable<ThongBao>>> GetThongBaoByNguoiDung(int idNguoiDung)
         {
             var thongBaos = await _context.ThongBaos
-                                          .Where(tb => tb.Id_NguoiDung == idNguoiDung)
+                                          .Where(tb => tb.Id_NguoiDung == idNguoiDung && tb.TrangThai == true)
                                           .OrderByDescending(tb => tb.NgayTao)
                                           .ToListAsync();
 
@@ -34,69 +37,52 @@ namespace CODE_CDIO4.Controllers
             return Ok(thongBaos);
         }
 
-        // GET: api/ThongBao/5
-        // Lấy chi tiết 1 thông báo
-        [HttpGet("{id}")]
-        public async Task<ActionResult<ThongBao>> GetThongBao(int id)
-        {
-            var thongBao = await _context.ThongBaos.FindAsync(id);
-            if (thongBao == null)
-                return NotFound("Không tìm thấy thông báo.");
-
-            return Ok(thongBao);
-        }
-
-        // ==================== POST ====================
-
         // POST: api/ThongBao
-        // Tạo mới thông báo
         [HttpPost]
-        public async Task<ActionResult<ThongBao>> PostThongBao(ThongBao thongBao)
+        [SwaggerOperation(Summary = "Thêm thông báo bằng proc insert_ThongBao")]
+        public async Task<IActionResult> PostThongBao([FromBody] ThongBaoDTO dto)
         {
-            // kiểm tra người dùng có tồn tại không
-            var exists = await _context.NguoiDungs.AnyAsync(n => n.Id == thongBao.Id_NguoiDung);
-            if (!exists)
-                return BadRequest("Người dùng không tồn tại.");
+            try
+            {
+                var parameters = new[]
+                {
+                    new SqlParameter("@id_nguoidung", dto.IdNguoiDung),
+                    new SqlParameter("@noidung", dto.NoiDung)
+                };
 
-            thongBao.NgayTao = DateTime.Now;
-            _context.ThongBaos.Add(thongBao);
-            await _context.SaveChangesAsync();
+                await _context.Database.ExecuteSqlRawAsync("EXEC insert_ThongBao @id_nguoidung, @noidung", parameters);
 
-            return CreatedAtAction(nameof(GetThongBao), new { id = thongBao.Id }, thongBao);
+                return Ok(new { message = "Thêm thông báo thành công." });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
 
-        // ==================== PUT ====================
-
-        // PUT: api/ThongBao/5/Read
-        // Đánh dấu thông báo đã đọc
-        [HttpPut("{id}/Read")]
-        public async Task<IActionResult> MarkAsRead(int id)
+        // DELETE: api/ThongBao
+        [HttpDelete]
+        [SwaggerOperation(Summary = "Xóa mềm thông báo bằng proc delete_ThongBao")]
+        public async Task<IActionResult> DeleteThongBao([FromBody] DeleteThongBaoDTO dto)
         {
-            var thongBao = await _context.ThongBaos.FindAsync(id);
-            if (thongBao == null)
-                return NotFound("Không tìm thấy thông báo.");
+            try
+            {
+                var parameters = new[]
+                {
+                    new SqlParameter("@id_thongbao", dto.IdThongBao),
+                    new SqlParameter("@id_nguoidung", dto.IdNguoiDung)
+                };
 
-            thongBao.DaDoc = true;
-            _context.ThongBaos.Update(thongBao);
-            await _context.SaveChangesAsync();
+                var result = await _context.ThongBaos
+                                           .FromSqlRaw("EXEC delete_ThongBao @id_thongbao, @id_nguoidung", parameters)
+                                           .ToListAsync();
 
-            return Ok(new { message = "Đã đánh dấu thông báo là đã đọc." });
-        }
-
-        // ==================== DELETE ====================
-
-        // DELETE: api/ThongBao/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteThongBao(int id)
-        {
-            var thongBao = await _context.ThongBaos.FindAsync(id);
-            if (thongBao == null)
-                return NotFound("Không tìm thấy thông báo.");
-
-            _context.ThongBaos.Remove(thongBao);
-            await _context.SaveChangesAsync();
-
-            return Ok(new { message = "Đã xóa thông báo thành công." });
+                return Ok(new { message = "Xóa mềm thông báo thành công." });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
     }
 }

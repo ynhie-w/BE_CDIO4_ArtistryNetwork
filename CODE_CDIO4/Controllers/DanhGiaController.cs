@@ -21,9 +21,36 @@ namespace CODE_CDIO4.Controllers
             _context = context;
             _notificationService = notificationService;
         }
+        // ==================== LẤY TẤT CẢ ====================
+        [HttpGet]
+        [SwaggerOperation(Summary = "Lấy tất cả đánh giá (đang hoạt động)")]
+        [SwaggerResponse(200, "Lấy thành công", typeof(IEnumerable<DanhGiaDTO>))]
+        [SwaggerResponse(404, "Không có đánh giá nào")]
+        public async Task<ActionResult<IEnumerable<DanhGiaDTO>>> GetAllDanhGia()
+        {
+            var danhGias = await _context.DanhGias
+                                         .Where(dg => dg.TrangThai == true)
+                                         .Include(dg => dg.NguoiDanhGia)
+                                         .OrderByDescending(dg => dg.NgayTao)
+                                         .ToListAsync();
+
+            if (!danhGias.Any())
+                return NotFound("Không có đánh giá nào.");
+
+            var dtos = danhGias.Select(dg => new DanhGiaDTO
+            {
+                Id = dg.Id,
+                Id_TacPham = dg.Id_TacPham,
+                Id_NguoiDung = dg.Id_NguoiDung,
+                Diem = dg.Diem,
+                NgayTao = dg.NgayTao,
+                TenNguoiDung = dg.NguoiDanhGia?.Ten
+            }).ToList();
+
+            return Ok(dtos);
+        }
 
         // ==================== LẤY DANH SÁCH THEO TACPHAM ====================
-        [HttpGet("TacPham/{idTacPham}")]
         [HttpGet("TacPham/{idTacPham}")]
         [SwaggerOperation(Summary = "Lấy danh sách đánh giá theo tác phẩm")]
         [SwaggerResponse(200, "Lấy thành công", typeof(IEnumerable<DanhGiaDTO>))]

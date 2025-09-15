@@ -176,7 +176,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[CODE_CDIO4.Models.BinhLuan, CODE_CDIO4, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[CODE_CDIO4.DTOs.BinhLuanViewDTO, CODE_CDIO4, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -485,7 +485,32 @@
   },
   {
     "ContainingType": "CODE_CDIO4.Controllers.DanhGiaController",
-    "Method": "UpsertDanhGia",
+    "Method": "GetAllDanhGia",
+    "RelativePath": "api/DanhGia",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[CODE_CDIO4.DTOs.DanhGiaDTO, CODE_CDIO4, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 404
+      }
+    ]
+  },
+  {
+    "ContainingType": "CODE_CDIO4.Controllers.DanhGiaController",
+    "Method": "InsertDanhGia",
     "RelativePath": "api/DanhGia",
     "HttpMethod": "POST",
     "IsController": true,
@@ -493,11 +518,62 @@
     "Parameters": [
       {
         "Name": "dto",
-        "Type": "CODE_CDIO4.DTOs.DanhGiaCreateUpdateDTO",
+        "Type": "CODE_CDIO4.DTOs.DanhGiaInsertDTO",
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "CODE_CDIO4.DTOs.DanhGiaDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 201
+      },
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 400
+      }
+    ]
+  },
+  {
+    "ContainingType": "CODE_CDIO4.Controllers.DanhGiaController",
+    "Method": "UpdateDanhGia",
+    "RelativePath": "api/DanhGia",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "CODE_CDIO4.DTOs.DanhGiaUpdateDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "CODE_CDIO4.DTOs.DanhGiaDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 400
+      },
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 404
+      }
+    ]
   },
   {
     "ContainingType": "CODE_CDIO4.Controllers.DanhGiaController",
@@ -522,6 +598,11 @@
           "text/json"
         ],
         "StatusCode": 200
+      },
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 404
       }
     ]
   },
@@ -544,7 +625,23 @@
         "IsRequired": false
       }
     ],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 204
+      },
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 400
+      },
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 404
+      }
+    ]
   },
   {
     "ContainingType": "CODE_CDIO4.Controllers.DanhGiaController",
@@ -569,26 +666,11 @@
           "text/json"
         ],
         "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "CODE_CDIO4.Controllers.DonHangController",
-    "Method": "GetAllDonHangs",
-    "RelativePath": "api/DonHang",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
+      },
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[CODE_CDIO4.Controllers.DonHangController\u002BDonHangDTO, CODE_CDIO4, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 404
       }
     ]
   },
@@ -601,20 +683,67 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "donHang",
-        "Type": "CODE_CDIO4.Models.DonHang",
+        "Name": "idNguoiMua",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "danhSachTacPham",
+        "Type": "System.Collections.Generic.List\u00601[[System.Int32, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": true
+      },
+      {
+        "Name": "idGiamGia",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "CODE_CDIO4.Controllers.DonHangController\u002BDonHangDTO",
+        "Type": "CODE_CDIO4.DTOs.DonHangDTO",
         "MediaTypes": [
           "text/plain",
           "application/json",
           "text/json"
         ],
-        "StatusCode": 200
+        "StatusCode": 201
+      },
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 400
+      }
+    ]
+  },
+  {
+    "ContainingType": "CODE_CDIO4.Controllers.DonHangController",
+    "Method": "DeleteDonHang",
+    "RelativePath": "api/DonHang/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 204
+      },
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 404
+      },
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 400
       }
     ]
   },
@@ -634,61 +763,24 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "CODE_CDIO4.Controllers.DonHangController\u002BDonHangDTO",
+        "Type": "CODE_CDIO4.DTOs.DonHangDTO",
         "MediaTypes": [
           "text/plain",
           "application/json",
           "text/json"
         ],
         "StatusCode": 200
+      },
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 404
       }
     ]
   },
   {
     "ContainingType": "CODE_CDIO4.Controllers.DonHangController",
-    "Method": "DeleteChiTiet",
-    "RelativePath": "api/DonHang/{id}/ChiTiet/{idTacPham}",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "idTacPham",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "CODE_CDIO4.Controllers.DonHangController",
-    "Method": "UpdateTrangThai",
-    "RelativePath": "api/DonHang/{id}/TrangThai",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "trangThai",
-        "Type": "System.String",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "CODE_CDIO4.Controllers.DonHangController",
-    "Method": "GetDonHangsByNguoiMua",
+    "Method": "GetDonHangByNguoiMua",
     "RelativePath": "api/DonHang/NguoiMua/{idNguoiMua}",
     "HttpMethod": "GET",
     "IsController": true,
@@ -698,17 +790,79 @@
         "Name": "idNguoiMua",
         "Type": "System.Int32",
         "IsRequired": true
+      },
+      {
+        "Name": "idYeuCau",
+        "Type": "System.Int32",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[CODE_CDIO4.Controllers.DonHangController\u002BDonHangDTO, CODE_CDIO4, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[CODE_CDIO4.DTOs.DonHangView, CODE_CDIO4, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
           "text/json"
         ],
         "StatusCode": 200
+      },
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 400
+      }
+    ]
+  },
+  {
+    "ContainingType": "CODE_CDIO4.Controllers.DonHangController",
+    "Method": "GetByTacGia",
+    "RelativePath": "api/DonHang/TacGia/{idTacGia}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idTacGia",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CODE_CDIO4.Controllers.DonHangController",
+    "Method": "GetDonHangByTacPham",
+    "RelativePath": "api/DonHang/TacPham/{idTacPham}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idTacPham",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "idNguoiTao",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[CODE_CDIO4.DTOs.DonHangView, CODE_CDIO4, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 400
       }
     ]
   },
@@ -841,33 +995,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[CODE_CDIO4.Models.DuAnCongDong, CODE_CDIO4, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "CODE_CDIO4.Controllers.DuAnCongDongController",
-    "Method": "PostDuAnCongDong",
-    "RelativePath": "api/DuAnCongDong",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "duAn",
-        "Type": "CODE_CDIO4.Models.DuAnCongDong",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "CODE_CDIO4.Models.DuAnCongDong",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[CODE_CDIO4.DTOs.DuAnCongDongResponseDTO, CODE_CDIO4, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -893,7 +1021,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "CODE_CDIO4.Models.DuAnCongDong",
+        "Type": "CODE_CDIO4.DTOs.DuAnCongDongResponseDTO",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -905,8 +1033,24 @@
   },
   {
     "ContainingType": "CODE_CDIO4.Controllers.DuAnCongDongController",
-    "Method": "PutDuAnCongDong",
-    "RelativePath": "api/DuAnCongDong/{id}",
+    "Method": "PostDuAnCongDongSP",
+    "RelativePath": "api/DuAnCongDong/SP",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "CODE_CDIO4.DTOs.DuAnCongDongRequestDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CODE_CDIO4.Controllers.DuAnCongDongController",
+    "Method": "PutDuAnCongDongSP",
+    "RelativePath": "api/DuAnCongDong/SP/{id}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -917,8 +1061,13 @@
         "IsRequired": true
       },
       {
-        "Name": "duAn",
-        "Type": "CODE_CDIO4.Models.DuAnCongDong",
+        "Name": "idNguoiDung",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "dto",
+        "Type": "CODE_CDIO4.DTOs.DuAnCongDongRequestDTO",
         "IsRequired": true
       }
     ],
@@ -926,8 +1075,8 @@
   },
   {
     "ContainingType": "CODE_CDIO4.Controllers.DuAnCongDongController",
-    "Method": "DeleteDuAnCongDong",
-    "RelativePath": "api/DuAnCongDong/{id}",
+    "Method": "DeleteDuAnCongDongSP",
+    "RelativePath": "api/DuAnCongDong/SP/{id}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -941,22 +1090,16 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "CODE_CDIO4.Controllers.DuAnCongDongController",
-    "Method": "GetThanhVien",
-    "RelativePath": "api/DuAnCongDong/{idDuAn}/ThanhVien",
+    "ContainingType": "CODE_CDIO4.Controllers.GiamGiaController",
+    "Method": "GetAll",
+    "RelativePath": "api/GiamGia",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "idDuAn",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[CODE_CDIO4.Models.ThamGiaDuAn, CODE_CDIO4, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[CODE_CDIO4.DTOs.GiamGiaDTO, CODE_CDIO4, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -967,46 +1110,52 @@
     ]
   },
   {
-    "ContainingType": "CODE_CDIO4.Controllers.DuAnCongDongController",
-    "Method": "ThamGiaDuAn",
-    "RelativePath": "api/DuAnCongDong/ThamGia",
+    "ContainingType": "CODE_CDIO4.Controllers.GiamGiaController",
+    "Method": "Create",
+    "RelativePath": "api/GiamGia",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "thamGia",
-        "Type": "CODE_CDIO4.Models.ThamGiaDuAn",
+        "Name": "dto",
+        "Type": "CODE_CDIO4.DTOs.CreateGiamGiaDTO",
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "CODE_CDIO4.Models.ThamGiaDuAn",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
-    "ContainingType": "CODE_CDIO4.Controllers.DuAnCongDongController",
-    "Method": "HuyThamGia",
-    "RelativePath": "api/DuAnCongDong/ThamGia/{idDuAn}/{idNguoiDung}",
+    "ContainingType": "CODE_CDIO4.Controllers.GiamGiaController",
+    "Method": "Update",
+    "RelativePath": "api/GiamGia/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "CODE_CDIO4.DTOs.CreateGiamGiaDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CODE_CDIO4.Controllers.GiamGiaController",
+    "Method": "Delete",
+    "RelativePath": "api/GiamGia/{id}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "idDuAn",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "idNguoiDung",
+        "Name": "id",
         "Type": "System.Int32",
         "IsRequired": true
       }
@@ -1186,6 +1335,27 @@
   },
   {
     "ContainingType": "CODE_CDIO4.Controllers.HashtagsController",
+    "Method": "PutHashtag",
+    "RelativePath": "api/Hashtags/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "hashtag",
+        "Type": "CODE_CDIO4.Models.Hashtag",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CODE_CDIO4.Controllers.HashtagsController",
     "Method": "DeleteHashtag",
     "RelativePath": "api/Hashtags/{id}",
     "HttpMethod": "DELETE",
@@ -1278,7 +1448,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[CODE_CDIO4.Models.HoaDon, CODE_CDIO4, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[CODE_CDIO4.DTOs.HoaDonDTO, CODE_CDIO4, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -1297,14 +1467,14 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "hoaDon",
-        "Type": "CODE_CDIO4.Models.HoaDon",
+        "Name": "dto",
+        "Type": "CODE_CDIO4.DTOs.HoaDonDTO",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "CODE_CDIO4.Models.HoaDon",
+        "Type": "CODE_CDIO4.DTOs.HoaDonDTO",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -1330,7 +1500,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "CODE_CDIO4.Models.HoaDon",
+        "Type": "CODE_CDIO4.DTOs.HoaDonDTO",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -1354,8 +1524,8 @@
         "IsRequired": true
       },
       {
-        "Name": "hoaDon",
-        "Type": "CODE_CDIO4.Models.HoaDon",
+        "Name": "dto",
+        "Type": "CODE_CDIO4.DTOs.HoaDonDTO",
         "IsRequired": true
       }
     ],
@@ -1407,7 +1577,7 @@
     "Parameters": [
       {
         "Name": "dto",
-        "Type": "CODE_CDIO4.Controllers.CreateUserDto",
+        "Type": "CODE_CDIO4.DTOs.CreateUserDto",
         "IsRequired": true
       }
     ],
@@ -1419,7 +1589,7 @@
           "application/json",
           "text/json"
         ],
-        "StatusCode": 201
+        "StatusCode": 200
       }
     ]
   },
@@ -1446,11 +1616,6 @@
           "text/json"
         ],
         "StatusCode": 200
-      },
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 404
       }
     ]
   },
@@ -1469,22 +1634,11 @@
       },
       {
         "Name": "dto",
-        "Type": "CODE_CDIO4.Controllers.UpdateUserDto",
+        "Type": "CODE_CDIO4.DTOs.UpdateUserDto",
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 204
-      },
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 404
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "CODE_CDIO4.Controllers.NguoiDungController",
@@ -1500,116 +1654,23 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 204
-      },
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 404
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "CODE_CDIO4.Controllers.NguoiDungController",
     "Method": "Login",
-    "RelativePath": "api/NguoiDung/Login",
+    "RelativePath": "api/NguoiDung/login",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "model",
-        "Type": "CODE_CDIO4.Controllers.LoginModel",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "CODE_CDIO4.Controllers.LoginResponseDto",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      },
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 401
-      }
-    ]
-  },
-  {
-    "ContainingType": "CODE_CDIO4.Controllers.NguoiDungController",
-    "Method": "GetPhanQuyen",
-    "RelativePath": "api/NguoiDung/PhanQuyen/{id}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "CODE_CDIO4.Controllers.PhanQuyenResponseDto",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      },
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 404
-      }
-    ]
-  },
-  {
-    "ContainingType": "CODE_CDIO4.Controllers.NguoiDungController",
-    "Method": "UpdatePhanQuyen",
-    "RelativePath": "api/NguoiDung/PhanQuyen/{id}",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
         "Name": "dto",
-        "Type": "CODE_CDIO4.Controllers.PhanQuyenUpdateDto",
+        "Type": "CODE_CDIO4.DTOs.LoginDto",
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "CODE_CDIO4.Controllers.PhanQuyenResponseDto",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      },
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 404
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "CODE_CDIO4.Controllers.QuyenController",
@@ -1766,28 +1827,12 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "tacPhamCamXuc",
-        "Type": "CODE_CDIO4.Models.TacPham_CamXuc",
+        "Name": "request",
+        "Type": "CODE_CDIO4.DTOs.TacPhamCamXucRequest",
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 200
-      },
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 201
-      },
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 400
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "CODE_CDIO4.Controllers.TacPham_CamXucController",
@@ -1810,18 +1855,13 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "CODE_CDIO4.Models.TacPham_CamXuc",
+        "Type": "CODE_CDIO4.DTOs.TacPhamCamXucDTO",
         "MediaTypes": [
           "text/plain",
           "application/json",
           "text/json"
         ],
         "StatusCode": 200
-      },
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 404
       }
     ]
   },
@@ -1844,18 +1884,7 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 204
-      },
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 404
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "CODE_CDIO4.Controllers.TacPham_HashtagsController",
@@ -1908,6 +1937,32 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "CODE_CDIO4.Controllers.TacPham_HashtagsController",
+    "Method": "UpdateTrangThai",
+    "RelativePath": "api/TacPham_Hashtags/TacPham/{idTacPham}/Hashtag/{idHashtag}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idTacPham",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "idHashtag",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "trangThai",
+        "Type": "System.Boolean",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "CODE_CDIO4.Controllers.TacPham_HashtagsController",
@@ -2062,7 +2117,7 @@
       },
       {
         "Name": "NguoiTao.Id_CapDo",
-        "Type": "System.Int32",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       },
       {
@@ -2364,7 +2419,7 @@
       },
       {
         "Name": "NguoiTao.Id_CapDo",
-        "Type": "System.Int32",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       },
       {
@@ -2567,6 +2622,80 @@
     ]
   },
   {
+    "ContainingType": "CODE_CDIO4.Controllers.ThamGiaDuAnController",
+    "Method": "GetByDuAn",
+    "RelativePath": "api/ThamGiaDuAn/{idDuAn}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idDuAn",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[CODE_CDIO4.Models.ThamGiaDuAn, CODE_CDIO4, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "CODE_CDIO4.Controllers.ThamGiaDuAnController",
+    "Method": "Delete",
+    "RelativePath": "api/ThamGiaDuAn/Delete",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "CODE_CDIO4.DTOs.DeleteThamGiaDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CODE_CDIO4.Controllers.ThamGiaDuAnController",
+    "Method": "Insert",
+    "RelativePath": "api/ThamGiaDuAn/Insert",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "CODE_CDIO4.DTOs.ThamGiaDuAnDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CODE_CDIO4.Controllers.ThamGiaDuAnController",
+    "Method": "Update",
+    "RelativePath": "api/ThamGiaDuAn/Update",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "CODE_CDIO4.DTOs.UpdateThamGiaDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "CODE_CDIO4.Controllers.ThanhToanController",
     "Method": "PostThanhToan",
     "RelativePath": "api/ThanhToan",
@@ -2588,7 +2717,12 @@
           "application/json",
           "text/json"
         ],
-        "StatusCode": 200
+        "StatusCode": 201
+      },
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 400
       }
     ]
   },
@@ -2615,6 +2749,11 @@
           "text/json"
         ],
         "StatusCode": 200
+      },
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 404
       }
     ]
   },
@@ -2632,7 +2771,18 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      },
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 404
+      }
+    ]
   },
   {
     "ContainingType": "CODE_CDIO4.Controllers.ThanhToanController",
@@ -2653,7 +2803,23 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 204
+      },
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 400
+      },
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 404
+      }
+    ]
   },
   {
     "ContainingType": "CODE_CDIO4.Controllers.ThanhToanController",
@@ -2678,8 +2844,29 @@
           "text/json"
         ],
         "StatusCode": 200
+      },
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 404
       }
     ]
+  },
+  {
+    "ContainingType": "CODE_CDIO4.Controllers.ThanhToanController",
+    "Method": "UpsertThanhToan",
+    "RelativePath": "api/ThanhToan/Upsert",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "CODE_CDIO4.DTOs.ThanhToanDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "CODE_CDIO4.Controllers.TheLoaiController",
@@ -2723,7 +2910,12 @@
           "application/json",
           "text/json"
         ],
-        "StatusCode": 200
+        "StatusCode": 201
+      },
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 409
       }
     ]
   },
@@ -2750,6 +2942,11 @@
           "text/json"
         ],
         "StatusCode": 200
+      },
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 404
       }
     ]
   },
@@ -2772,7 +2969,23 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 204
+      },
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 400
+      },
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 404
+      }
+    ]
   },
   {
     "ContainingType": "CODE_CDIO4.Controllers.TheLoaiController",
@@ -2788,7 +3001,18 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      },
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 404
+      }
+    ]
   },
   {
     "ContainingType": "CODE_CDIO4.Controllers.ThongBaoController",
@@ -2799,60 +3023,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "thongBao",
-        "Type": "CODE_CDIO4.Models.ThongBao",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "CODE_CDIO4.Models.ThongBao",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "CODE_CDIO4.Controllers.ThongBaoController",
-    "Method": "GetThongBao",
-    "RelativePath": "api/ThongBao/{id}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "CODE_CDIO4.Models.ThongBao",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "CODE_CDIO4.Controllers.ThongBaoController",
-    "Method": "DeleteThongBao",
-    "RelativePath": "api/ThongBao/{id}",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
+        "Name": "dto",
+        "Type": "CODE_CDIO4.DTOs.ThongBaoDTO",
         "IsRequired": true
       }
     ],
@@ -2860,15 +3032,15 @@
   },
   {
     "ContainingType": "CODE_CDIO4.Controllers.ThongBaoController",
-    "Method": "MarkAsRead",
-    "RelativePath": "api/ThongBao/{id}/Read",
-    "HttpMethod": "PUT",
+    "Method": "DeleteThongBao",
+    "RelativePath": "api/ThongBao",
+    "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "id",
-        "Type": "System.Int32",
+        "Name": "dto",
+        "Type": "CODE_CDIO4.DTOs.DeleteThongBaoDTO",
         "IsRequired": true
       }
     ],
@@ -2897,6 +3069,11 @@
           "text/json"
         ],
         "StatusCode": 200
+      },
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 404
       }
     ]
   }

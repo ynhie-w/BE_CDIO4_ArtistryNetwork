@@ -8,12 +8,13 @@ namespace CODE_CDIO4.Models
     {
         [Key]
         [Column("id")]
-        public int Id{ get; set; }
+        public int Id { get; set; }
 
         [Required]
         [Column("ten")]
-        [MaxLength(100)]
+        [MaxLength(50)] 
         public string Ten { get; set; } = string.Empty;
+
         [Column("trangthai")]
         public bool TrangThai { get; set; } = true;
 

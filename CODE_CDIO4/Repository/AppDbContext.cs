@@ -1,5 +1,7 @@
-﻿using CODE_CDIO4.Models;
+﻿using CODE_CDIO4.DTOs;
+using CODE_CDIO4.Models;
 using Microsoft.EntityFrameworkCore;
+using static CODE_CDIO4.Controllers.DonHangController;
 
 namespace CODE_CDIO4.Repository
 {
@@ -30,6 +32,8 @@ namespace CODE_CDIO4.Repository
         public DbSet<HoaDon> HoaDons { get; set; } = null!;
         public DbSet<HoaDon_ChiTiet> HoaDon_ChiTiets { get; set; } = null!;
         public DbSet<TacPham_CamXuc> TacPham_CamXucs { get; set; } = null!;
+        public DbSet<DonHangView> DonHangViews { get; set; }
+        public DbSet<GiamGia> GiamGias { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -43,11 +47,20 @@ namespace CODE_CDIO4.Repository
             modelBuilder.Entity<DuAn_TacPham>().HasKey(dt => new { dt.Id_DuAn, dt.Id_TacPham });
             modelBuilder.Entity<DonHang_ChiTiet>().HasKey(dhct => new { dhct.Id_DonHang, dhct.Id_TacPham });
             modelBuilder.Entity<TacPham_CamXuc>().HasKey(tc => new { tc.Id_NguoiDung, tc.Id_TacPham, tc.Id_CamXuc });
+            modelBuilder.Entity<GiamGia>().ToTable("GiamGia");
+            modelBuilder.Entity<NewDonHangID>().HasNoKey();
 
-            // ------------------ Relationships ------------------
+            base.OnModelCreating(modelBuilder);
 
-            // GioHang
-            modelBuilder.Entity<GioHang>()
+            // DonHangView là keyless entity (không map với bảng thật)
+            modelBuilder.Entity<DonHangView>()
+                .HasNoKey()
+                .ToView(null); // null vì không map với view/table nào trong DB
+       
+        // ------------------ Relationships ------------------
+
+        // GioHang
+        modelBuilder.Entity<GioHang>()
                 .HasOne(g => g.NguoiMua)
                 .WithMany(u => u.GioHangs)
                 .HasForeignKey(g => g.Id_NguoiMua)
@@ -146,7 +159,7 @@ namespace CODE_CDIO4.Repository
 
             modelBuilder.Entity<TacPham_Hashtags>()
                 .HasOne(th => th.Hashtag)
-                .WithMany(h => h.TacPham_hashtags)
+                .WithMany(h => h.TacPham_Hashtags)
                 .HasForeignKey(th => th.Id_Hashtag)
                 .OnDelete(DeleteBehavior.Restrict);
 
@@ -208,6 +221,13 @@ namespace CODE_CDIO4.Repository
                 .WithMany(c => c.NguoiDungs)
                 .HasForeignKey(nd => nd.Id_CapDo)
                 .OnDelete(DeleteBehavior.Restrict);
+            // DonHang - GiamGia
+            modelBuilder.Entity<DonHang>()
+                .HasOne(dh => dh.GiamGias)
+                .WithMany(g => g.DonHangs)
+                .HasForeignKey(dh => dh.IdGiamGia)
+                .OnDelete(DeleteBehavior.SetNull);
+
         }
     }
 }

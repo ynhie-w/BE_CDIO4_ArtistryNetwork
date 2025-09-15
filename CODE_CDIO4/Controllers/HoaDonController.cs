@@ -1,8 +1,9 @@
 ﻿using CODE_CDIO4.Models;
-using CODE_CDIO4.Repository;
+using CODE_CDIO4.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Annotations;
+using CODE_CDIO4.Repository;
 
 namespace CODE_CDIO4.Controllers
 {
@@ -17,61 +18,193 @@ namespace CODE_CDIO4.Controllers
             _context = context;
         }
 
-        // GET: api/HoaDon
+        // ==================== GET ALL ====================
         [HttpGet]
-        [SwaggerOperation(Summary = "Lấy tất cả hóa đơn")]
-        public async Task<ActionResult<IEnumerable<HoaDon>>> GetAll()
+        [SwaggerOperation(Summary = "Lấy tất cả hóa đơn (bao gồm chi tiết)")]
+        public async Task<ActionResult<IEnumerable<HoaDonDTO>>> GetAll()
         {
-            return await _context.HoaDons.ToListAsync();
+            var data = await _context.HoaDons
+                .Include(h => h.HoaDon_ChiTiets)
+                .Where(h => h.TrangThai == true)
+                .Select(h => new HoaDonDTO
+                {
+                    Id = h.Id,
+                    Id_DonHang = h.Id_DonHang,
+                    SoHoaDon = h.SoHoaDon,
+                    NgayLap = h.NgayLap,
+                    TenNguoiLap = h.NguoiLapHoaDon.Ten,
+                    ThanhTien = h.ThanhTien,
+                    GhiChu = h.GhiChu,
+                    TrangThai = h.TrangThai,
+                    ChiTiet = h.HoaDon_ChiTiets.Select(c => new HoaDonChiTietDTO
+                    {
+                        Id = c.Id,
+                        Id_HoaDon = c.Id_HoaDon,
+                        Id_TacPham = c.Id_TacPham,
+                        ThanhTien = c.ThanhTien,
+                        TrangThai = c.TrangThai
+                    }).ToList()
+                })
+                .ToListAsync();
+
+            return Ok(data);
         }
 
-        // GET: api/HoaDon/5
+        // ==================== GET BY ID ====================
         [HttpGet("{id}")]
-        [SwaggerOperation(Summary = "Lấy hóa đơn theo ID")]
-        public async Task<ActionResult<HoaDon>> GetById(int id)
+        [SwaggerOperation(Summary = "Lấy hóa đơn theo ID (bao gồm chi tiết)")]
+        public async Task<ActionResult<HoaDonDTO>> GetById(int id)
         {
-            var hoaDon = await _context.HoaDons.FindAsync(id);
+            var hoaDon = await _context.HoaDons
+                .Include(h => h.HoaDon_ChiTiets)
+                .FirstOrDefaultAsync(h => h.Id == id && h.TrangThai == true);
+
             if (hoaDon == null) return NotFound("Không tìm thấy hóa đơn.");
-            return hoaDon;
+
+            var dto = new HoaDonDTO
+            {
+                Id = hoaDon.Id,
+                Id_DonHang = hoaDon.Id_DonHang,
+                SoHoaDon = hoaDon.SoHoaDon,
+                NgayLap = hoaDon.NgayLap,
+                TenNguoiLap = hoaDon.NguoiLapHoaDon.Ten,
+                ThanhTien = hoaDon.ThanhTien,
+                GhiChu = hoaDon.GhiChu,
+                TrangThai = hoaDon.TrangThai,
+                ChiTiet = hoaDon.HoaDon_ChiTiets.Select(c => new HoaDonChiTietDTO
+                {
+                    Id = c.Id,
+                    Id_HoaDon = c.Id_HoaDon,
+                    Id_TacPham = c.Id_TacPham,
+                    ThanhTien = c.ThanhTien,
+                    TrangThai = c.TrangThai
+                }).ToList()
+            };
+
+            return Ok(dto);
         }
 
-        // POST: api/HoaDon
+        // ==================== CREATE ====================
         [HttpPost]
-        [SwaggerOperation(Summary = "Tạo hóa đơn mới")]
-        public async Task<ActionResult<HoaDon>> Create(HoaDon hoaDon)
+  
+        [SwaggerOperation(Summary = "Tạo hóa đơn mới kèm chi tiết")]
+        public async Task<ActionResult<HoaDonDTO>> Create(HoaDonDTO dto)
         {
-            hoaDon.NgayLap = DateTime.Now;
+            var hoaDon = new HoaDon
+            {
+                Id_DonHang = dto.Id_DonHang,
+                SoHoaDon = dto.SoHoaDon,
+                NgayLap = DateTime.Now,
+                NguoiLap = dto.Id_NguoiLap,   // gán FK
+                ThanhTien = dto.ThanhTien,
+                GhiChu = dto.GhiChu,
+                TrangThai = true,
+                HoaDon_ChiTiets = dto.ChiTiet?.Select(c => new HoaDon_ChiTiet
+                {
+                    Id_TacPham = c.Id_TacPham,
+                    ThanhTien = c.ThanhTien,
+                    TrangThai = true
+                }).ToList()
+            };
+
             _context.HoaDons.Add(hoaDon);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetById), new { id = hoaDon.Id }, hoaDon);
+            // map lại sang DTO trả về
+            dto.Id = hoaDon.Id;
+            dto.TrangThai = hoaDon.TrangThai;
+            dto.ChiTiet = hoaDon.HoaDon_ChiTiets.Select(c => new HoaDonChiTietDTO
+            {
+                Id = c.Id,
+                Id_HoaDon = c.Id_HoaDon,
+                Id_TacPham = c.Id_TacPham,
+                ThanhTien = c.ThanhTien,
+                TrangThai = c.TrangThai
+            }).ToList();
+
+            return CreatedAtAction(nameof(GetById), new { id = hoaDon.Id }, dto);
         }
 
-        // PUT: api/HoaDon/5
+
+        // ==================== UPDATE ====================
         [HttpPut("{id}")]
-        [SwaggerOperation(Summary = "Cập nhật hóa đơn")]
-        public async Task<IActionResult> Update(int id, HoaDon hoaDon)
+        [SwaggerOperation(Summary = "Cập nhật hóa đơn kèm chi tiết")]
+        public async Task<IActionResult> Update(int id, HoaDonDTO dto)
         {
-            if (id != hoaDon.Id) return BadRequest("ID không khớp.");
+            if (id != dto.Id) return BadRequest("ID không khớp.");
 
-            _context.Entry(hoaDon).State = EntityState.Modified;
+            var hoaDon = await _context.HoaDons
+                .Include(h => h.HoaDon_ChiTiets)
+                .FirstOrDefaultAsync(h => h.Id == id);
+
+            if (hoaDon == null || hoaDon.TrangThai == false)
+                return NotFound("Không tìm thấy hóa đơn.");
+
+            // Cập nhật hóa đơn
+            hoaDon.Id_DonHang = dto.Id_DonHang;
+            hoaDon.SoHoaDon = dto.SoHoaDon;
+            hoaDon.NgayLap = dto.NgayLap;
+            hoaDon.NguoiLap = dto.Id_NguoiLap;
+            hoaDon.ThanhTien = dto.ThanhTien;
+            hoaDon.GhiChu = dto.GhiChu;
+
+            // Đồng bộ chi tiết
+            var chiTietIds = dto.ChiTiet?.Select(c => c.Id).ToList() ?? new List<int>();
+
+            // Xóa chi tiết cũ không còn trong DTO
+            var chiTietCanXoa = hoaDon.HoaDon_ChiTiets
+                .Where(c => !chiTietIds.Contains(c.Id))
+                .ToList();
+
+                foreach (var c in chiTietCanXoa)
+                {
+                    hoaDon.HoaDon_ChiTiets.Remove(c);
+                }
+
+
+            // Cập nhật hoặc thêm mới
+            foreach (var cDto in dto.ChiTiet ?? new List<HoaDonChiTietDTO>())
+            {
+                var existing = hoaDon.HoaDon_ChiTiets.FirstOrDefault(c => c.Id == cDto.Id);
+                if (existing != null)
+                {
+                    existing.Id_TacPham = cDto.Id_TacPham;
+                    existing.ThanhTien = cDto.ThanhTien;
+                    existing.TrangThai = cDto.TrangThai;
+                }
+                else
+                {
+                    hoaDon.HoaDon_ChiTiets.Add(new HoaDon_ChiTiet
+                    {
+                        Id_TacPham = cDto.Id_TacPham,
+                        ThanhTien = cDto.ThanhTien,
+                        TrangThai = cDto.TrangThai
+                    });
+                }
+            }
+
             await _context.SaveChangesAsync();
-
             return NoContent();
         }
 
-        // DELETE: api/HoaDon/5
+        // ==================== SOFT DELETE ====================
         [HttpDelete("{id}")]
-        [SwaggerOperation(Summary = "Xóa hóa đơn")]
+        [SwaggerOperation(Summary = "Xóa mềm hóa đơn (soft delete) kèm chi tiết")]
         public async Task<IActionResult> Delete(int id)
         {
-            var hoaDon = await _context.HoaDons.FindAsync(id);
+            var hoaDon = await _context.HoaDons
+                .Include(h => h.HoaDon_ChiTiets)
+                .FirstOrDefaultAsync(h => h.Id == id);
+
             if (hoaDon == null) return NotFound("Không tìm thấy hóa đơn.");
 
-            _context.HoaDons.Remove(hoaDon);
+            hoaDon.TrangThai = false;
+            foreach (var c in hoaDon.HoaDon_ChiTiets)
+                c.TrangThai = false;
+
             await _context.SaveChangesAsync();
 
-            return Ok(new { message = "Đã xóa hóa đơn thành công." });
+            return Ok(new { message = "Đã xóa mềm hóa đơn và chi tiết thành công." });
         }
     }
 }

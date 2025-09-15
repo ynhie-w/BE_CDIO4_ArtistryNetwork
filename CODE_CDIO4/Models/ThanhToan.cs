@@ -17,7 +17,7 @@ namespace CODE_CDIO4.Models
         [Required]
         [Column("phuongthuc")]
         [MaxLength(20)]
-        public string PhuongThuc { get; set; } = string.Empty;
+        public string PhuongThuc { get; set; } = string.Empty; // momo, vnpay, paypal
 
         [Required]
         [Column("trangthai")]

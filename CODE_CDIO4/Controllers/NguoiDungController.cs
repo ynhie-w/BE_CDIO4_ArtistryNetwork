@@ -1,10 +1,11 @@
 ﻿using CODE_CDIO4.Models;
+using CODE_CDIO4.DTOs;
 using CODE_CDIO4.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Swashbuckle.AspNetCore.Annotations;
 using System.Security.Cryptography;
 using System.Text;
-using Swashbuckle.AspNetCore.Annotations;
 
 namespace CODE_CDIO4.Controllers
 {
@@ -19,204 +20,131 @@ namespace CODE_CDIO4.Controllers
             _context = context;
         }
 
-        // ==================== CRUD ====================
-
+        // ==================== GET ====================
         [HttpGet]
         [SwaggerOperation(Summary = "Lấy tất cả người dùng")]
         public async Task<ActionResult<IEnumerable<NguoiDung>>> GetAll()
         {
-            return await _context.NguoiDungs.Include(nd => nd.Quyen).ToListAsync();
+            return await _context.NguoiDungs
+                .Include(x => x.Quyen)
+                .Include(x => x.CapDo)
+                .ToListAsync();
         }
 
         [HttpGet("{id}")]
         [SwaggerOperation(Summary = "Lấy người dùng theo ID")]
-        [SwaggerResponse(StatusCodes.Status200OK, "Thành công", typeof(NguoiDung))]
-        [SwaggerResponse(StatusCodes.Status404NotFound, "Không tìm thấy người dùng")]
         public async Task<ActionResult<NguoiDung>> GetById(int id)
         {
-            var nguoiDung = await _context.NguoiDungs.Include(nd => nd.Quyen).FirstOrDefaultAsync(nd => nd.Id == id);
-            if (nguoiDung == null) return NotFound();
-            return nguoiDung;
+            var user = await _context.NguoiDungs
+                .Include(x => x.Quyen)
+                .Include(x => x.CapDo)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (user == null) return NotFound();
+            return user;
         }
 
+        // ==================== CREATE ====================
         [HttpPost]
         [SwaggerOperation(Summary = "Tạo người dùng mới")]
-        [SwaggerResponse(StatusCodes.Status201Created, "Tạo thành công", typeof(NguoiDung))]
-        public async Task<ActionResult<NguoiDung>> Create(CreateUserDto dto)
+        public async Task<ActionResult<NguoiDung>> Create([FromBody] CreateUserDto dto)
         {
-            var nguoiDung = new NguoiDung
+            if (string.IsNullOrEmpty(dto.Email) && string.IsNullOrEmpty(dto.Sdt))
+                return BadRequest("Phải có ít nhất Email hoặc SĐT");
+
+            var user = new NguoiDung
             {
                 Ten = dto.Ten,
-                Email = dto.Email,
-                Sdt = dto.Sdt,
-                Id_PhanQuyen = dto.Id_PhanQuyen,
-                MatKhau = HashPasswordToBytes(dto.MatKhau)
+                Sdt = string.IsNullOrWhiteSpace(dto.Sdt) ? null : dto.Sdt,
+                Email = string.IsNullOrWhiteSpace(dto.Email) ? null : dto.Email,
+                MatKhau = HashPassword(dto.MatKhau),
+                DiemThuong = dto.DiemThuong ?? 0,
+                Id_CapDo = dto.Id_CapDo,
+                Id_PhanQuyen = dto.Id_PhanQuyen ?? 1,
+                TrangThai = true,
+                AnhDaiDien = dto.AnhDaiDien
             };
 
-            _context.NguoiDungs.Add(nguoiDung);
+            _context.NguoiDungs.Add(user);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetById), new { id = nguoiDung.Id }, nguoiDung);
+            return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
         }
 
+        // ==================== UPDATE ====================
         [HttpPut("{id}")]
-        [SwaggerOperation(Summary = "Cập nhật thông tin người dùng")]
-        [SwaggerResponse(StatusCodes.Status204NoContent, "Cập nhật thành công")]
-        [SwaggerResponse(StatusCodes.Status404NotFound, "Không tìm thấy người dùng")]
-        public async Task<IActionResult> Update(int id, UpdateUserDto dto)
+        [SwaggerOperation(Summary = "Cập nhật người dùng")]
+        public async Task<IActionResult> Update(int id, [FromBody] UpdateUserDto dto)
         {
-            var nguoiDung = await _context.NguoiDungs.FindAsync(id);
-            if (nguoiDung == null) return NotFound();
+            var user = await _context.NguoiDungs.FindAsync(id);
+            if (user == null) return NotFound();
 
-            nguoiDung.Ten = dto.Ten;
-            nguoiDung.Email = dto.Email;
-            nguoiDung.Sdt = dto.Sdt;
-            nguoiDung.Id_PhanQuyen = dto.Id_PhanQuyen ?? nguoiDung.Id_PhanQuyen;
+            if (string.IsNullOrEmpty(dto.Email) && string.IsNullOrEmpty(dto.Sdt))
+                return BadRequest("Phải có ít nhất Email hoặc SĐT");
+
+            user.Ten = dto.Ten ?? user.Ten;
+            user.Sdt = dto.Sdt ?? user.Sdt;
+            user.Email = dto.Email ?? user.Email;
+            user.AnhDaiDien = dto.AnhDaiDien ?? user.AnhDaiDien;
+            user.DiemThuong = dto.DiemThuong ?? user.DiemThuong;
+            user.Id_CapDo = dto.Id_CapDo ?? user.Id_CapDo;
+            user.Id_PhanQuyen = dto.Id_PhanQuyen ?? user.Id_PhanQuyen;
+            user.TrangThai = dto.TrangThai ?? user.TrangThai;
 
             if (!string.IsNullOrEmpty(dto.MatKhau))
-            {
-                nguoiDung.MatKhau = HashPasswordToBytes(dto.MatKhau);
-            }
+                user.MatKhau = HashPassword(dto.MatKhau);
 
-            _context.Entry(nguoiDung).State = EntityState.Modified;
+            _context.Entry(user).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
+        // ==================== DELETE ====================
         [HttpDelete("{id}")]
-        [SwaggerOperation(Summary = "Xóa người dùng")]
-        [SwaggerResponse(StatusCodes.Status204NoContent, "Xóa thành công")]
-        [SwaggerResponse(StatusCodes.Status404NotFound, "Không tìm thấy người dùng")]
+        [SwaggerOperation(Summary = "Xóa người dùng (mềm)")]
         public async Task<IActionResult> Delete(int id)
         {
-            var nguoiDung = await _context.NguoiDungs.FindAsync(id);
-            if (nguoiDung == null) return NotFound();
+            var user = await _context.NguoiDungs.FindAsync(id);
+            if (user == null) return NotFound();
 
-            _context.NguoiDungs.Remove(nguoiDung);
+            user.TrangThai = false;
+            _context.Entry(user).State = EntityState.Modified;
             await _context.SaveChangesAsync();
+
             return NoContent();
         }
 
-        // ==================== Đăng nhập ====================
-        [HttpPost("Login")]
+        // ==================== LOGIN ====================
+        [HttpPost("login")]
         [SwaggerOperation(Summary = "Đăng nhập")]
-        [SwaggerResponse(StatusCodes.Status200OK, "Đăng nhập thành công", typeof(LoginResponseDto))]
-        [SwaggerResponse(StatusCodes.Status401Unauthorized, "Email hoặc mật khẩu không đúng")]
-        public async Task<IActionResult> Login([FromBody] LoginModel model)
+        public async Task<IActionResult> Login([FromBody] LoginDto dto)
         {
-            var user = await _context.NguoiDungs.SingleOrDefaultAsync(u => u.Email == model.Email);
-            if (user == null) return Unauthorized("Email hoặc mật khẩu không đúng.");
+            var user = await _context.NguoiDungs
+                .FirstOrDefaultAsync(x => x.Email == dto.Email || x.Sdt == dto.Sdt);
 
-            byte[] hashedPasswordBytes = HashPasswordToBytes(model.MatKhau);
+            if (user == null) return Unauthorized("Không tìm thấy tài khoản");
 
-            if (!hashedPasswordBytes.SequenceEqual(user.MatKhau))
-                return Unauthorized("Email hoặc mật khẩu không đúng.");
+            if (!user.MatKhau.SequenceEqual(HashPassword(dto.MatKhau)))
+                return Unauthorized("Sai mật khẩu");
 
-            var loginResponse = new LoginResponseDto
+            return Ok(new LoginResponseDto
             {
                 Id = user.Id,
                 Ten = user.Ten,
                 Email = user.Email,
-                Id_PhanQuyen = user.Id_PhanQuyen
-            };
-
-            return Ok(loginResponse);
+                Sdt = user.Sdt,
+                Id_PhanQuyen = user.Id_PhanQuyen,
+                TrangThai = user.TrangThai
+            });
         }
 
-        // ==================== PHÂN QUYỀN ====================
-        [HttpGet("PhanQuyen/{id}")]
-        [SwaggerOperation(Summary = "Lấy quyền người dùng")]
-        [SwaggerResponse(StatusCodes.Status200OK, "Thành công", typeof(PhanQuyenResponseDto))]
-        [SwaggerResponse(StatusCodes.Status404NotFound, "Không tìm thấy người dùng")]
-        public async Task<IActionResult> GetPhanQuyen(int id)
+        // ==================== HELPER ====================
+        private byte[] HashPassword(string password)
         {
-            var user = await _context.NguoiDungs.FindAsync(id);
-            if (user == null) return NotFound();
-
-            var phanQuyenDto = new PhanQuyenResponseDto
-            {
-                Id = user.Id,
-                Id_PhanQuyen = user.Id_PhanQuyen
-            };
-
-            return Ok(phanQuyenDto);
-        }
-
-        [HttpPut("PhanQuyen/{id}")]
-        [SwaggerOperation(Summary = "Cập nhật quyền người dùng")]
-        [SwaggerResponse(StatusCodes.Status200OK, "Cập nhật thành công", typeof(PhanQuyenResponseDto))]
-        [SwaggerResponse(StatusCodes.Status404NotFound, "Không tìm thấy người dùng")]
-        public async Task<IActionResult> UpdatePhanQuyen(int id, [FromBody] PhanQuyenUpdateDto dto)
-        {
-            var user = await _context.NguoiDungs.FindAsync(id);
-            if (user == null) return NotFound();
-
-            user.Id_PhanQuyen = dto.Id_PhanQuyen;
-            _context.Entry(user).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-
-            var phanQuyenDto = new PhanQuyenResponseDto
-            {
-                Id = user.Id,
-                Id_PhanQuyen = user.Id_PhanQuyen
-            };
-
-            return Ok(phanQuyenDto);
-        }
-
-        // ==================== HASHING HELPERS ====================
-        private byte[] HashPasswordToBytes(string password)
-        {
-            using (SHA256 sha256 = SHA256.Create())
-            {
-                return sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-            }
+            using var sha256 = SHA256.Create();
+            return sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
         }
     }
 
-    // ==================== DTOs ĐÃ CẬP NHẬT ====================
-
-    public class CreateUserDto
-    {
-        public string Ten { get; set; } = null!;
-        public string Email { get; set; } = null!;
-        public string Sdt { get; set; } = null!;
-        public string MatKhau { get; set; } = null!;
-        public int Id_PhanQuyen { get; set; } = 1; // Mặc định là thành viên
-    }
-
-    public class UpdateUserDto
-    {
-        public string Ten { get; set; } = null!;
-        public string Email { get; set; } = null!;
-        public string Sdt { get; set; } = null!;
-        public string? MatKhau { get; set; }
-        public int? Id_PhanQuyen { get; set; }
-    }
-
-    public class LoginModel
-    {
-        public string Email { get; set; } = null!;
-        public string MatKhau { get; set; } = null!;
-    }
-
-    public class LoginResponseDto
-    {
-        public int Id { get; set; }
-        public string Ten { get; set; } = null!;
-        public string Email { get; set; } = null!;
-        public int Id_PhanQuyen { get; set; }
-    }
-
-    public class PhanQuyenResponseDto
-    {
-        public int Id { get; set; }
-        public int Id_PhanQuyen { get; set; }
-    }
-
-    public class PhanQuyenUpdateDto
-    {
-        public int Id_PhanQuyen { get; set; }
-    }
 }
