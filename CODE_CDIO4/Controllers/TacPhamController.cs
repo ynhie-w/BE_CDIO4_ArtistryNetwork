@@ -17,7 +17,40 @@ namespace CODE_CDIO4.Controllers
         {
             _context = context;
         }
+       // LẤY TẤT CẢ TÁC PHẨM====================
+        //get all
+        [HttpGet]
+        [SwaggerOperation(Summary = "Lấy danh sách tác phẩm", Description = "Trả về toàn bộ danh sách tác phẩm trong hệ thống.")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Danh sách tác phẩm")]
+        public async Task<IActionResult> GetAllTacPhams()
+        {
+            var result = await _context.TacPhams
+                .Include(t => t.TheLoai)
+                .Include(t => t.NguoiTao)
+                .Include(t => t.TacPham_Hashtags)
+                .ToListAsync();
 
+            return Ok(new { message = "Lấy danh sách tác phẩm thành công", data = result });
+        }
+
+        // get by id
+        [HttpGet("get/{id}")]
+        [SwaggerOperation(Summary = "Lấy tác phẩm theo ID", Description = "Trả về thông tin chi tiết của một tác phẩm theo ID.")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Thông tin tác phẩm")]
+        [SwaggerResponse(StatusCodes.Status404NotFound, "Không tìm thấy tác phẩm")]
+        public async Task<IActionResult> GetTacPhamById(int id)
+        {
+            var result = await _context.TacPhams
+                .Include(t => t.TheLoai)
+                .Include(t => t.NguoiTao)
+                .Include(t => t.TacPham_Hashtags)
+                .FirstOrDefaultAsync(t => t.Id == id);
+
+            if (result == null)
+                return NotFound(new { message = "Không tìm thấy tác phẩm" });
+
+            return Ok(new { message = "Lấy tác phẩm thành công", data = result });
+        }
         // ================== INSERT ==================
         [HttpPost("insert")]
         [SwaggerOperation(Summary = "Thêm tác phẩm mới", Description = "Thêm một tác phẩm mới vào hệ thống (gồm tên, mô tả, ảnh, thể loại, giá, trạng thái).")]

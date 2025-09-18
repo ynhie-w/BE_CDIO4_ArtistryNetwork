@@ -548,7 +548,7 @@
         "tags": [
           "CapDo"
         ],
-        "summary": "Tạo cấp độ mới (không nhập id)",
+        "summary": "Tạo cấp độ mới",
         "description": "Thêm một cấp độ mới vào cơ sở dữ liệu.",
         "requestBody": {
           "content": {
@@ -720,7 +720,7 @@
         "tags": [
           "DanhGia"
         ],
-        "summary": "Lấy tất cả đánh giá (đang hoạt động)",
+        "summary": "Lấy tất cả đánh giá",
         "responses": {
           "200": {
             "description": "Lấy thành công",
@@ -2960,6 +2960,48 @@
           },
           "404": {
             "description": "Không tìm thấy quyền để xóa."
+          }
+        }
+      }
+    },
+    "/api/TacPham/get-all": {
+      "get": {
+        "tags": [
+          "TacPham"
+        ],
+        "summary": "Lấy danh sách tác phẩm",
+        "description": "Trả về toàn bộ danh sách tác phẩm trong hệ thống.",
+        "responses": {
+          "200": {
+            "description": "Danh sách tác phẩm"
+          }
+        }
+      }
+    },
+    "/api/TacPham/get/{id}": {
+      "get": {
+        "tags": [
+          "TacPham"
+        ],
+        "summary": "Lấy tác phẩm theo ID",
+        "description": "Trả về thông tin chi tiết của một tác phẩm theo ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thông tin tác phẩm"
+          },
+          "404": {
+            "description": "Không tìm thấy tác phẩm"
           }
         }
       }

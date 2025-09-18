@@ -64,7 +64,7 @@ namespace CODE_CDIO4.Controllers
 
         // ==================== TẠO MỚI ====================
         [HttpPost]
-        [SwaggerOperation(Summary = "Tạo cấp độ mới (không nhập id)", Description = "Thêm một cấp độ mới vào cơ sở dữ liệu.")]
+        [SwaggerOperation(Summary = "Tạo cấp độ mới", Description = "Thêm một cấp độ mới vào cơ sở dữ liệu.")]
         [SwaggerResponse(StatusCodes.Status201Created, "Tạo thành công.", typeof(CapDoDTO))]
         [SwaggerResponse(StatusCodes.Status400BadRequest, "Dữ liệu không hợp lệ.")]
         public async Task<ActionResult<CapDoDTO>> Create([FromBody] CapDoInsertDTO dto)

@@ -2024,6 +2024,49 @@
   },
   {
     "ContainingType": "CODE_CDIO4.Controllers.TacPhamController",
+    "Method": "GetAllTacPhams",
+    "RelativePath": "api/TacPham/get-all",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "CODE_CDIO4.Controllers.TacPhamController",
+    "Method": "GetTacPhamById",
+    "RelativePath": "api/TacPham/get/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      },
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 404
+      }
+    ]
+  },
+  {
+    "ContainingType": "CODE_CDIO4.Controllers.TacPhamController",
     "Method": "InsertTacPham",
     "RelativePath": "api/TacPham/insert",
     "HttpMethod": "POST",

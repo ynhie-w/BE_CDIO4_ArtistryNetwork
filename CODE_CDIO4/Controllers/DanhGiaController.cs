@@ -21,9 +21,9 @@ namespace CODE_CDIO4.Controllers
             _context = context;
             _notificationService = notificationService;
         }
-        // ==================== LẤY TẤT CẢ ====================
+        // ==================== LẤY TẤT CẢ ĐÁNH GIÁ====================
         [HttpGet]
-        [SwaggerOperation(Summary = "Lấy tất cả đánh giá (đang hoạt động)")]
+        [SwaggerOperation(Summary = "Lấy tất cả đánh giá")]
         [SwaggerResponse(200, "Lấy thành công", typeof(IEnumerable<DanhGiaDTO>))]
         [SwaggerResponse(404, "Không có đánh giá nào")]
         public async Task<ActionResult<IEnumerable<DanhGiaDTO>>> GetAllDanhGia()
