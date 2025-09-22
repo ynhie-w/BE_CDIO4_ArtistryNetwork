@@ -1,0 +1,1732 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "CDIO4_BE",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/Admin/dangnhap": {
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Đăng nhập admin bằng email hoặc số điện thoại, trả về JWT Token",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DangNhapDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DangNhapDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DangNhapDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Admin/nguoidung": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Lấy danh sách tất cả người dùng (có phân trang)",
+        "parameters": [
+          {
+            "name": "trang",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "soLuong",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Tạo tài khoản người dùng mới (admin tạo)",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaoNguoiDungDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaoNguoiDungDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaoNguoiDungDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Admin/nguoidung/{id}": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Lấy thông tin chi tiết một người dùng",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Cập nhật thông tin người dùng",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CapNhatNguoiDungDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CapNhatNguoiDungDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CapNhatNguoiDungDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Xóa người dùng",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Admin/nguoidung/{id}/khoa": {
+      "put": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Khóa/Mở khóa tài khoản người dùng",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KhoaTaiKhoanDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KhoaTaiKhoanDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/KhoaTaiKhoanDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Admin/noidung/sanpham": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Lấy danh sách tất cả sản phẩm",
+        "parameters": [
+          {
+            "name": "trang",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "soLuong",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Tạo sản phẩm mới",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaoSanPhamDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaoSanPhamDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaoSanPhamDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Admin/noidung/sanpham/{id}": {
+      "put": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Cập nhật sản phẩm",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CapNhatSanPhamDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CapNhatSanPhamDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CapNhatSanPhamDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Xóa sản phẩm",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Admin/noidung/bosuutap": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Lấy danh sách tất cả bộ sưu tập",
+        "parameters": [
+          {
+            "name": "trang",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "soLuong",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Tạo bộ sưu tập mới",
+        "parameters": [
+          {
+            "name": "idNguoiDung",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idTacPham",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Cập nhật trạng thái bộ sưu tập",
+        "parameters": [
+          {
+            "name": "idNguoiDung",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idTacPham",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "trangThai",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Admin/noidung/bosuutap/{id}": {
+      "delete": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Xóa bộ sưu tập",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Admin/thongke/tong-quan": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Thống kê tổng quan hệ thống",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Admin/thongke/donhang-theo-thoi-gian": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "parameters": [
+          {
+            "name": "tuNgay",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "denNgay",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Admin/thongke/nguoi-dung": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Thống kê người dùng mới theo thời gian",
+        "parameters": [
+          {
+            "name": "tuNgay",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "denNgay",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Admin/thongke/san-pham-ban-chay": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Top sản phẩm bán chạy nhất",
+        "parameters": [
+          {
+            "name": "top",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Admin/donhang": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Lấy danh sách tất cả đơn hàng",
+        "parameters": [
+          {
+            "name": "trang",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "soLuong",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          },
+          {
+            "name": "trangThai",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Admin/donhang/{id}": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Lấy chi tiết đơn hàng",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Admin"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HuyDonHangDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HuyDonHangDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/HuyDonHangDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Admin/donhang/{id}/trang-thai": {
+      "put": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Cập nhật trạng thái đơn hàng",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CapNhatTrangThaiDonHangDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CapNhatTrangThaiDonHangDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CapNhatTrangThaiDonHangDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/DonHang": {
+      "get": {
+        "tags": [
+          "DonHang"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/DonHang/TaoMoi": {
+      "post": {
+        "tags": [
+          "DonHang"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaoDonHangDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaoDonHangDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaoDonHangDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/GioHang": {
+      "get": {
+        "tags": [
+          "GioHang"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/GioHang/Them": {
+      "post": {
+        "tags": [
+          "GioHang"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ThemGioHangDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ThemGioHangDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ThemGioHangDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/GioHang/Xoa": {
+      "delete": {
+        "tags": [
+          "GioHang"
+        ],
+        "parameters": [
+          {
+            "name": "sanPhamId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TacPham": {
+      "get": {
+        "tags": [
+          "TacPham"
+        ],
+        "summary": "Lấy danh sách tác phẩm, có thể lọc theo thể loại hoặc hashtag (không cần đăng nhập)",
+        "parameters": [
+          {
+            "name": "tenTheLoai",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "hashtag",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TacPham/{id}": {
+      "get": {
+        "tags": [
+          "TacPham"
+        ],
+        "summary": "Xem chi tiết tác phẩm, sẽ tăng lượt xem (không cần đăng nhập) ",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TacPham/Search": {
+      "get": {
+        "tags": [
+          "TacPham"
+        ],
+        "summary": "Tìm kiếm tác phẩm theo từ khóa  (không cần đăng nhập)",
+        "parameters": [
+          {
+            "name": "keyword",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TacPham/BoSuuTap": {
+      "get": {
+        "tags": [
+          "TacPham"
+        ],
+        "summary": "Lấy danh sách bộ sưu tập của người dùng đã đăng nhập (cần đăng nhập)",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TacPham/My": {
+      "get": {
+        "tags": [
+          "TacPham"
+        ],
+        "summary": "Lấy danh sách tác phẩm của chính mình  (cần đăng nhập)",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TacPham/ThemVaoBoSuuTap/{idTacPham}": {
+      "post": {
+        "tags": [
+          "TacPham"
+        ],
+        "summary": "Thêm tác phẩm vào bộ sưu tập của người dùng  (cần đăng nhập)",
+        "parameters": [
+          {
+            "name": "idTacPham",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TacPham/BoSuuTap/{idTacPham}": {
+      "delete": {
+        "tags": [
+          "TacPham"
+        ],
+        "summary": "Xóa tác phẩm khỏi bộ sưu tập của người dùng  (cần đăng nhập)",
+        "parameters": [
+          {
+            "name": "idTacPham",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TacPham/Mua/{idTacPham}": {
+      "post": {
+        "tags": [
+          "TacPham"
+        ],
+        "summary": "Mua tác phẩm (demo chỉ ghi nhận đánh giá 5 sao)  (cần đăng nhập)",
+        "parameters": [
+          {
+            "name": "idTacPham",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TacPham/{idTacPham}/binhluan": {
+      "post": {
+        "tags": [
+          "TacPham"
+        ],
+        "summary": "Thêm bình luận hoặc trả lời bình luận  (cần đăng nhập)",
+        "parameters": [
+          {
+            "name": "idTacPham",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ThemBinhLuanRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ThemBinhLuanRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ThemBinhLuanRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TacPham/binhluan/sua": {
+      "put": {
+        "tags": [
+          "TacPham"
+        ],
+        "summary": "Sửa nội dung bình luận  (cần đăng nhập)",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SuaBinhLuanDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SuaBinhLuanDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SuaBinhLuanDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TacPham/binhluan/{idBinhLuan}": {
+      "delete": {
+        "tags": [
+          "TacPham"
+        ],
+        "summary": "Xóa bình luận  (cần đăng nhập)",
+        "parameters": [
+          {
+            "name": "idBinhLuan",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TacPham/{idTacPham}/camxuc": {
+      "post": {
+        "tags": [
+          "TacPham"
+        ],
+        "summary": "Thêm/cập nhật cảm xúc  (cần đăng nhập)",
+        "parameters": [
+          {
+            "name": "idTacPham",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TacPham/camxuc/{idTacPham}": {
+      "delete": {
+        "tags": [
+          "TacPham"
+        ],
+        "summary": "Xóa cảm xúc (cần đăng nhập)",
+        "parameters": [
+          {
+            "name": "idTacPham",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TaiKhoan/dangnhap": {
+      "post": {
+        "tags": [
+          "TaiKhoan"
+        ],
+        "summary": "Đăng nhập bằng email hoặc số điện thoại và mật khẩu, trả về JWT Token",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DangNhapDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DangNhapDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DangNhapDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TaiKhoan/dangky": {
+      "post": {
+        "tags": [
+          "TaiKhoan"
+        ],
+        "summary": "Đăng ký tài khoản mới",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DangKyDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DangKyDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DangKyDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TaiKhoan/dangxuat": {
+      "post": {
+        "tags": [
+          "TaiKhoan"
+        ],
+        "summary": "Đăng xuất, hủy JWT token hiện tại",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TaiKhoan/doimatkhau": {
+      "put": {
+        "tags": [
+          "TaiKhoan"
+        ],
+        "summary": "Đổi mật khẩu, cần mật khẩu cũ và mật khẩu mới  (cần đăng nhập)",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DoiMatKhauDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DoiMatKhauDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DoiMatKhauDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TaiKhoan/quenmatkhau": {
+      "post": {
+        "tags": [
+          "TaiKhoan"
+        ],
+        "summary": "Gửi yêu cầu quên mật khẩu, tạo token và gửi link reset. lấy token reset ở console của backend",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuenMatKhauDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuenMatKhauDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuenMatKhauDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TaiKhoan/datlaimatkhau": {
+      "post": {
+        "tags": [
+          "TaiKhoan"
+        ],
+        "summary": "Đặt lại mật khẩu từ token reset",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DatLaiMatKhauDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DatLaiMatKhauDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DatLaiMatKhauDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TaiKhoan/ThongTin": {
+      "get": {
+        "tags": [
+          "TaiKhoan"
+        ],
+        "summary": "Lấy thông tin cá nhân (chỉ thành viên) (cần đăng nhập)",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TaiKhoan/CapNhatEmail": {
+      "patch": {
+        "tags": [
+          "TaiKhoan"
+        ],
+        "summary": "Chỉnh sửa email  (cần đăng nhập)",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CapNhatNguoiDungDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CapNhatNguoiDungDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CapNhatNguoiDungDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TaiKhoan/CapNhatSdt": {
+      "patch": {
+        "tags": [
+          "TaiKhoan"
+        ],
+        "summary": "Chỉnh sửa số điện thoại (cần đăng nhập)",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CapNhatNguoiDungDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CapNhatNguoiDungDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CapNhatNguoiDungDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TaiKhoan/CapNhatAnhDaiDien": {
+      "patch": {
+        "tags": [
+          "TaiKhoan"
+        ],
+        "summary": "Chỉnh sửa ảnh đại diện (cần đăng nhập)",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CapNhatNguoiDungDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CapNhatNguoiDungDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CapNhatNguoiDungDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CapNhatNguoiDungDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ten": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "sdt": {
+            "type": "string",
+            "nullable": true
+          },
+          "anhDaiDien": {
+            "type": "string",
+            "nullable": true
+          },
+          "matKhauMoi": {
+            "type": "string",
+            "nullable": true
+          },
+          "diemThuong": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "trangThai": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CapNhatSanPhamDto": {
+        "type": "object",
+        "properties": {
+          "tenSanPham": {
+            "type": "string",
+            "nullable": true
+          },
+          "gia": {
+            "type": "number",
+            "format": "double"
+          },
+          "moTa": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CapNhatTrangThaiDonHangDto": {
+        "type": "object",
+        "properties": {
+          "trangThai": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DangKyDto": {
+        "type": "object",
+        "properties": {
+          "ten": {
+            "type": "string",
+            "nullable": true
+          },
+          "emailSdt": {
+            "type": "string",
+            "nullable": true
+          },
+          "matKhau": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DangNhapDto": {
+        "type": "object",
+        "properties": {
+          "emailSdt": {
+            "type": "string",
+            "nullable": true
+          },
+          "matKhau": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DatLaiMatKhauDto": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "nullable": true
+          },
+          "matKhauMoi": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DoiMatKhauDto": {
+        "type": "object",
+        "properties": {
+          "matKhauCu": {
+            "type": "string",
+            "nullable": true
+          },
+          "matKhauMoi": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "HuyDonHangDto": {
+        "type": "object",
+        "properties": {
+          "lyDoHuy": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "KhoaTaiKhoanDto": {
+        "type": "object",
+        "properties": {
+          "biKhoa": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "QuenMatKhauDto": {
+        "type": "object",
+        "properties": {
+          "emailSdt": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SuaBinhLuanDto": {
+        "type": "object",
+        "properties": {
+          "idBinhLuan": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "noiDungMoi": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TaoDonHangDto": {
+        "type": "object",
+        "properties": {
+          "diaChiGiaoHang": {
+            "type": "string",
+            "nullable": true
+          },
+          "hinhThucThanhToan": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TaoNguoiDungDto": {
+        "type": "object",
+        "properties": {
+          "ten": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "sdt": {
+            "type": "string",
+            "nullable": true
+          },
+          "matKhau": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TaoSanPhamDto": {
+        "type": "object",
+        "properties": {
+          "tenSanPham": {
+            "type": "string",
+            "nullable": true
+          },
+          "gia": {
+            "type": "number",
+            "format": "double"
+          },
+          "moTa": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ThemBinhLuanRequest": {
+        "type": "object",
+        "properties": {
+          "noiDung": {
+            "type": "string",
+            "nullable": true
+          },
+          "idBinhLuanCha": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ThemGioHangDto": {
+        "type": "object",
+        "properties": {
+          "sanPhamId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "soLuong": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "description": "Nhập JWT Bearer token theo format: Bearer {token}",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
+}
