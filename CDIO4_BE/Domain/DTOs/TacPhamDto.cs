@@ -47,10 +47,8 @@
         public string NoiDung { get; set; } = string.Empty;
         public DateTime NgayTao { get; set; }
 
-        // Level 0 hoặc 1
         public int Level { get; set; }
 
-        // Trả lời nếu Level = 0
         public List<BinhLuanDto> TraLoi { get; set; } = new();
 
     }

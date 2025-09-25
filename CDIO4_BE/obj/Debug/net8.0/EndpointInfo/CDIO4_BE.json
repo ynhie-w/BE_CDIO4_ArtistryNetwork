@@ -839,23 +839,7 @@
         "tags": [
           "TacPham"
         ],
-        "summary": "Lấy danh sách tác phẩm, có thể lọc theo thể loại hoặc hashtag (không cần đăng nhập)",
-        "parameters": [
-          {
-            "name": "tenTheLoai",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "hashtag",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "summary": "Lấy danh sách tác phẩm (không cần đăng nhập)",
         "responses": {
           "200": {
             "description": "OK"
@@ -989,6 +973,30 @@
           "TacPham"
         ],
         "summary": "Mua tác phẩm (demo chỉ ghi nhận đánh giá 5 sao)  (cần đăng nhập)",
+        "parameters": [
+          {
+            "name": "idTacPham",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TacPham/tacpham/{idTacPham}": {
+      "get": {
+        "tags": [
+          "TacPham"
+        ],
+        "summary": "Xem danh sách bình luận của tác phẩm (bao gồm trả lời)",
         "parameters": [
           {
             "name": "idTacPham",

@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\nhi\\CDIO4\\CDIO4_BE\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{51F381A4-5A6A-4740-ACC3-E0FF9C7EEE85}|CDIO4_BE\\CDIO4_BE.csproj|c:\\nhi\\cdio4\\cdio4_be\\cdio4_be\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{51F381A4-5A6A-4740-ACC3-E0FF9C7EEE85}|CDIO4_BE\\CDIO4_BE.csproj|solutionrelative:cdio4_be\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{AC2980DC-56BA-4F74-A1BE-04A6C19E8815}|CDIO4_BE\\CDIO4_BE.csproj|c:\\nhi\\cdio4\\cdio4_be\\cdio4_be\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{AC2980DC-56BA-4F74-A1BE-04A6C19E8815}|CDIO4_BE\\CDIO4_BE.csproj|solutionrelative:cdio4_be\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{51F381A4-5A6A-4740-ACC3-E0FF9C7EEE85}|CDIO4_BE\\CDIO4_BE.csproj|c:\\nhi\\cdio4\\cdio4_be\\cdio4_be\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{51F381A4-5A6A-4740-ACC3-E0FF9C7EEE85}|CDIO4_BE\\CDIO4_BE.csproj|solutionrelative:cdio4_be\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{AC2980DC-56BA-4F74-A1BE-04A6C19E8815}|CDIO4_BE\\CDIO4_BE.csproj|c:\\nhi\\cdio4\\cdio4_be\\cdio4_be\\repository\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AC2980DC-56BA-4F74-A1BE-04A6C19E8815}|CDIO4_BE\\CDIO4_BE.csproj|solutionrelative:cdio4_be\\repository\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,24 +18,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "launchSettings.json",
-              "DocumentMoniker": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Properties\\launchSettings.json",
-              "RelativeDocumentMoniker": "CDIO4_BE\\Properties\\launchSettings.json",
-              "ToolTip": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Properties\\launchSettings.json",
-              "RelativeToolTip": "CDIO4_BE\\Properties\\launchSettings.json",
-              "ViewState": "AgIAABkAAAAAAAAAAAAqwA8AAAAfAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-09-23T04:22:48.153Z",
-              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -45,9 +32,22 @@
               "RelativeDocumentMoniker": "CDIO4_BE\\appsettings.json",
               "ToolTip": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\appsettings.json",
               "RelativeToolTip": "CDIO4_BE\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-09-23T04:22:45.424Z",
+              "WhenOpened": "2025-09-25T03:09:53.934Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Repository\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "CDIO4_BE\\Repository\\AppDbContext.cs",
+              "ToolTip": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Repository\\AppDbContext.cs",
+              "RelativeToolTip": "CDIO4_BE\\Repository\\AppDbContext.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAxwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-25T03:09:49.51Z",
               "EditorCaption": ""
             }
           ]

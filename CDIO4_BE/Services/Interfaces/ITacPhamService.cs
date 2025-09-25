@@ -6,7 +6,7 @@ namespace CDIO4_BE.Services.Interfaces
 {
     public interface ITacPhamService
     {
-        Task<List<TacPhamListDto>> LayDanhSachTacPham(string? tenTheLoai, string? hashtag);
+        Task<List<TacPhamListDto>> LayDanhSachTacPham();
         Task<TacPhamDto?> LayChiTietTacPham(int id);
         Task<List<TacPhamDto>> TimKiemTacPham(string keyword);
         Task<List<TacPhamDto>> LayBoSuuTap(int idNguoiDung);
@@ -15,6 +15,7 @@ namespace CDIO4_BE.Services.Interfaces
 
         Task ThemVaoBoSuuTap(int idNguoiDung, int idTacPham);
         Task XoaKhoiBoSuuTap(int idNguoiDung, int idTacPham);
+        Task<IEnumerable<BinhLuan>> XemDanhSachBinhLuanCuaTacPham(int idTacPham);
         Task ThemBinhLuan(int idNguoiDung, int idTacPham, string noiDung);
         Task ThemTraLoiBinhLuan(int idNguoiDung, int? idBinhLuanCha, string noiDung);
         Task SuaBinhLuan(int idNguoiDung, int idBinhLuan, string noiDungMoi);

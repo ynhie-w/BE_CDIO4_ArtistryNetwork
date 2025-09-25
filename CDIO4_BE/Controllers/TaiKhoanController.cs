@@ -146,7 +146,6 @@ namespace CDIO4_BE.Controllers
                     Email = u.Email,
                     Sdt = u.Sdt,
                     AnhDaiDien = u.AnhDaiDien,
-                    MatKhauMoi = "",        // Không trả mật khẩu hiện tại
                     DiemThuong = u.DiemThuong,
                     TrangThai = u.TrangThai
                 })

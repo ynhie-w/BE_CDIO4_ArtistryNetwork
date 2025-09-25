@@ -18,24 +18,15 @@ namespace CDIO4_BE.Services
         {
             _context = context;
         }
-        public async Task<List<TacPhamListDto>> LayDanhSachTacPham(string? tenTheLoai, string? hashtag)
+        public async Task<List<TacPhamListDto>> LayDanhSachTacPham()
         {
             var query = _context.TacPhams
                 .Include(tp => tp.NguoiTao)
                 .Include(tp => tp.BinhLuans)
                 .Include(tp => tp.TacPham_CamXucs)
-                .Include(tp => tp.TheLoai) // join với bảng thể loại
+                .Include(tp => tp.TheLoai) 
                 .AsQueryable();
 
-            if (!string.IsNullOrEmpty(tenTheLoai))
-            {
-                query = query.Where(tp => tp.TheLoai != null && tp.TheLoai.Ten == tenTheLoai);
-            }
-
-            if (!string.IsNullOrEmpty(hashtag))
-            {
-                query = query.Where(tp => tp.MoTa != null && tp.MoTa.Contains("#" + hashtag));
-            }
 
             return await query.Select(tp => new TacPhamListDto
             {
@@ -50,8 +41,6 @@ namespace CDIO4_BE.Services
                     Ten = tp.NguoiTao.Ten,
                     AnhDaiDien = tp.NguoiTao.AnhDaiDien
                 },
-                SoLuongBinhLuan = tp.BinhLuans.Count(b => b.TrangThai),
-                SoLuongCamXuc = tp.TacPham_CamXucs.Count(tc => tc.TrangThai),
                 LuotXem = tp.LuotXem
             }).ToListAsync();
         }
@@ -181,6 +170,16 @@ namespace CDIO4_BE.Services
             // Soft delete bằng cách cập nhật trạng thái
             boSuuTap.TrangThai = false;
             await _context.SaveChangesAsync();
+        }
+        public async Task<IEnumerable<BinhLuan>> XemDanhSachBinhLuanCuaTacPham(int idTacPham)
+        {
+            var binhLuans = await _context.BinhLuans
+            .Where(b => b.Id_TacPham == idTacPham && b.TrangThai == true)
+            .Include(b => b.NguoiBinhLuan) // lấy thông tin người dùng
+            .OrderByDescending(b => b.NgayTao)
+            .ToListAsync();
+
+            return binhLuans;
         }
         public async Task ThemBinhLuan(int idNguoiDung, int idTacPham, string noiDung)
         {

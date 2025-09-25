@@ -24,10 +24,10 @@ namespace CDIO4_BE.Controllers
 
         // GET: /api/tacPham
         [HttpGet]
-        [SwaggerOperation(Summary = "Lấy danh sách tác phẩm, có thể lọc theo thể loại hoặc hashtag (không cần đăng nhập)")]
-        public async Task<IActionResult> LayDanhSachTacPham(string? tenTheLoai, string? hashtag)
+        [SwaggerOperation(Summary = "Lấy danh sách tác phẩm (không cần đăng nhập)")]
+        public async Task<IActionResult> LayDanhSachTacPham()
         {
-            var list = await _tacPhamService.LayDanhSachTacPham(tenTheLoai, hashtag);
+            var list = await _tacPhamService.LayDanhSachTacPham();
             return Ok(list);
         }
 
@@ -100,10 +100,6 @@ namespace CDIO4_BE.Controllers
             }
         }
 
-
-
-
-
         // POST: /api/tacPham/Mua/{idTacPham}
         [HttpPost("Mua/{idTacPham}")]
         [Authorize]
@@ -115,6 +111,13 @@ namespace CDIO4_BE.Controllers
             return Ok("Đã mua tác phẩm");
         }
 
+        [HttpGet("tacpham/{idTacPham}")]
+        [SwaggerOperation(Summary = "Xem danh sách bình luận của tác phẩm (bao gồm trả lời)")]
+        public async Task<IActionResult> GetBinhLuansByTacPham(int idTacPham)
+        {
+            var binhLuans = await _tacPhamService.XemDanhSachBinhLuanCuaTacPham(idTacPham);
+            return Ok(binhLuans);
+        }
 
         // POST: /api/tacPham/{idTacPham}/binhluan
         [HttpPost("{idTacPham}/binhluan")]

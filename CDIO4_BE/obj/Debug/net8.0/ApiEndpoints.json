@@ -511,18 +511,7 @@
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "tenTheLoai",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "hashtag",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -695,6 +684,22 @@
         "Name": "keyword",
         "Type": "System.String",
         "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CDIO4_BE.Controllers.TacPhamController",
+    "Method": "GetBinhLuansByTacPham",
+    "RelativePath": "api/TacPham/tacpham/{idTacPham}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idTacPham",
+        "Type": "System.Int32",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
