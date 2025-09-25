@@ -59,27 +59,6 @@
   },
   {
     "ContainingType": "CDIO4_BE.Controllers.AdminController",
-    "Method": "HuyDonHang",
-    "RelativePath": "api/Admin/donhang/{id}",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "yeuCau",
-        "Type": "CDIO4_BE.Domain.DTOs.HuyDonHangDto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "CDIO4_BE.Controllers.AdminController",
     "Method": "CapNhatTrangThaiDonHang",
     "RelativePath": "api/Admin/donhang/{id}/trang-thai",
     "HttpMethod": "PUT",
@@ -116,22 +95,6 @@
         "Name": "soLuong",
         "Type": "System.Int32",
         "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "CDIO4_BE.Controllers.AdminController",
-    "Method": "TaoNguoiDung",
-    "RelativePath": "api/Admin/nguoidung",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "yeuCau",
-        "Type": "CDIO4_BE.Domain.DTOs.TaoNguoiDungDto",
-        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -233,69 +196,6 @@
   },
   {
     "ContainingType": "CDIO4_BE.Controllers.AdminController",
-    "Method": "TaoBoSuuTap",
-    "RelativePath": "api/Admin/noidung/bosuutap",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "idNguoiDung",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "idTacPham",
-        "Type": "System.Int32",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "CDIO4_BE.Controllers.AdminController",
-    "Method": "CapNhatBoSuuTap",
-    "RelativePath": "api/Admin/noidung/bosuutap",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "idNguoiDung",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "idTacPham",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "trangThai",
-        "Type": "System.Boolean",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "CDIO4_BE.Controllers.AdminController",
-    "Method": "XoaBoSuuTap",
-    "RelativePath": "api/Admin/noidung/bosuutap/{id}",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "CDIO4_BE.Controllers.AdminController",
     "Method": "LayDanhSachSanPham",
     "RelativePath": "api/Admin/noidung/sanpham",
     "HttpMethod": "GET",
@@ -311,59 +211,6 @@
         "Name": "soLuong",
         "Type": "System.Int32",
         "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "CDIO4_BE.Controllers.AdminController",
-    "Method": "TaoSanPham",
-    "RelativePath": "api/Admin/noidung/sanpham",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "yeuCau",
-        "Type": "CDIO4_BE.Domain.DTOs.TaoSanPhamDto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "CDIO4_BE.Controllers.AdminController",
-    "Method": "CapNhatSanPham",
-    "RelativePath": "api/Admin/noidung/sanpham/{id}",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "yeuCau",
-        "Type": "CDIO4_BE.Domain.DTOs.CapNhatSanPhamDto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "CDIO4_BE.Controllers.AdminController",
-    "Method": "XoaSanPham",
-    "RelativePath": "api/Admin/noidung/sanpham/{id}",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -511,7 +358,18 @@
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "trang",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "soLuong",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   },
   {

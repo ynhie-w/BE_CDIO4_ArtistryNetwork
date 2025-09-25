@@ -23,9 +23,9 @@ namespace CDIO4_BE.Controllers
         [HttpGet]
         public async Task<IActionResult> XemGioHang()
         {
-            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userIdClaim = User.FindFirstValue("userId"); // giống DonHangController
             if (string.IsNullOrEmpty(userIdClaim))
-                return Unauthorized();
+                return Unauthorized(new { Message = "Không tìm thấy userId trong token" });
 
             int userId = int.Parse(userIdClaim);
             var gioHang = await _gioHangService.LayGioHang(userId);
@@ -36,9 +36,9 @@ namespace CDIO4_BE.Controllers
         [HttpPost("Them")]
         public async Task<IActionResult> ThemSanPham([FromBody] ThemGioHangDto dto)
         {
-            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userIdClaim = User.FindFirstValue("userId");
             if (string.IsNullOrEmpty(userIdClaim))
-                return Unauthorized();
+                return Unauthorized(new { Message = "Không tìm thấy userId trong token" });
 
             int userId = int.Parse(userIdClaim);
             var ketQua = await _gioHangService.ThemSanPham(userId, dto);
@@ -51,9 +51,9 @@ namespace CDIO4_BE.Controllers
         [HttpDelete("Xoa")]
         public async Task<IActionResult> XoaSanPham([FromQuery] int sanPhamId)
         {
-            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userIdClaim = User.FindFirstValue("userId");
             if (string.IsNullOrEmpty(userIdClaim))
-                return Unauthorized();
+                return Unauthorized(new { Message = "Không tìm thấy userId trong token" });
 
             int userId = int.Parse(userIdClaim);
             var ketQua = await _gioHangService.XoaSanPham(userId, sanPhamId);

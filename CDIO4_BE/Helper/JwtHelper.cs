@@ -15,9 +15,8 @@ namespace CDIO4_BE.Helper
         {
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, IdNguoiDung.ToString()),
-                   new Claim(ClaimTypes.NameIdentifier, IdNguoiDung.ToString()),
-                new Claim(ClaimTypes.Role, VaiTro)
+                new Claim("userId", IdNguoiDung.ToString()),
+                new Claim("role", VaiTro)
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(KhoaBiMat));

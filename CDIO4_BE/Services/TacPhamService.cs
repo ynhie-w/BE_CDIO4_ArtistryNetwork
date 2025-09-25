@@ -18,32 +18,38 @@ namespace CDIO4_BE.Services
         {
             _context = context;
         }
-        public async Task<List<TacPhamListDto>> LayDanhSachTacPham()
+        public async Task<List<TacPhamListDto>> LayDanhSachTacPham(int trang, int soLuong)
         {
             var query = _context.TacPhams
                 .Include(tp => tp.NguoiTao)
                 .Include(tp => tp.BinhLuans)
                 .Include(tp => tp.TacPham_CamXucs)
-                .Include(tp => tp.TheLoai) 
+                .Include(tp => tp.TheLoai)
                 .AsQueryable();
 
-
-            return await query.Select(tp => new TacPhamListDto
-            {
-                Id = tp.Id,
-                Ten = tp.Ten,
-                MoTa = tp.MoTa,
-                Anh = tp.Anh,
-                NgayTao = tp.NgayTao,
-                NguoiTao = tp.NguoiTao == null ? null : new NguoiDungDto
+            return await query
+                .OrderByDescending(tp => tp.NgayTao)
+                .Skip((trang - 1) * soLuong)
+                .Take(soLuong)
+                .Select(tp => new TacPhamListDto
                 {
-                    Id = tp.NguoiTao.Id,
-                    Ten = tp.NguoiTao.Ten,
-                    AnhDaiDien = tp.NguoiTao.AnhDaiDien
-                },
-                LuotXem = tp.LuotXem
-            }).ToListAsync();
+                    Id = tp.Id,
+                    Ten = tp.Ten,
+                    MoTa = tp.MoTa,
+                    Anh = tp.Anh,
+                    NgayTao = tp.NgayTao,
+                    NguoiTao = tp.NguoiTao == null ? null : new NguoiDungDto
+                    {
+                        Id = tp.NguoiTao.Id,
+                        Ten = tp.NguoiTao.Ten,
+                        AnhDaiDien = tp.NguoiTao.AnhDaiDien
+                    },
+                    SoLuongBinhLuan = tp.BinhLuans.Count(b => b.TrangThai),
+                    SoLuongCamXuc = tp.TacPham_CamXucs.Count(c => c.TrangThai),
+                    LuotXem = tp.LuotXem
+                }).ToListAsync();
         }
+
 
         public async Task<TacPhamDto?> LayChiTietTacPham(int id)
         {

@@ -68,36 +68,6 @@
             "description": "OK"
           }
         }
-      },
-      "post": {
-        "tags": [
-          "Admin"
-        ],
-        "summary": "Tạo tài khoản người dùng mới (admin tạo)",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TaoNguoiDungDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TaoNguoiDungDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/TaoNguoiDungDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
       }
     },
     "/api/Admin/nguoidung/{id}": {
@@ -261,101 +231,6 @@
             "description": "OK"
           }
         }
-      },
-      "post": {
-        "tags": [
-          "Admin"
-        ],
-        "summary": "Tạo sản phẩm mới",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TaoSanPhamDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TaoSanPhamDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/TaoSanPhamDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Admin/noidung/sanpham/{id}": {
-      "put": {
-        "tags": [
-          "Admin"
-        ],
-        "summary": "Cập nhật sản phẩm",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CapNhatSanPhamDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CapNhatSanPhamDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/CapNhatSanPhamDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Admin"
-        ],
-        "summary": "Xóa sản phẩm",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
       }
     },
     "/api/Admin/noidung/bosuutap": {
@@ -381,95 +256,6 @@
               "type": "integer",
               "format": "int32",
               "default": 10
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Admin"
-        ],
-        "summary": "Tạo bộ sưu tập mới",
-        "parameters": [
-          {
-            "name": "idNguoiDung",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "idTacPham",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Admin"
-        ],
-        "summary": "Cập nhật trạng thái bộ sưu tập",
-        "parameters": [
-          {
-            "name": "idNguoiDung",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "idTacPham",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "trangThai",
-            "in": "query",
-            "schema": {
-              "type": "boolean"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Admin/noidung/bosuutap/{id}": {
-      "delete": {
-        "tags": [
-          "Admin"
-        ],
-        "summary": "Xóa bộ sưu tập",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
             }
           }
         ],
@@ -641,46 +427,6 @@
             "description": "OK"
           }
         }
-      },
-      "delete": {
-        "tags": [
-          "Admin"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/HuyDonHangDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/HuyDonHangDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/HuyDonHangDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
       }
     },
     "/api/Admin/donhang/{id}/trang-thai": {
@@ -839,7 +585,27 @@
         "tags": [
           "TacPham"
         ],
-        "summary": "Lấy danh sách tác phẩm (không cần đăng nhập)",
+        "summary": "Lấy danh sách tác phẩm (có phân trang, không cần đăng nhập)",
+        "parameters": [
+          {
+            "name": "trang",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "soLuong",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -1508,24 +1274,6 @@
         },
         "additionalProperties": false
       },
-      "CapNhatSanPhamDto": {
-        "type": "object",
-        "properties": {
-          "tenSanPham": {
-            "type": "string",
-            "nullable": true
-          },
-          "gia": {
-            "type": "number",
-            "format": "double"
-          },
-          "moTa": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "CapNhatTrangThaiDonHangDto": {
         "type": "object",
         "properties": {
@@ -1596,16 +1344,6 @@
         },
         "additionalProperties": false
       },
-      "HuyDonHangDto": {
-        "type": "object",
-        "properties": {
-          "lyDoHuy": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "KhoaTaiKhoanDto": {
         "type": "object",
         "properties": {
@@ -1647,46 +1385,6 @@
             "nullable": true
           },
           "hinhThucThanhToan": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "TaoNguoiDungDto": {
-        "type": "object",
-        "properties": {
-          "ten": {
-            "type": "string",
-            "nullable": true
-          },
-          "email": {
-            "type": "string",
-            "nullable": true
-          },
-          "sdt": {
-            "type": "string",
-            "nullable": true
-          },
-          "matKhau": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "TaoSanPhamDto": {
-        "type": "object",
-        "properties": {
-          "tenSanPham": {
-            "type": "string",
-            "nullable": true
-          },
-          "gia": {
-            "type": "number",
-            "format": "double"
-          },
-          "moTa": {
             "type": "string",
             "nullable": true
           }

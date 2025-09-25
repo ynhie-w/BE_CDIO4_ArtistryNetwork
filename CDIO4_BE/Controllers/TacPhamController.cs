@@ -24,12 +24,13 @@ namespace CDIO4_BE.Controllers
 
         // GET: /api/tacPham
         [HttpGet]
-        [SwaggerOperation(Summary = "Lấy danh sách tác phẩm (không cần đăng nhập)")]
-        public async Task<IActionResult> LayDanhSachTacPham()
+        [SwaggerOperation(Summary = "Lấy danh sách tác phẩm (có phân trang, không cần đăng nhập)")]
+        public async Task<IActionResult> LayDanhSachTacPham([FromQuery] int trang = 1, [FromQuery] int soLuong = 10)
         {
-            var list = await _tacPhamService.LayDanhSachTacPham();
+            var list = await _tacPhamService.LayDanhSachTacPham(trang, soLuong);
             return Ok(list);
         }
+
 
         // GET: /api/tacPham/{id}
         [HttpGet("{id}")]

@@ -1,10 +1,24 @@
 ﻿using CDIO4_BE.Domain.DTOs;
 using CDIO4_BE.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using static CDIO4_BE.Controllers.DonHangController;
 
 namespace CDIO4_BE.Repository
 {
+    public static class SqlServerIdentityColumnTriggerExtensions
+    {
+        public static EntityTypeBuilder<TEntity> UseSqlServerIdentityColumnTriggerWorkaround<TEntity>(
+            this EntityTypeBuilder<TEntity> builder) where TEntity : class
+        {
+            builder.Property<int>("__ef_tmp_id")
+                .Metadata.SetAfterSaveBehavior(
+                    Microsoft.EntityFrameworkCore.Metadata.PropertySaveBehavior.Ignore);
+
+            return builder;
+        }
+    }
+
     public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options)
@@ -49,18 +63,27 @@ namespace CDIO4_BE.Repository
             modelBuilder.Entity<DonHang_ChiTiet>().HasKey(dhct => new { dhct.Id_DonHang, dhct.Id_TacPham });
             modelBuilder.Entity<TacPham_CamXuc>().HasKey(tc => new { tc.Id_NguoiDung, tc.Id_TacPham, tc.Id_CamXuc });
             modelBuilder.Entity<GiamGia>().ToTable("GiamGia");
+            modelBuilder.Entity<NguoiDung>(entity =>
+            {
+                entity.ToTable("NGUOIDUNG", t => t.ExcludeFromMigrations());
+
+                entity.Property(e => e.Id)
+                    .ValueGeneratedOnAdd()   // Id sinh tự động (identity)
+                    .UseIdentityColumn();    // SQL Server identity
+            });
+
 
 
             base.OnModelCreating(modelBuilder);
 
-        // ------------------ Relationships ------------------
+            // ------------------ Relationships ------------------
 
-        // GioHang
-        modelBuilder.Entity<GioHang>()
-                .HasOne(g => g.NguoiMua)
-                .WithMany(u => u.GioHangs)
-                .HasForeignKey(g => g.Id_NguoiMua)
-                .OnDelete(DeleteBehavior.Cascade);
+            // GioHang
+            modelBuilder.Entity<GioHang>()
+                    .HasOne(g => g.NguoiMua)
+                    .WithMany(u => u.GioHangs)
+                    .HasForeignKey(g => g.Id_NguoiMua)
+                    .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<GioHang>()
                 .HasOne(g => g.TacPham)
@@ -212,11 +235,13 @@ namespace CDIO4_BE.Repository
                 .HasForeignKey(nd => nd.Id_PhanQuyen)
                 .OnDelete(DeleteBehavior.Restrict);
 
+
             modelBuilder.Entity<NguoiDung>()
                 .HasOne(nd => nd.CapDo)
                 .WithMany(c => c.NguoiDungs)
                 .HasForeignKey(nd => nd.Id_CapDo)
                 .OnDelete(DeleteBehavior.Restrict);
+
             // DonHang - GiamGia
             modelBuilder.Entity<DonHang>()
                 .HasOne(dh => dh.GiamGias)

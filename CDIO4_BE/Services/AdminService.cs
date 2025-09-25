@@ -138,97 +138,15 @@ namespace CDIO4_BE.Services
                 .ToListAsync();
         }
 
-        public async Task<int> TaoSanPham(TaoSanPhamDto yeuCau)
-        {
-            var sp = new TacPham
-            {
-                Ten = yeuCau.TenSanPham,
-                Gia = yeuCau.Gia,
-                MoTa = yeuCau.MoTa
-            };
-
-            _dbContext.TacPhams.Add(sp);
-            await _dbContext.SaveChangesAsync();
-            return sp.Id;
-        }
-
-        public async Task<bool> CapNhatSanPham(int id, CapNhatSanPhamDto yeuCau)
-        {
-            var sp = await _dbContext.TacPhams.FindAsync(id);
-            if (sp == null) return false;
-
-            sp.Ten = yeuCau.TenSanPham ?? sp.Ten;
-            sp.Gia = yeuCau.Gia != 0 ? yeuCau.Gia : sp.Gia;
-            sp.MoTa = yeuCau.MoTa ?? sp.MoTa;
-
-            await _dbContext.SaveChangesAsync();
-            return true;
-        }
-
-        public async Task<bool> XoaSanPham(int id)
-        {
-            var sp = await _dbContext.TacPhams.FindAsync(id);
-            if (sp == null) return false;
-
-            _dbContext.TacPhams.Remove(sp);
-            await _dbContext.SaveChangesAsync();
-            return true;
-        }
-
-        // ===== BỘ SƯU TẬP =====
         public async Task<List<BoSuuTap>> LayDanhSachBoSuuTap(int trang, int soLuong)
         {
             return await _dbContext.BoSuuTaps
-                .OrderBy(b => b.NgayThem) 
+                .OrderBy(b => b.NgayThem)
                 .Skip((trang - 1) * soLuong)
                 .Take(soLuong)
                 .ToListAsync();
         }
 
-        public async Task<object> TaoBoSuuTap(int idNguoiDung, int idTacPham)
-        {
-            var bst = new BoSuuTap
-            {
-                Id_NguoiDung = idNguoiDung,
-                Id_TacPham = idTacPham,
-                NgayThem = DateTime.Now,
-                TrangThai = true
-            };
-
-            _dbContext.BoSuuTaps.Add(bst);
-            await _dbContext.SaveChangesAsync();
-
-            return new { bst.Id_NguoiDung, bst.Id_TacPham };
-        }
-
-
-
-        public async Task<bool> CapNhatBoSuuTap(int idNguoiDung, int idTacPham, bool? trangThai = null)
-        {
-            var bst = await _dbContext.BoSuuTaps
-                .FirstOrDefaultAsync(b => b.Id_NguoiDung == idNguoiDung && b.Id_TacPham == idTacPham);
-
-            if (bst == null) return false;
-
-            if (trangThai.HasValue)
-                bst.TrangThai = trangThai.Value;
-
-            await _dbContext.SaveChangesAsync();
-            return true;
-        }
-
-
-        public async Task<bool> XoaBoSuuTap(int id)
-        {
-            var bst = await _dbContext.BoSuuTaps.FindAsync(id);
-            if (bst == null) return false;
-
-            _dbContext.BoSuuTaps.Remove(bst);
-            await _dbContext.SaveChangesAsync();
-            return true;
-        }
-
-        // ===== THỐNG KÊ (demo) =====
         public async Task<object> LayThongKeTongQuan()
         {
             var tongNguoiDung = await _dbContext.NguoiDungs.CountAsync();
@@ -287,13 +205,30 @@ namespace CDIO4_BE.Services
                 .ToListAsync();
         }
 
-        public async Task<DonHang?> LayChiTietDonHang(int id)
+        public async Task<DonHangDto?> LayChiTietDonHang(int id)
         {
-            return await _dbContext.DonHangs
+            var donHang = await _dbContext.DonHangs
                 .Include(d => d.DonHang_ChiTiets)
                 .ThenInclude(ct => ct.TacPham)
                 .FirstOrDefaultAsync(d => d.Id == id);
+
+            if (donHang == null) return null;
+
+            return new DonHangDto
+            {
+                Id = donHang.Id,
+                NgayMua = donHang.NgayMua,
+                TrangThai = donHang.TrangThai,
+                TongTien = donHang.TongTien,
+                GiamGia = donHang.GiamGia,
+                ChiTiets = donHang.DonHang_ChiTiets.Select(ct => new DonHangChiTietDto
+                {
+                    Id_TacPham = ct.Id_TacPham,
+                    TenTacPham = ct.TacPham.Ten,
+                }).ToList()
+            };
         }
+
 
 
         public async Task<bool> CapNhatTrangThaiDonHang(int id, CapNhatTrangThaiDonHangDto yeuCau)

@@ -21,15 +21,9 @@ namespace CDIO4_BE.Services.Interfaces
 
         // ===== Sản phẩm =====
         Task<List<TacPham>> LayDanhSachSanPham(int trang, int soLuong);
-        Task<int> TaoSanPham(TaoSanPhamDto yeuCau);
-        Task<bool> CapNhatSanPham(int id, CapNhatSanPhamDto yeuCau);
-        Task<bool> XoaSanPham(int id);
 
         // ===== Bộ sưu tập =====
         Task<List<BoSuuTap>> LayDanhSachBoSuuTap(int trang, int soLuong);
-        Task<object> TaoBoSuuTap(int idNguoiDung, int idTacPham);
-        Task<bool> CapNhatBoSuuTap(int idNguoiDung, int idTacPham, bool? trangThai = null);
-        Task<bool> XoaBoSuuTap(int id);
 
         // ===== Thống kê =====
         Task<object> LayThongKeTongQuan();
@@ -39,7 +33,7 @@ namespace CDIO4_BE.Services.Interfaces
 
         // ===== Đơn hàng =====
         Task<List<DonHang>> LayDanhSachDonHang(int trang, int soLuong, string trangThai);
-        Task<DonHang> LayChiTietDonHang(int id);
+        Task<DonHangDto?> LayChiTietDonHang(int id);
         Task<bool> CapNhatTrangThaiDonHang(int id, CapNhatTrangThaiDonHangDto yeuCau);
         Task<bool> HuyDonHang(int id, string lyDoHuy);
     }

@@ -58,19 +58,6 @@ namespace CDIO4_BE.Controllers
 
             return Ok(nguoiDung);
         }
-
-        [HttpPost("nguoidung")]
-        [Authorize(Roles = "Admin")]
-        [SwaggerOperation(Summary = "Tạo tài khoản người dùng mới (admin tạo)")]
-        public async Task<IActionResult> TaoNguoiDung([FromBody] TaoNguoiDungDto yeuCau)
-        {
-            var newUserId = await _adminService.TaoNguoiDung(yeuCau);
-            if (newUserId == 0)
-                return BadRequest(new { ThongBao = "Không thể tạo người dùng. Email/SĐT có thể đã tồn tại" });
-
-            return Ok(new { NewUserId = newUserId, ThongBao = "Tạo người dùng thành công" });
-        }
-
         [HttpPut("nguoidung/{id}")]
         [Authorize(Roles = "Admin")]
         [SwaggerOperation(Summary = "Cập nhật thông tin người dùng")]
@@ -117,39 +104,6 @@ namespace CDIO4_BE.Controllers
             return Ok(danhSach);
         }
 
-        [HttpPost("noidung/sanpham")]
-        [Authorize(Roles = "Admin")]
-        [SwaggerOperation(Summary = "Tạo sản phẩm mới")]
-        public async Task<IActionResult> TaoSanPham([FromBody] TaoSanPhamDto yeuCau)
-        {
-            var newProductId = await _adminService.TaoSanPham(yeuCau);
-            return Ok(new { NewProductId = newProductId, ThongBao = "Tạo sản phẩm thành công" });
-        }
-
-        [HttpPut("noidung/sanpham/{id}")]
-        [Authorize(Roles = "Admin")]
-        [SwaggerOperation(Summary = "Cập nhật sản phẩm")]
-        public async Task<IActionResult> CapNhatSanPham(int id, [FromBody] CapNhatSanPhamDto yeuCau)
-        {
-            var ketQua = await _adminService.CapNhatSanPham(id, yeuCau);
-            if (!ketQua)
-                return BadRequest(new { ThongBao = "Không thể cập nhật sản phẩm" });
-
-            return Ok(new { ThongBao = "Cập nhật sản phẩm thành công" });
-        }
-
-        [HttpDelete("noidung/sanpham/{id}")]
-        [Authorize(Roles = "Admin")]
-        [SwaggerOperation(Summary = "Xóa sản phẩm")]
-        public async Task<IActionResult> XoaSanPham(int id)
-        {
-            var ketQua = await _adminService.XoaSanPham(id);
-            if (!ketQua)
-                return BadRequest(new { ThongBao = "Không thể xóa sản phẩm" });
-
-            return Ok(new { ThongBao = "Xóa sản phẩm thành công" });
-        }
-
         [HttpGet("noidung/bosuutap")]
         [Authorize(Roles = "Admin")]
         [SwaggerOperation(Summary = "Lấy danh sách tất cả bộ sưu tập")]
@@ -157,38 +111,6 @@ namespace CDIO4_BE.Controllers
         {
             var danhSach = await _adminService.LayDanhSachBoSuuTap(trang, soLuong);
             return Ok(danhSach);
-        }
-        [HttpPost("noidung/bosuutap")]
-        [Authorize(Roles = "Admin")]
-        [SwaggerOperation(Summary = "Tạo bộ sưu tập mới")]
-        public async Task<IActionResult> TaoBoSuuTap([FromQuery] int idNguoiDung, [FromQuery] int idTacPham)
-        {
-            var newCollectionId = await _adminService.TaoBoSuuTap(idNguoiDung, idTacPham);
-            return Ok(new { NewCollectionId = newCollectionId, ThongBao = "Tạo bộ sưu tập thành công" });
-        }
-
-        [HttpPut("noidung/bosuutap")]
-        [Authorize(Roles = "Admin")]
-        [SwaggerOperation(Summary = "Cập nhật trạng thái bộ sưu tập")]
-        public async Task<IActionResult> CapNhatBoSuuTap([FromQuery] int idNguoiDung, [FromQuery] int idTacPham, [FromQuery] bool trangThai)
-        {
-            var ketQua = await _adminService.CapNhatBoSuuTap(idNguoiDung, idTacPham, trangThai);
-            if (!ketQua)
-                return BadRequest(new { ThongBao = "Không thể cập nhật bộ sưu tập" });
-
-            return Ok(new { ThongBao = "Cập nhật bộ sưu tập thành công" });
-        }
-
-        [HttpDelete("noidung/bosuutap/{id}")]
-        [Authorize(Roles = "Admin")]
-        [SwaggerOperation(Summary = "Xóa bộ sưu tập")]
-        public async Task<IActionResult> XoaBoSuuTap(int id)
-        {
-            var ketQua = await _adminService.XoaBoSuuTap(id);
-            if (!ketQua)
-                return BadRequest(new { ThongBao = "Không thể xóa bộ sưu tập" });
-
-            return Ok(new { ThongBao = "Xóa bộ sưu tập thành công" });
         }
 
         // ===== THỐNG KÊ =====
@@ -260,16 +182,6 @@ namespace CDIO4_BE.Controllers
                 return BadRequest(new { ThongBao = "Không thể cập nhật trạng thái đơn hàng" });
 
             return Ok(new { ThongBao = "Cập nhật trạng thái đơn hàng thành công" });
-        }
-
-        [HttpDelete("donhang/{id}")]
-        public async Task<IActionResult> HuyDonHang(int id, [FromBody] HuyDonHangDto yeuCau)
-        {
-            var ketQua = await _adminService.HuyDonHang(id, yeuCau.LyDoHuy);
-            if (!ketQua)
-                return BadRequest(new { ThongBao = "Không thể hủy đơn hàng" });
-
-            return Ok(new { ThongBao = "Hủy đơn hàng thành công" });
         }
 
     }

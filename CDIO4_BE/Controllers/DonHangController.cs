@@ -22,7 +22,11 @@ namespace CDIO4_BE.Controllers
         [HttpGet]
         public async Task<IActionResult> XemDonHang()
         {
-            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var userIdClaim = User.FindFirstValue("userId");
+            if (string.IsNullOrEmpty(userIdClaim))
+                return Unauthorized(new { Message = "Không tìm thấy userId trong token" });
+
+            var userId = int.Parse(userIdClaim);
             var donHang = await _donHangService.LayDanhSachDonHang(userId);
             return Ok(donHang);
         }
@@ -30,7 +34,11 @@ namespace CDIO4_BE.Controllers
         [HttpPost("TaoMoi")]
         public async Task<IActionResult> TaoDonHang([FromBody] TaoDonHangDto dto)
         {
-            var userId = int.Parse(User.Identity.Name);
+            var userIdClaim = User.FindFirstValue("userId");
+            if (string.IsNullOrEmpty(userIdClaim))
+                return Unauthorized(new { Message = "Không tìm thấy userId trong token" });
+
+            var userId = int.Parse(userIdClaim);
             var newOrderId = await _donHangService.TaoDonHang(userId, dto);
             if (newOrderId == 0) return BadRequest(new { ThongBao = "Tạo đơn hàng thất bại" });
             return Ok(new { DonHangId = newOrderId, ThongBao = "Tạo đơn hàng thành công" });
