@@ -25,42 +25,38 @@ namespace CDIO4_BE.Services
 
         public async Task<string> DangNhapAdmin(DangNhapDto yeuCau)
         {
-            // 1. Lấy người dùng theo email
             var user = await _dbContext.NguoiDungs
                 .FirstOrDefaultAsync(u => u.Email == yeuCau.EmailSdt);
 
             if (user == null)
             {
                 _logger.LogInformation("Không tìm thấy người dùng với email: {Email}", yeuCau.EmailSdt);
-                return null; // trả về null nếu không tìm thấy user
+                return null;
             }
 
-            // 2. Hash mật khẩu nhập vào
             var hashedInput = HashHelper.HashPassword(yeuCau.MatKhau);
-
-            // Debug: hiển thị hash nhập vào và hash lưu trong DB
             _logger.LogInformation("Hash nhập vào: {Hash}", HashHelper.HashPasswordHex(yeuCau.MatKhau));
             _logger.LogInformation("Hash DB: {DbHash}", Convert.ToHexString(user.MatKhau));
 
-            // 3. So sánh hash
             if (!user.MatKhau.SequenceEqual(hashedInput))
             {
                 _logger.LogInformation("Mật khẩu không khớp");
-                return null; // sai mật khẩu
+                return null;
             }
 
             if (user.Id_PhanQuyen != 2)
             {
                 _logger.LogInformation("Người dùng không phải admin: Id_PhanQuyen={Id}", user.Id_PhanQuyen);
-                return null; // không phải admin
+                return null;
             }
 
-            // 5. Tạo JWT
-            var token = JwtHelper.TaoToken(user.Id,user.Ten, "Admin", 60); // token 60 phút
+            
+            var token = JwtHelper.TaoToken(user, "Admin", 60);
             _logger.LogInformation("Đăng nhập thành công, token đã được tạo cho user Id={Id}", user.Id);
 
             return token;
         }
+
 
         public async Task<List<NguoiDung>> LayDanhSachNguoiDung(int trang, int soLuong)
         {

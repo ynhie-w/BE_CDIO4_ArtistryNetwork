@@ -29,8 +29,10 @@ public class TaiKhoanService : ITaiKhoanService
         if (!MatKhauHelper.KiemTraMatKhau(yeuCau.MatKhau, nguoiDung.MatKhau))
             return null;
 
-        return JwtHelper.TaoToken(nguoiDung.Id,nguoiDung.Ten, nguoiDung.Quyen.Ten);
+        // ✅ Gọi TaoToken mới
+        return JwtHelper.TaoToken(nguoiDung, nguoiDung.Quyen.Ten, 60);
     }
+
 
     public Task<bool> DangXuat()
     {

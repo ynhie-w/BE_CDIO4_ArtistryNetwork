@@ -3,16 +3,39 @@
   "WorkspaceRootPath": "C:\\nhi\\CDIO4\\CDIO4_BE\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{AC2980DC-56BA-4F74-A1BE-04A6C19E8815}|CDIO4_BE\\CDIO4_BE.csproj|c:\\nhi\\cdio4\\cdio4_be\\cdio4_be\\services\\taikhoanservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AC2980DC-56BA-4F74-A1BE-04A6C19E8815}|CDIO4_BE\\CDIO4_BE.csproj|solutionrelative:cdio4_be\\services\\taikhoanservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/YNHIE_YNHIE2/dbArtistryNetwork/True/SqlTable/dbo.NGUOIDUNG.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{AC2980DC-56BA-4F74-A1BE-04A6C19E8815}|CDIO4_BE\\CDIO4_BE.csproj|c:\\nhi\\cdio4\\cdio4_be\\cdio4_be\\helper\\jwthelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{AC2980DC-56BA-4F74-A1BE-04A6C19E8815}|CDIO4_BE\\CDIO4_BE.csproj|solutionrelative:cdio4_be\\helper\\jwthelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{AC2980DC-56BA-4F74-A1BE-04A6C19E8815}|CDIO4_BE\\CDIO4_BE.csproj|c:\\nhi\\cdio4\\cdio4_be\\cdio4_be\\services\\interfaces\\itaikhoanservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AC2980DC-56BA-4F74-A1BE-04A6C19E8815}|CDIO4_BE\\CDIO4_BE.csproj|solutionrelative:cdio4_be\\services\\interfaces\\itaikhoanservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AC2980DC-56BA-4F74-A1BE-04A6C19E8815}|CDIO4_BE\\CDIO4_BE.csproj|c:\\nhi\\cdio4\\cdio4_be\\cdio4_be\\services\\taikhoanservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AC2980DC-56BA-4F74-A1BE-04A6C19E8815}|CDIO4_BE\\CDIO4_BE.csproj|solutionrelative:cdio4_be\\services\\taikhoanservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{AC2980DC-56BA-4F74-A1BE-04A6C19E8815}|CDIO4_BE\\CDIO4_BE.csproj|c:\\nhi\\cdio4\\cdio4_be\\cdio4_be\\services\\adminservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{AC2980DC-56BA-4F74-A1BE-04A6C19E8815}|CDIO4_BE\\CDIO4_BE.csproj|solutionrelative:cdio4_be\\services\\adminservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AC2980DC-56BA-4F74-A1BE-04A6C19E8815}|CDIO4_BE\\CDIO4_BE.csproj|c:\\nhi\\cdio4\\cdio4_be\\cdio4_be\\domain\\entities\\nguoidung.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AC2980DC-56BA-4F74-A1BE-04A6C19E8815}|CDIO4_BE\\CDIO4_BE.csproj|solutionrelative:cdio4_be\\domain\\entities\\nguoidung.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AC2980DC-56BA-4F74-A1BE-04A6C19E8815}|CDIO4_BE\\CDIO4_BE.csproj|c:\\nhi\\cdio4\\cdio4_be\\cdio4_be\\domain\\dtos\\taikhoandto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AC2980DC-56BA-4F74-A1BE-04A6C19E8815}|CDIO4_BE\\CDIO4_BE.csproj|solutionrelative:cdio4_be\\domain\\dtos\\taikhoandto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AC2980DC-56BA-4F74-A1BE-04A6C19E8815}|CDIO4_BE\\CDIO4_BE.csproj|c:\\nhi\\cdio4\\cdio4_be\\cdio4_be\\domain\\dtos\\tacphamdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AC2980DC-56BA-4F74-A1BE-04A6C19E8815}|CDIO4_BE\\CDIO4_BE.csproj|solutionrelative:cdio4_be\\domain\\dtos\\tacphamdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AC2980DC-56BA-4F74-A1BE-04A6C19E8815}|CDIO4_BE\\CDIO4_BE.csproj|c:\\nhi\\cdio4\\cdio4_be\\cdio4_be\\controllers\\taikhoancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AC2980DC-56BA-4F74-A1BE-04A6C19E8815}|CDIO4_BE\\CDIO4_BE.csproj|solutionrelative:cdio4_be\\controllers\\taikhoancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{AC2980DC-56BA-4F74-A1BE-04A6C19E8815}|CDIO4_BE\\CDIO4_BE.csproj|c:\\nhi\\cdio4\\cdio4_be\\cdio4_be\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -37,10 +60,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{AC2980DC-56BA-4F74-A1BE-04A6C19E8815}|CDIO4_BE\\CDIO4_BE.csproj|c:\\nhi\\cdio4\\cdio4_be\\cdio4_be\\services\\interfaces\\iadminservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{AC2980DC-56BA-4F74-A1BE-04A6C19E8815}|CDIO4_BE\\CDIO4_BE.csproj|solutionrelative:cdio4_be\\services\\interfaces\\iadminservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{AC2980DC-56BA-4F74-A1BE-04A6C19E8815}|CDIO4_BE\\CDIO4_BE.csproj|c:\\nhi\\cdio4\\cdio4_be\\cdio4_be\\domain\\dtos\\tacphamdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AC2980DC-56BA-4F74-A1BE-04A6C19E8815}|CDIO4_BE\\CDIO4_BE.csproj|solutionrelative:cdio4_be\\domain\\dtos\\tacphamdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{AC2980DC-56BA-4F74-A1BE-04A6C19E8815}|CDIO4_BE\\CDIO4_BE.csproj|c:\\nhi\\cdio4\\cdio4_be\\cdio4_be\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -103,32 +122,132 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "dbo.NGUOIDUNG [Data]",
+              "DocumentMoniker": "ViewDataWindow_MSSQL__/YNHIE_YNHIE2/dbArtistryNetwork/True/SqlTable/dbo.NGUOIDUNG.sql",
+              "ToolTip": "dbo.NGUOIDUNG [Data]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2025-09-25T17:14:23.109Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ITaiKhoanService.cs",
+              "DocumentMoniker": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Services\\Interfaces\\ITaiKhoanService.cs",
+              "RelativeDocumentMoniker": "CDIO4_BE\\Services\\Interfaces\\ITaiKhoanService.cs",
+              "ToolTip": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Services\\Interfaces\\ITaiKhoanService.cs",
+              "RelativeToolTip": "CDIO4_BE\\Services\\Interfaces\\ITaiKhoanService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-25T17:11:15.433Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "NguoiDung.cs",
+              "DocumentMoniker": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Domain\\Entities\\NguoiDung.cs",
+              "RelativeDocumentMoniker": "CDIO4_BE\\Domain\\Entities\\NguoiDung.cs",
+              "ToolTip": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Domain\\Entities\\NguoiDung.cs",
+              "RelativeToolTip": "CDIO4_BE\\Domain\\Entities\\NguoiDung.cs",
+              "ViewState": "AgIAADUAAAAAAAAAAAAcwE4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-25T17:06:42.774Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "TaiKhoanDto.cs",
+              "DocumentMoniker": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Domain\\DTOs\\TaiKhoanDto.cs",
+              "RelativeDocumentMoniker": "CDIO4_BE\\Domain\\DTOs\\TaiKhoanDto.cs",
+              "ToolTip": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Domain\\DTOs\\TaiKhoanDto.cs",
+              "RelativeToolTip": "CDIO4_BE\\Domain\\DTOs\\TaiKhoanDto.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAA3wAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-25T17:04:56.46Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "TacPhamDto.cs",
+              "DocumentMoniker": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Domain\\DTOs\\TacPhamDto.cs",
+              "RelativeDocumentMoniker": "CDIO4_BE\\Domain\\DTOs\\TacPhamDto.cs",
+              "ToolTip": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Domain\\DTOs\\TacPhamDto.cs",
+              "RelativeToolTip": "CDIO4_BE\\Domain\\DTOs\\TacPhamDto.cs",
+              "ViewState": "AgIAADkAAAAAAAAAAAAmwE8AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-25T03:47:26.126Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "JwtHelper.cs",
+              "DocumentMoniker": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Helper\\JwtHelper.cs",
+              "RelativeDocumentMoniker": "CDIO4_BE\\Helper\\JwtHelper.cs",
+              "ToolTip": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Helper\\JwtHelper.cs",
+              "RelativeToolTip": "CDIO4_BE\\Helper\\JwtHelper.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAswB0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-25T03:32:08.97Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AdminService.cs",
+              "DocumentMoniker": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Services\\AdminService.cs",
+              "RelativeDocumentMoniker": "CDIO4_BE\\Services\\AdminService.cs",
+              "ToolTip": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Services\\AdminService.cs",
+              "RelativeToolTip": "CDIO4_BE\\Services\\AdminService.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAhwDQAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-25T03:32:48.891Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "TaiKhoanService.cs",
               "DocumentMoniker": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Services\\TaiKhoanService.cs",
               "RelativeDocumentMoniker": "CDIO4_BE\\Services\\TaiKhoanService.cs",
               "ToolTip": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Services\\TaiKhoanService.cs",
               "RelativeToolTip": "CDIO4_BE\\Services\\TaiKhoanService.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAzwB8AAAA8AAAAAAAAAA==",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAlwCIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-25T04:09:37.902Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Program.cs",
-              "RelativeDocumentMoniker": "CDIO4_BE\\Program.cs",
-              "ToolTip": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Program.cs",
-              "RelativeToolTip": "CDIO4_BE\\Program.cs",
-              "ViewState": "AgIAAFUAAAAAAAAAAAAYwJAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 8,
+              "Title": "TaiKhoanController.cs",
+              "DocumentMoniker": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Controllers\\TaiKhoanController.cs",
+              "RelativeDocumentMoniker": "CDIO4_BE\\Controllers\\TaiKhoanController.cs",
+              "ToolTip": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Controllers\\TaiKhoanController.cs",
+              "RelativeToolTip": "CDIO4_BE\\Controllers\\TaiKhoanController.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAUwCoAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-25T03:57:32.401Z",
+              "WhenOpened": "2025-09-25T17:04:25.677Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 10,
+              "Title": "TacPhamController.cs",
+              "DocumentMoniker": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Controllers\\TacPhamController.cs",
+              "RelativeDocumentMoniker": "CDIO4_BE\\Controllers\\TacPhamController.cs",
+              "ToolTip": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Controllers\\TacPhamController.cs",
+              "RelativeToolTip": "CDIO4_BE\\Controllers\\TacPhamController.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAgwCAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-25T03:47:01.687Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
               "Title": "TacPhamService.cs",
               "DocumentMoniker": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Services\\TacPhamService.cs",
               "RelativeDocumentMoniker": "CDIO4_BE\\Services\\TacPhamService.cs",
@@ -141,56 +260,18 @@
             {
               "$type": "Document",
               "DocumentIndex": 9,
-              "Title": "TacPhamDto.cs",
-              "DocumentMoniker": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Domain\\DTOs\\TacPhamDto.cs",
-              "RelativeDocumentMoniker": "CDIO4_BE\\Domain\\DTOs\\TacPhamDto.cs",
-              "ToolTip": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Domain\\DTOs\\TacPhamDto.cs",
-              "RelativeToolTip": "CDIO4_BE\\Domain\\DTOs\\TacPhamDto.cs",
-              "ViewState": "AgIAADgAAAAAAAAAAAA/wE8AAAABAAAAAAAAAA==",
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Program.cs",
+              "RelativeDocumentMoniker": "CDIO4_BE\\Program.cs",
+              "ToolTip": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Program.cs",
+              "RelativeToolTip": "CDIO4_BE\\Program.cs",
+              "ViewState": "AgIAAFUAAAAAAAAAAAAYwJAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-25T03:47:26.126Z"
+              "WhenOpened": "2025-09-25T03:57:32.401Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "TacPhamController.cs",
-              "DocumentMoniker": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Controllers\\TacPhamController.cs",
-              "RelativeDocumentMoniker": "CDIO4_BE\\Controllers\\TacPhamController.cs",
-              "ToolTip": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Controllers\\TacPhamController.cs",
-              "RelativeToolTip": "CDIO4_BE\\Controllers\\TacPhamController.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAgwCAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-25T03:47:01.687Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "JwtHelper.cs",
-              "DocumentMoniker": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Helper\\JwtHelper.cs",
-              "RelativeDocumentMoniker": "CDIO4_BE\\Helper\\JwtHelper.cs",
-              "ToolTip": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Helper\\JwtHelper.cs",
-              "RelativeToolTip": "CDIO4_BE\\Helper\\JwtHelper.cs",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAswA0AAAAdAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-25T03:32:08.97Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "AdminService.cs",
-              "DocumentMoniker": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Services\\AdminService.cs",
-              "RelativeDocumentMoniker": "CDIO4_BE\\Services\\AdminService.cs",
-              "ToolTip": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Services\\AdminService.cs",
-              "RelativeToolTip": "CDIO4_BE\\Services\\AdminService.cs",
-              "ViewState": "AgIAACgAAAAAAAAAAAAzwDoAAAA8AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-25T03:32:48.891Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 13,
               "Title": "ITacPhamService.cs",
               "DocumentMoniker": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Services\\Interfaces\\ITacPhamService.cs",
               "RelativeDocumentMoniker": "CDIO4_BE\\Services\\Interfaces\\ITacPhamService.cs",
@@ -202,7 +283,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 11,
               "Title": "TacPham.cs",
               "DocumentMoniker": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Domain\\Entities\\TacPham.cs",
               "RelativeDocumentMoniker": "CDIO4_BE\\Domain\\Entities\\TacPham.cs",
@@ -214,7 +295,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 16,
               "Title": "NguoiDungService.cs",
               "DocumentMoniker": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Services\\NguoiDungService.cs",
               "RelativeDocumentMoniker": "CDIO4_BE\\Services\\NguoiDungService.cs",
@@ -226,7 +307,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 14,
               "Title": "IAdminService.cs",
               "DocumentMoniker": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Services\\Interfaces\\IAdminService.cs",
               "RelativeDocumentMoniker": "CDIO4_BE\\Services\\Interfaces\\IAdminService.cs",
@@ -238,7 +319,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 17,
               "Title": "MatKhauHelper.cs",
               "DocumentMoniker": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Helper\\MatKhauHelper.cs",
               "RelativeDocumentMoniker": "CDIO4_BE\\Helper\\MatKhauHelper.cs",
@@ -250,7 +331,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 15,
               "Title": "AdminController.cs",
               "DocumentMoniker": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Controllers\\AdminController.cs",
               "RelativeDocumentMoniker": "CDIO4_BE\\Controllers\\AdminController.cs",
@@ -262,7 +343,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 18,
               "Title": "HashHelper.cs",
               "DocumentMoniker": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Helper\\HashHelper.cs",
               "RelativeDocumentMoniker": "CDIO4_BE\\Helper\\HashHelper.cs",
@@ -274,7 +355,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 20,
               "Title": "AppDbContext.cs",
               "DocumentMoniker": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Repository\\AppDbContext.cs",
               "RelativeDocumentMoniker": "CDIO4_BE\\Repository\\AppDbContext.cs",
@@ -286,7 +367,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 19,
               "Title": "GioHang.cs",
               "DocumentMoniker": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Domain\\Entities\\GioHang.cs",
               "RelativeDocumentMoniker": "CDIO4_BE\\Domain\\Entities\\GioHang.cs",
@@ -298,7 +379,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 21,
               "Title": "GioHangService.cs",
               "DocumentMoniker": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Services\\GioHangService.cs",
               "RelativeDocumentMoniker": "CDIO4_BE\\Services\\GioHangService.cs",
@@ -310,7 +391,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 22,
               "Title": "DonHangDto.cs",
               "DocumentMoniker": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Domain\\DTOs\\DonHangDto.cs",
               "RelativeDocumentMoniker": "CDIO4_BE\\Domain\\DTOs\\DonHangDto.cs",
@@ -322,7 +403,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 23,
               "Title": "GioHangController.cs",
               "DocumentMoniker": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Controllers\\GioHangController.cs",
               "RelativeDocumentMoniker": "CDIO4_BE\\Controllers\\GioHangController.cs",
@@ -334,7 +415,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 24,
               "Title": "DonHangController.cs",
               "DocumentMoniker": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\Controllers\\DonHangController.cs",
               "RelativeDocumentMoniker": "CDIO4_BE\\Controllers\\DonHangController.cs",
@@ -346,7 +427,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 25,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\nhi\\CDIO4\\CDIO4_BE\\CDIO4_BE\\appsettings.json",
               "RelativeDocumentMoniker": "CDIO4_BE\\appsettings.json",
