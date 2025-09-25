@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CDIO4_BE")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f9a0e7c92587ecf6cf13042c882ca26e023271cd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c1f347f10a03419c2de326d3eb276fcc75095585")]
 [assembly: System.Reflection.AssemblyProductAttribute("CDIO4_BE")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CDIO4_BE")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

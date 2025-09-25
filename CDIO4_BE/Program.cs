@@ -15,11 +15,10 @@ builder.Logging.SetMinimumLevel(LogLevel.Information);
 
 // ===== Đăng ký DbContext =====
 builder.Services.AddDbContext<AppDbContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
 // ===== Đăng ký các service =====
-// Thêm tất cả các service đã đăng ký trong hai đoạn code
 builder.Services.AddScoped<INguoiDungService, NguoiDungService>();
 builder.Services.AddScoped<ITaiKhoanService, TaiKhoanService>();
 builder.Services.AddScoped<ITacPhamService, TacPhamService>();
@@ -51,19 +50,32 @@ builder.Services.AddSwaggerGen(c =>
     });
 
     c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
-{
-{
-new Microsoft.OpenApi.Models.OpenApiSecurityScheme
-{
-Reference = new Microsoft.OpenApi.Models.OpenApiReference
-{
-Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
-Id = "Bearer"
-}
-},
-new string[] {}
-}
+    {
+        {
+            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+            {
+                Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                {
+                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
 });
+
+// ===== Cấu hình CORS =====
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins("http://localhost:3000") // Cho phép FE React gọi API
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+                      });
 });
 
 // ===== Cấu hình JWT Authentication =====
@@ -107,7 +119,6 @@ builder.Services.AddAuthentication(options =>
 
             return context.Response.WriteAsync(result);
         }
-
     };
 });
 
@@ -124,6 +135,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors(MyAllowSpecificOrigins); // ✅ Thêm CORS vào pipeline
 app.UseAuthentication();
 app.UseAuthorization();
 
