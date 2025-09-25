@@ -11,11 +11,12 @@ namespace CDIO4_BE.Helper
         // Khóa bí mật ≥ 32 ký tự (256 bit)
         private static string KhoaBiMat = "SuperSecretKey123!ChangeThisToLongerKey456!";
 
-        public static string TaoToken(int IdNguoiDung, string VaiTro, int ThoiGianHieuLuc = 60)
+        public static string TaoToken(int IdNguoiDung,string Ten, string VaiTro, int ThoiGianHieuLuc = 60)
         {
             var claims = new[]
             {
                 new Claim("userId", IdNguoiDung.ToString()),
+                new Claim("UserName", Ten),
                 new Claim("role", VaiTro)
             };
 

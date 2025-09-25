@@ -56,7 +56,7 @@ namespace CDIO4_BE.Services
             }
 
             // 5. Tạo JWT
-            var token = JwtHelper.TaoToken(user.Id, "Admin", 60); // token 60 phút
+            var token = JwtHelper.TaoToken(user.Id,user.Ten, "Admin", 60); // token 60 phút
             _logger.LogInformation("Đăng nhập thành công, token đã được tạo cho user Id={Id}", user.Id);
 
             return token;
