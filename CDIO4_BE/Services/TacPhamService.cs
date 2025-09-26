@@ -84,19 +84,7 @@ namespace CDIO4_BE.Services
                     Ten = t.NguoiTao.Ten,
                     AnhDaiDien = t.NguoiTao.AnhDaiDien
                 },
-                BinhLuans = binhLuans,
-                CamXucs = t.TacPham_CamXucs
-                    .Where(tc => tc.TrangThai)
-                    .Select(tc => new CamXucDto
-                    {
-                        TenCamXuc = tc.CamXuc?.Ten ?? "",
-                        NguoiCamXuc = tc.NguoiDung == null ? null : new NguoiDungDto
-                        {
-                            Id = tc.NguoiDung.Id,
-                            Ten = tc.NguoiDung.Ten,
-                            AnhDaiDien = tc.NguoiDung.AnhDaiDien
-                        }
-                    }).ToList()
+                  
             };
         }
 
@@ -177,16 +165,33 @@ namespace CDIO4_BE.Services
             boSuuTap.TrangThai = false;
             await _context.SaveChangesAsync();
         }
-        public async Task<IEnumerable<BinhLuan>> XemDanhSachBinhLuanCuaTacPham(int idTacPham)
+        public async Task<IEnumerable<BinhLuanDto>> XemDanhSachBinhLuanCuaTacPham(int idTacPham, int? currentUserId = null)
         {
             var binhLuans = await _context.BinhLuans
-            .Where(b => b.Id_TacPham == idTacPham && b.TrangThai == true)
-            .Include(b => b.NguoiBinhLuan) // lấy thông tin người dùng
-            .OrderByDescending(b => b.NgayTao)
-            .ToListAsync();
+                .Where(b => b.Id_TacPham == idTacPham && b.TrangThai == true)
+                .Include(b => b.NguoiBinhLuan)
+                .OrderByDescending(b => b.NgayTao)
+                .ToListAsync();
 
-            return binhLuans;
+            var result = binhLuans.Select(bl => new BinhLuanDto
+            {
+                Id = bl.Id,
+                NoiDung = bl.NoiDung,
+                NgayTao = bl.NgayTao,
+                Level = bl.Level,
+                NguoiBinhLuan = new NguoiDungDto
+                {
+                    Id = bl.NguoiBinhLuan.Id,
+                    Ten = bl.NguoiBinhLuan.Ten
+                },
+                // ChuSoHuu = true nếu user hiện tại chính là người viết bình luận
+                ChuSoHuu = currentUserId != null && bl.NguoiBinhLuan.Id == currentUserId
+            });
+
+            return result;
         }
+
+
         public async Task ThemBinhLuan(int idNguoiDung, int idTacPham, string noiDung)
         {
             _context.BinhLuans.Add(new BinhLuan

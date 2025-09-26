@@ -353,27 +353,6 @@
   },
   {
     "ContainingType": "CDIO4_BE.Controllers.TacPhamController",
-    "Method": "LayDanhSachTacPham",
-    "RelativePath": "api/TacPham",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "trang",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "soLuong",
-        "Type": "System.Int32",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "CDIO4_BE.Controllers.TacPhamController",
     "Method": "LayChiTietTacPham",
     "RelativePath": "api/TacPham/{id}",
     "HttpMethod": "GET",
@@ -548,7 +527,7 @@
   },
   {
     "ContainingType": "CDIO4_BE.Controllers.TacPhamController",
-    "Method": "GetBinhLuansByTacPham",
+    "Method": "XemDanhSachBinhLuanCuaTacPham",
     "RelativePath": "api/TacPham/tacpham/{idTacPham}",
     "HttpMethod": "GET",
     "IsController": true,

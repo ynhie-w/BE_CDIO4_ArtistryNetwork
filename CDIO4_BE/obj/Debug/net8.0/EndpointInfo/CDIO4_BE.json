@@ -580,39 +580,6 @@
         }
       }
     },
-    "/api/TacPham": {
-      "get": {
-        "tags": [
-          "TacPham"
-        ],
-        "summary": "Lấy danh sách tác phẩm (có phân trang, không cần đăng nhập)",
-        "parameters": [
-          {
-            "name": "trang",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32",
-              "default": 1
-            }
-          },
-          {
-            "name": "soLuong",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32",
-              "default": 10
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/TacPham/{id}": {
       "get": {
         "tags": [
@@ -642,7 +609,7 @@
         "tags": [
           "TacPham"
         ],
-        "summary": "Tìm kiếm tác phẩm theo từ khóa  (không cần đăng nhập)",
+        "summary": "Tìm kiếm tác phẩm theo từ khóa (không cần đăng nhập)",
         "parameters": [
           {
             "name": "keyword",

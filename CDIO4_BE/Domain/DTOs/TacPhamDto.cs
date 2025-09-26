@@ -36,8 +36,6 @@
 
         public NguoiDungDto? NguoiTao { get; set; }
 
-        public List<BinhLuanDto> BinhLuans { get; set; } = new();
-        public List<CamXucDto> CamXucs { get; set; } = new();
     }
 
     public class BinhLuanDto
@@ -50,6 +48,7 @@
         public int Level { get; set; }
 
         public List<BinhLuanDto> TraLoi { get; set; } = new();
+        public bool ChuSoHuu { get; set; }
 
     }
 

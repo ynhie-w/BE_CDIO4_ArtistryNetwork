@@ -16,7 +16,7 @@ namespace CDIO4_BE.Services.Interfaces
 
         Task ThemVaoBoSuuTap(int idNguoiDung, int idTacPham);
         Task XoaKhoiBoSuuTap(int idNguoiDung, int idTacPham);
-        Task<IEnumerable<BinhLuan>> XemDanhSachBinhLuanCuaTacPham(int idTacPham);
+        Task<IEnumerable<BinhLuanDto>> XemDanhSachBinhLuanCuaTacPham(int idTacPham, int? currentUserId = null);
         Task ThemBinhLuan(int idNguoiDung, int idTacPham, string noiDung);
         Task ThemTraLoiBinhLuan(int idNguoiDung, int? idBinhLuanCha, string noiDung);
         Task SuaBinhLuan(int idNguoiDung, int idBinhLuan, string noiDungMoi);

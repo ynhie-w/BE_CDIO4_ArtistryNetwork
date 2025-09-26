@@ -1,4 +1,5 @@
 ﻿using CDIO4_BE.Domain.DTOs;
+using CDIO4_BE.Domain.Entities;
 using CDIO4_BE.Repository;
 using CDIO4_BE.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -23,28 +24,41 @@ namespace CDIO4_BE.Controllers
         }
 
         // GET: /api/tacPham
-        [HttpGet]
-        [SwaggerOperation(Summary = "Lấy danh sách tác phẩm (có phân trang, không cần đăng nhập)")]
-        public async Task<IActionResult> LayDanhSachTacPham([FromQuery] int trang = 1, [FromQuery] int soLuong = 10)
-        {
-            var list = await _tacPhamService.LayDanhSachTacPham(trang, soLuong);
-            return Ok(list);
-        }
-
-
-        // GET: /api/tacPham/{id}
         [HttpGet("{id}")]
         [SwaggerOperation(Summary = "Xem chi tiết tác phẩm, sẽ tăng lượt xem (không cần đăng nhập) ")]
         public async Task<IActionResult> LayChiTietTacPham(int id)
         {
             var tp = await _tacPhamService.LayChiTietTacPham(id);
-            if (tp == null) return NotFound("Không tìm thấy tác phẩm");
-            return Ok(tp);
+            if (tp == null)
+                return NotFound("Không tìm thấy tác phẩm");
+
+            bool chuSoHuu = false;
+            if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                var userIdClaim = User.FindFirst("userId");
+                if (userIdClaim != null && int.TryParse(userIdClaim.Value, out int userId))
+                {
+                    // So sánh userId trong token với chủ sở hữu tác phẩm
+                    if (tp.NguoiTao.Id == userId)
+                    {
+                        chuSoHuu = true;
+                    }
+                }
+            }
+
+            return Ok(new
+            {
+                TacPham = tp,
+                ChuSoHuu = chuSoHuu
+            });
         }
+
+
+
 
         // GET: /api/tacPham/search
         [HttpGet("Search")]
-        [SwaggerOperation(Summary = "Tìm kiếm tác phẩm theo từ khóa  (không cần đăng nhập)")]
+        [SwaggerOperation(Summary = "Tìm kiếm tác phẩm theo từ khóa (không cần đăng nhập)")]
         public async Task<IActionResult> TimKiemTacPham(string keyword)
         {
             var list = await _tacPhamService.TimKiemTacPham(keyword);
@@ -111,14 +125,35 @@ namespace CDIO4_BE.Controllers
             await _tacPhamService.MuaTacPham(userId, idTacPham);
             return Ok("Đã mua tác phẩm");
         }
-
         [HttpGet("tacpham/{idTacPham}")]
         [SwaggerOperation(Summary = "Xem danh sách bình luận của tác phẩm (bao gồm trả lời)")]
-        public async Task<IActionResult> GetBinhLuansByTacPham(int idTacPham)
+        public async Task<IActionResult> XemDanhSachBinhLuanCuaTacPham(int idTacPham)
         {
-            var binhLuans = await _tacPhamService.XemDanhSachBinhLuanCuaTacPham(idTacPham);
-            return Ok(binhLuans);
+            // Lấy userId từ token
+            int? currentUserId = null;
+            if (User.Identity?.IsAuthenticated == true)
+            {
+                var userIdClaim = User.FindFirst("userId");
+                if (userIdClaim != null && int.TryParse(userIdClaim.Value, out int userId))
+                {
+                    currentUserId = userId;
+                }
+            }
+
+            // Gọi service để lấy danh sách bình luận (có gắn cờ ChuSoHuu cho từng bình luận)
+            var binhLuans = await _tacPhamService.XemDanhSachBinhLuanCuaTacPham(idTacPham, currentUserId);
+
+            // Check xem user hiện tại có phải chủ sở hữu tác phẩm không
+            var tacPham = await _tacPhamService.LayChiTietTacPham(idTacPham);
+            bool chuSoHuuTacPham = tacPham?.NguoiTao?.Id == currentUserId;
+
+            return Ok(new
+            {
+                BinhLuan = binhLuans,
+                ChuSoHuuTacPham = chuSoHuuTacPham
+            });
         }
+
 
         // POST: /api/tacPham/{idTacPham}/binhluan
         [HttpPost("{idTacPham}/binhluan")]
