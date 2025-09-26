@@ -47,6 +47,10 @@ public class TaiKhoanService : ITaiKhoanService
             throw new InvalidOperationException("Mật khẩu không được trống");
         if (string.IsNullOrWhiteSpace(dto.EmailSdt))
             throw new InvalidOperationException("Số điện thoại hoặc email không được trống");
+        if(string.IsNullOrWhiteSpace(dto.NhapLaiMatKhau))
+            throw new InvalidOperationException("Mật khẩu nhập lại không được trống");
+        if(dto.NhapLaiMatKhau!=dto.MatKhau)
+            throw new InvalidOperationException("Mật khẩu nhập lại không khớp với mật khẩu");
 
         // Kiểm tra trùng tên, email hoặc số điện thoại
         bool daTonTai = await _context.NguoiDungs.AnyAsync(u =>
@@ -93,21 +97,23 @@ public class TaiKhoanService : ITaiKhoanService
 
     public async Task<bool> DoiMatKhau(ClaimsPrincipal user, DoiMatKhauDto dto)
     {
-        // Lấy Id người dùng từ token JWT
-        var userIdStr = user.FindFirstValue(ClaimTypes.NameIdentifier);
+        // 1. Lấy Id người dùng từ token JWT
+        var userIdStr = user.FindFirstValue("userId"); 
         if (!int.TryParse(userIdStr, out var userId)) return false;
 
         var nguoiDung = await _context.NguoiDungs.FindAsync(userId);
         if (nguoiDung == null) return false;
 
-        // Kiểm tra mật khẩu cũ
         if (!MatKhauHelper.KiemTraMatKhau(dto.MatKhauCu, nguoiDung.MatKhau))
             return false;
 
-        // Cập nhật mật khẩu mới (đã hash)
+        if (dto.MatKhauMoi != dto.MatKhauMoiNhapLai)
+            return false;
+
         nguoiDung.MatKhau = MatKhauHelper.HashTheoSQL(dto.MatKhauMoi);
         _context.NguoiDungs.Update(nguoiDung);
         await _context.SaveChangesAsync();
+
         return true;
     }
 

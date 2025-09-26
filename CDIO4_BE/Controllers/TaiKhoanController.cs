@@ -72,7 +72,7 @@ namespace CDIO4_BE.Controllers
         // ===== ĐỔI MẬT KHẨU =====
         [HttpPut("doimatkhau")]
         [Authorize]
-        [SwaggerOperation(Summary = "Đổi mật khẩu, cần mật khẩu cũ và mật khẩu mới  (cần đăng nhập)")]
+        [SwaggerOperation(Summary = "Đổi mật khẩu, cần mật khẩu cũ và mật khẩu mới (cần đăng nhập)")]
         public async Task<IActionResult> DoiMatKhau([FromBody] DoiMatKhauDto yeuCau)
         {
             var ketQua = await _taiKhoanService.DoiMatKhau(User, yeuCau);
@@ -82,7 +82,7 @@ namespace CDIO4_BE.Controllers
 
             return Ok(new { ThongBao = "Đổi mật khẩu thành công" });
         }
-        /*est nội bộ (không email/SMS)
+        /*test nội bộ (không email/SMS)
         Gọi API POST /api/TaiKhoan/quenmatkhau với JSON:
         {
           "emailSdt": "0763576386"

@@ -999,7 +999,7 @@
         "tags": [
           "TaiKhoan"
         ],
-        "summary": "Đổi mật khẩu, cần mật khẩu cũ và mật khẩu mới  (cần đăng nhập)",
+        "summary": "Đổi mật khẩu, cần mật khẩu cũ và mật khẩu mới (cần đăng nhập)",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1265,6 +1265,10 @@
           "matKhau": {
             "type": "string",
             "nullable": true
+          },
+          "nhapLaiMatKhau": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1305,6 +1309,10 @@
             "nullable": true
           },
           "matKhauMoi": {
+            "type": "string",
+            "nullable": true
+          },
+          "matKhauMoiNhapLai": {
             "type": "string",
             "nullable": true
           }

@@ -24,11 +24,8 @@
         public string EmailSdt { get; set; }
 
         /// <summary>Mật khẩu (chưa hash, sẽ hash trong C#)</summary>
-        public string MatKhau
-        {
-            get; set;
-
-        }
+        public string MatKhau { get; set; }
+        public string NhapLaiMatKhau { get; set; }
     }
 
     /// <summary>
@@ -41,6 +38,7 @@
 
         /// <summary>Mật khẩu mới</summary>
         public string MatKhauMoi { get; set; }
+        public string MatKhauMoiNhapLai { get; set; }
     }
 
 
