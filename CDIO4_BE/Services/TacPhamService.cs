@@ -3,29 +3,60 @@ using CDIO4_BE.Domain.Entities;
 using CDIO4_BE.Repository;
 using CDIO4_BE.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
-using System.Threading.Tasks;
-
+using System.Security.Claims;
+using CDIO4_BE.Helper;
 namespace CDIO4_BE.Services
 {
+
     public class TacPhamService : ITacPhamService
     {
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly AppDbContext _context;
 
-        public TacPhamService(AppDbContext context)
+        public TacPhamService(AppDbContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
         }
+
+        public async Task<List<TacPhamDto>> LayDanhSachTacPham(int trang, int soLuong)
+        {
+            var tacPhams = await _context.TacPhams
+                .Include(tp => tp.NguoiTao)
+                .Include(tp => tp.BinhLuans)
+                .Include(tp => tp.TacPham_CamXucs)
+                .Include(tp => tp.TheLoai)
+                .OrderByDescending(tp => tp.NgayTao)
+                .Skip((trang - 1) * soLuong)
+                .Take(soLuong)
+                .ToListAsync();
+
+            return tacPhams.Select(tp => Mapper.MapToTacPhamDto(tp)).ToList();
+        }
+
+        public async Task<List<TacPhamDto>> LayDanhSachTacPhamNoiBat(int soLuong)
+        {
+            var tacPhams = await _context.TacPhams
+                .Include(tp => tp.NguoiTao)
+                .Include(tp => tp.BinhLuans)
+                .Include(tp => tp.TacPham_CamXucs)
+                .OrderByDescending(tp => tp.TacPham_CamXucs.Count(c => c.TrangThai))
+                .ThenByDescending(tp => tp.LuotXem)
+                .Take(soLuong)
+                .ToListAsync();
+
+            return tacPhams.Select(tp => Mapper.MapToTacPhamDto(tp)).ToList();
+        }
+
+
+
         public async Task<int> TaoTacPham(TaoTacPhamDto dto, int userId)
         {
             var tacPham = new TacPham
             {
                 Ten = dto.Ten,
                 MoTa = dto.MoTa,
-                DanhSachAnh = dto.Anh,   
+                DanhSachAnh = dto.Anh,
                 Id_NguoiTao = userId,
                 NgayTao = DateTime.UtcNow,
                 Gia = dto.Gia,
@@ -37,6 +68,33 @@ namespace CDIO4_BE.Services
             return tacPham.Id;
         }
 
+        public async Task<string> UploadAnhTacPham(int idTacPham, IFormFile file)
+        {
+            var tacPham = await _context.TacPhams.FindAsync(idTacPham);
+            if (tacPham == null)
+                throw new Exception("Không tìm thấy tác phẩm");
+
+            if (file == null || file.Length == 0)
+                throw new Exception("File ảnh không hợp lệ");
+
+            var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+            if (!Directory.Exists(uploadsFolder))
+                Directory.CreateDirectory(uploadsFolder);
+
+            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+            var filePath = Path.Combine(uploadsFolder, fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            // Lưu tên file vào DB
+            tacPham.Anh = fileName;
+            await _context.SaveChangesAsync();
+
+            return fileName;
+        }
 
 
         public async Task<bool> SuaTacPham(int id, SuaTacPhamDto dto, int userId)
@@ -72,43 +130,13 @@ namespace CDIO4_BE.Services
             return true;
         }
 
-        public async Task<List<TacPhamListDto>> LayDanhSachTacPham(int trang, int soLuong)
-        {
-            var query = _context.TacPhams
-                .Include(tp => tp.NguoiTao)
-                .Include(tp => tp.BinhLuans)
-                .Include(tp => tp.TacPham_CamXucs)
-                .Include(tp => tp.TheLoai)
-                .AsQueryable();
 
-            return await query
-                .OrderByDescending(tp => tp.NgayTao)
-                .Skip((trang - 1) * soLuong)
-                .Take(soLuong)
-                .Select(tp => new TacPhamListDto
-                {
-                    Id = tp.Id,
-                    Ten = tp.Ten,
-                    MoTa = tp.MoTa,
-                    Anh = tp.Anh,
-                    NgayTao = tp.NgayTao,
-                    NguoiTao = tp.NguoiTao == null ? null : new NguoiDungDto
-                    {
-                        Id = tp.NguoiTao.Id,
-                        Ten = tp.NguoiTao.Ten,
-                        AnhDaiDien = tp.NguoiTao.AnhDaiDien
-                    },
-                    SoLuongBinhLuan = tp.BinhLuans.Count(b => b.TrangThai),
-                    SoLuongCamXuc = tp.TacPham_CamXucs.Count(c => c.TrangThai),
-                    LuotXem = tp.LuotXem
-                }).ToListAsync();
-        }
         public async Task<TacPhamDto?> LayChiTietTacPham(int id)
         {
             var t = await _context.TacPhams
                 .Include(tp => tp.NguoiTao)
-                .Include(tp => tp.TacPham_CamXucs)
-                    .ThenInclude(tc => tc.CamXuc)
+                .Include(tp => tp.TacPham_CamXucs).ThenInclude(tc => tc.CamXuc)
+                .Include(tp => tp.BinhLuans)
                 .FirstOrDefaultAsync(tp => tp.Id == id);
 
             if (t == null) return null;
@@ -117,28 +145,23 @@ namespace CDIO4_BE.Services
             t.LuotXem += 1;
             await _context.SaveChangesAsync();
 
-            // Lấy bình luận + trả lời
+            // Lấy bình luận + trả lời (có thể override số lượng bình luận)
             var binhLuans = await LayBinhLuanVaTraLoi(t.Id);
 
+            // Lấy userId từ token
+            var user = _httpContextAccessor.HttpContext?.User;
+            var userIdStr = user?.FindFirstValue("userId");
+            int? Id_NguoiDung = int.TryParse(userIdStr, out var parsedId) ? parsedId : (int?)null;
 
-            return new TacPhamDto
-            {
-                Id = t.Id,
-                Ten = t.Ten,
-                MoTa = t.MoTa,
-                Anh = t.Anh,
-                Gia = t.Gia,
-                LuotXem = t.LuotXem,
-                NgayTao = t.NgayTao,
-                NguoiTao = t.NguoiTao == null ? null : new NguoiDungDto
-                {
-                    Id = t.NguoiTao.Id,
-                    Ten = t.NguoiTao.Ten,
-                    AnhDaiDien = t.NguoiTao.AnhDaiDien
-                },
-                  
-            };
+            // Dùng Mapper
+            var dto = Mapper.MapToTacPhamDto(t, Id_NguoiDung);
+
+            // Override lại số lượng bình luận bằng list đã load kèm trả lời
+            dto.ThongKe.LuotBinhLuan = binhLuans.Count;
+
+            return dto;
         }
+
 
 
         public async Task<List<TacPhamDto>> TimKiemTacPham(string keyword)
@@ -176,19 +199,20 @@ namespace CDIO4_BE.Services
 
         public async Task<List<TacPhamDto>> LayTacPhamCuaToi(int idNguoiDung)
         {
-            return await _context.TacPhams
+            var userIdClaim = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier);
+            int? currentUserId = userIdClaim != null ? int.Parse(userIdClaim.Value) : (int?)null;
+
+            var list = await _context.TacPhams
+                .Include(tp => tp.NguoiTao)
+                .Include(tp => tp.BinhLuans)
+                .Include(tp => tp.TacPham_CamXucs).ThenInclude(tc => tc.CamXuc)
                 .Where(tp => tp.Id_NguoiTao == idNguoiDung)
-                .Select(tp => new TacPhamDto
-                {
-                    Id = tp.Id,
-                    Ten = tp.Ten,
-                    MoTa = tp.MoTa,
-                    Anh = tp.Anh,
-                    Gia = tp.Gia,
-                    LuotXem = tp.LuotXem,
-                    NgayTao = tp.NgayTao
-                }).ToListAsync();
+                .OrderByDescending(tp => tp.NgayTao)
+                .ToListAsync();
+
+            return list.Select(tp => Mapper.MapToTacPhamDto(tp, currentUserId)).ToList();
         }
+
 
         public async Task ThemVaoBoSuuTap(int idNguoiDung, int idTacPham)
         {
@@ -255,7 +279,7 @@ namespace CDIO4_BE.Services
             await _context.SaveChangesAsync();
         }
 
-  
+
         public async Task ThemTraLoiBinhLuan(int idNguoiDung, int? idBinhLuanCha, string noiDung)
         {
             if (idBinhLuanCha.HasValue)
@@ -335,7 +359,6 @@ namespace CDIO4_BE.Services
 
         public async Task MuaTacPham(int idNguoiDung, int idTacPham)
         {
-            // Demo chỉ ghi nhận đánh giá 5 sao
             _context.DanhGias.Add(new DanhGia
             {
                 Id_NguoiDung = idNguoiDung,
@@ -346,7 +369,6 @@ namespace CDIO4_BE.Services
             });
             await _context.SaveChangesAsync();
         }
-        // --- Start of code to add ---
 
         public async Task SuaBinhLuan(int idNguoiDung, int idBinhLuan, string noiDungMoi)
         {
@@ -378,43 +400,58 @@ namespace CDIO4_BE.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpsertCamXuc(int idNguoiDung, int idTacPham, int idCamXuc)
+        public async Task ThemSuaCamXuc(int userId, int idTacPham, CamXucRequest cx)
         {
-            var camXucHienTai = await _context.TacPham_CamXucs.FirstOrDefaultAsync(tc => tc.Id_TacPham == idTacPham && tc.Id_NguoiDung == idNguoiDung);
+            var existing = await _context.TacPham_CamXucs
+                .FirstOrDefaultAsync(tc => tc.Id_NguoiDung == userId && tc.Id_TacPham == idTacPham);
 
-            if (camXucHienTai == null)
+            if (existing == null)
             {
-                // No existing reaction, so add a new one
-                _context.TacPham_CamXucs.Add(new TacPham_CamXuc
+                var newEntity = new TacPham_CamXuc
                 {
-                    Id_NguoiDung = idNguoiDung,
+                    Id_NguoiDung = userId,
                     Id_TacPham = idTacPham,
-                    Id_CamXuc = idCamXuc,
+                    Id_CamXuc = cx.IdCamXuc, 
                     NgayTao = DateTime.Now,
                     TrangThai = true
-                });
+                };
+                _context.TacPham_CamXucs.Add(newEntity);
             }
             else
             {
-                // Existing reaction found, update it
-                camXucHienTai.Id_CamXuc = idCamXuc;
-                camXucHienTai.TrangThai = true; // Ensure it's active
+                existing.Id_CamXuc = cx.IdCamXuc;
+                existing.NgayTao = DateTime.Now;
+                existing.TrangThai = true;
             }
 
             await _context.SaveChangesAsync();
         }
 
-        public async Task XoaCamXuc(int idNguoiDung, int idTacPham)
+
+        public async Task<TacPham_CamXuc?> GetCamXuc(int userId, int idTacPham)
         {
-            var camXuc = await _context.TacPham_CamXucs.FirstOrDefaultAsync(tc => tc.Id_TacPham == idTacPham && tc.Id_NguoiDung == idNguoiDung);
-            if (camXuc == null)
-            {
-                throw new Exception("Không tìm thấy cảm xúc để xóa.");
-            }
-
-            camXuc.TrangThai = false; // Soft delete
-            await _context.SaveChangesAsync();
+            return await _context.TacPham_CamXucs
+                .Include(tc => tc.CamXuc)
+                .FirstOrDefaultAsync(tc => tc.Id_NguoiDung == userId && tc.Id_TacPham == idTacPham && tc.TrangThai);
         }
-        // --- End of code to add ---
+
+        public async Task<TacPham_CamXuc?> LayCamXuc(int userId, int idTacPham)
+        {
+            return await _context.TacPham_CamXucs
+                .Include(tc => tc.CamXuc)
+                .FirstOrDefaultAsync(tc => tc.Id_NguoiDung == userId && tc.Id_TacPham == idTacPham && tc.TrangThai);
+        }
+
+        public async Task XoaCamXuc(int userId, int idTacPham)
+        {
+            var existing = await _context.TacPham_CamXucs
+                .FirstOrDefaultAsync(tc => tc.Id_NguoiDung == userId && tc.Id_TacPham == idTacPham);
+
+            if (existing != null)
+            {
+                existing.TrangThai = false; // soft delete
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }

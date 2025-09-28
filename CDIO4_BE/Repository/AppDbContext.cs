@@ -2,7 +2,6 @@
 using CDIO4_BE.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using static CDIO4_BE.Controllers.DonHangController;
 
 namespace CDIO4_BE.Repository
 {
@@ -18,12 +17,13 @@ namespace CDIO4_BE.Repository
             return builder;
         }
     }
-
     public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options) { }
 
+        // Đã xóa null! khỏi các DbSet không cần thiết nếu bạn đã cấu hình chúng đúng cách
+        // hoặc nếu chúng không thể null.
         public DbSet<NguoiDung> NguoiDungs { get; set; } = null!;
         public DbSet<TacPham> TacPhams { get; set; } = null!;
         public DbSet<GioHang> GioHangs { get; set; } = null!;
@@ -46,12 +46,14 @@ namespace CDIO4_BE.Repository
         public DbSet<HoaDon> HoaDons { get; set; } = null!;
         public DbSet<HoaDon_ChiTiet> HoaDon_ChiTiets { get; set; } = null!;
         public DbSet<TacPham_CamXuc> TacPham_CamXucs { get; set; } = null!;
-        public DbSet<DatLaiMatKhauToken> DatLaiMatKhauTokens { get; set; }
 
-        public DbSet<GiamGia> GiamGias { get; set; }
+        public DbSet<DatLaiMatKhauToken> DatLaiMatKhauTokens { get; set; } = null!; // Thêm = null!
+        public DbSet<GiamGia> GiamGias { get; set; } = null!; // Thêm = null!
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Gọi base class trước khi cấu hình các entity của bạn
             base.OnModelCreating(modelBuilder);
 
             // ------------------ Composite Keys ------------------
@@ -61,20 +63,34 @@ namespace CDIO4_BE.Repository
             modelBuilder.Entity<TacPham_Hashtags>().HasKey(th => new { th.Id_TacPham, th.Id_Hashtag });
             modelBuilder.Entity<DuAn_TacPham>().HasKey(dt => new { dt.Id_DuAn, dt.Id_TacPham });
             modelBuilder.Entity<DonHang_ChiTiet>().HasKey(dhct => new { dhct.Id_DonHang, dhct.Id_TacPham });
-            modelBuilder.Entity<TacPham_CamXuc>().HasKey(tc => new { tc.Id_NguoiDung, tc.Id_TacPham, tc.Id_CamXuc });
-            modelBuilder.Entity<GiamGia>().ToTable("GiamGia");
+
+            // Cần quyết định khóa chính của TacPham_CamXuc là gì:
+            // Phương án 1: Khóa chính bao gồm Id_NguoiDung, Id_TacPham, Id_CamXuc (nếu một người có thể có nhiều cảm xúc cho 1 tác phẩm)
+            // modelBuilder.Entity<TacPham_CamXuc>().HasKey(tc => new { tc.Id_NguoiDung, tc.Id_TacPham, tc.Id_CamXuc });
+            // Phương án 2: Khóa chính chỉ bao gồm Id_NguoiDung và Id_TacPham, đảm bảo mỗi user chỉ có MỘT cảm xúc cho MỘT tác phẩm (phù hợp với IsUnique bên dưới)
+            modelBuilder.Entity<TacPham_CamXuc>()
+                 .HasKey(tc => new { tc.Id_NguoiDung, tc.Id_TacPham }); // Chọn phương án này nếu một user chỉ có 1 cảm xúc/tác phẩm
+
+
+            // Unique: 1 user chỉ có 1 cảm xúc duy nhất cho tác phẩm đó
+            // Điều này có vẻ phù hợp với phương án 2 của khóa chính trên
+            modelBuilder.Entity<TacPham_CamXuc>()
+                .HasIndex(tc => new { tc.Id_NguoiDung, tc.Id_TacPham })
+                .IsUnique();
+
+            modelBuilder.Entity<GiamGia>().ToTable("GiamGia"); // Mapping tên bảng nếu cần
+
+            // Cấu hình NguoiDung
             modelBuilder.Entity<NguoiDung>(entity =>
             {
-                entity.ToTable("NGUOIDUNG", t => t.ExcludeFromMigrations());
-
+                entity.ToTable("NGUOIDUNG"); // Xóa ExcludeFromMigrations nếu đây là bảng chính
                 entity.Property(e => e.Id)
-                    .ValueGeneratedOnAdd()   // Id sinh tự động (identity)
-                    .UseIdentityColumn();    // SQL Server identity
+                    .ValueGeneratedOnAdd() // Id sinh tự động (identity)
+                    .UseIdentityColumn();  // SQL Server identity
+                // Nếu cần dùng workaround:
+                // .UseSqlServerIdentityColumnTriggerWorkaround();
             });
 
-
-
-            base.OnModelCreating(modelBuilder);
 
             // ------------------ Relationships ------------------
 
@@ -130,7 +146,7 @@ namespace CDIO4_BE.Repository
                 .HasForeignKey(bl => bl.Id_NguoiDung)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // TacPham_CamXuc
+            // TacPham_CamXuc (Relationships)
             modelBuilder.Entity<TacPham_CamXuc>()
                 .HasOne(tc => tc.NguoiDung)
                 .WithMany(u => u.TacPham_CamXucs)
@@ -147,7 +163,7 @@ namespace CDIO4_BE.Repository
                 .HasOne(tc => tc.CamXuc)
                 .WithMany(cx => cx.TacPham_CamXucs)
                 .HasForeignKey(tc => tc.Id_CamXuc)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict); // Rất quan trọng: Không xóa cảm xúc nếu có người dùng nó
 
             // ThongBao
             modelBuilder.Entity<ThongBao>()
@@ -213,7 +229,7 @@ namespace CDIO4_BE.Repository
                 .HasOne(tp => tp.NguoiTao)
                 .WithMany(u => u.TacPhams)
                 .HasForeignKey(tp => tp.Id_NguoiTao)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Restrict); // Giữ lại người tạo ngay cả khi tác phẩm bị xóa
 
             // HoaDon - HoaDon_ChiTiet
             modelBuilder.Entity<HoaDon_ChiTiet>()
@@ -233,22 +249,21 @@ namespace CDIO4_BE.Repository
                 .HasOne(nd => nd.Quyen)
                 .WithMany(q => q.NguoiDungs)
                 .HasForeignKey(nd => nd.Id_PhanQuyen)
-                .OnDelete(DeleteBehavior.Restrict);
-
+                .OnDelete(DeleteBehavior.Restrict); // Rất quan trọng: Không xóa quyền nếu có người dùng
 
             modelBuilder.Entity<NguoiDung>()
                 .HasOne(nd => nd.CapDo)
                 .WithMany(c => c.NguoiDungs)
                 .HasForeignKey(nd => nd.Id_CapDo)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Restrict); // Rất quan trọng: Không xóa cấp độ nếu có người dùng
 
             // DonHang - GiamGia
             modelBuilder.Entity<DonHang>()
-                .HasOne(dh => dh.GiamGias)
+                .HasOne(dh => dh.GiamGias) // GiamGias là navigation property đến GiamGia entity
                 .WithMany(g => g.DonHangs)
                 .HasForeignKey(dh => dh.IdGiamGia)
-                .OnDelete(DeleteBehavior.SetNull);
-
+                .IsRequired(false) // Allow null if a discount is optional
+                .OnDelete(DeleteBehavior.SetNull); // Nếu giảm giá bị xóa, IdGiamGia trong DonHang sẽ là null
         }
     }
 }

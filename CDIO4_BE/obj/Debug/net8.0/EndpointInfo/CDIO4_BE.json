@@ -548,6 +548,61 @@
         }
       }
     },
+    "/api/TacPham/danhsach": {
+      "get": {
+        "tags": [
+          "TacPham"
+        ],
+        "parameters": [
+          {
+            "name": "trang",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "soLuong",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TacPham/noibat": {
+      "get": {
+        "tags": [
+          "TacPham"
+        ],
+        "parameters": [
+          {
+            "name": "soLuong",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/TacPham": {
       "post": {
         "tags": [
@@ -569,6 +624,50 @@
             "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/TaoTacPhamDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TacPham/{idTacPham}/upload-anh": {
+      "post": {
+        "tags": [
+          "TacPham"
+        ],
+        "summary": "Upload ảnh cho tác phẩm",
+        "parameters": [
+          {
+            "name": "idTacPham",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "file": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -911,11 +1010,33 @@
       }
     },
     "/api/TacPham/{idTacPham}/camxuc": {
+      "get": {
+        "tags": [
+          "TacPham"
+        ],
+        "summary": "Lấy cảm xúc của tôi cho tác phẩm",
+        "parameters": [
+          {
+            "name": "idTacPham",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
       "post": {
         "tags": [
           "TacPham"
         ],
-        "summary": "Thêm/cập nhật cảm xúc  (cần đăng nhập)",
+        "summary": "Thêm/cập nhật cảm xúc (cần đăng nhập)",
         "parameters": [
           {
             "name": "idTacPham",
@@ -931,20 +1052,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "integer",
-                "format": "int32"
+                "$ref": "#/components/schemas/CamXucRequest"
               }
             },
             "text/json": {
               "schema": {
-                "type": "integer",
-                "format": "int32"
+                "$ref": "#/components/schemas/CamXucRequest"
               }
             },
             "application/*+json": {
               "schema": {
-                "type": "integer",
-                "format": "int32"
+                "$ref": "#/components/schemas/CamXucRequest"
               }
             }
           }
@@ -954,14 +1072,12 @@
             "description": "OK"
           }
         }
-      }
-    },
-    "/api/TacPham/camxuc/{idTacPham}": {
+      },
       "delete": {
         "tags": [
           "TacPham"
         ],
-        "summary": "Xóa cảm xúc (cần đăng nhập)",
+        "summary": "Xóa cảm xúc (soft delete)",
         "parameters": [
           {
             "name": "idTacPham",
@@ -1265,6 +1381,16 @@
   },
   "components": {
     "schemas": {
+      "CamXucRequest": {
+        "type": "object",
+        "properties": {
+          "idCamXuc": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "CapNhatNguoiDungDto": {
         "type": "object",
         "properties": {

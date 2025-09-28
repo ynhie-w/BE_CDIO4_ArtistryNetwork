@@ -427,6 +427,22 @@
   },
   {
     "ContainingType": "CDIO4_BE.Controllers.TacPhamController",
+    "Method": "GetCamXuc",
+    "RelativePath": "api/TacPham/{idTacPham}/camxuc",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idTacPham",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CDIO4_BE.Controllers.TacPhamController",
     "Method": "UpsertCamXuc",
     "RelativePath": "api/TacPham/{idTacPham}/camxuc",
     "HttpMethod": "POST",
@@ -439,9 +455,46 @@
         "IsRequired": true
       },
       {
-        "Name": "idCamXuc",
+        "Name": "cx",
+        "Type": "CDIO4_BE.Domain.DTOs.CamXucRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CDIO4_BE.Controllers.TacPhamController",
+    "Method": "DeleteCamXuc",
+    "RelativePath": "api/TacPham/{idTacPham}/camxuc",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idTacPham",
         "Type": "System.Int32",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CDIO4_BE.Controllers.TacPhamController",
+    "Method": "UploadAnh",
+    "RelativePath": "api/TacPham/{idTacPham}/upload-anh",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idTacPham",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "file",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -506,16 +559,21 @@
   },
   {
     "ContainingType": "CDIO4_BE.Controllers.TacPhamController",
-    "Method": "XoaCamXuc",
-    "RelativePath": "api/TacPham/camxuc/{idTacPham}",
-    "HttpMethod": "DELETE",
+    "Method": "LayDanhSachTacPham",
+    "RelativePath": "api/TacPham/danhsach",
+    "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "idTacPham",
+        "Name": "trang",
         "Type": "System.Int32",
-        "IsRequired": true
+        "IsRequired": false
+      },
+      {
+        "Name": "soLuong",
+        "Type": "System.Int32",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -544,6 +602,22 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CDIO4_BE.Controllers.TacPhamController",
+    "Method": "LayDanhSachTacPhamNoiBat",
+    "RelativePath": "api/TacPham/noibat",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "soLuong",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   },
   {

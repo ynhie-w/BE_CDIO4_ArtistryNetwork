@@ -21,7 +21,7 @@ namespace CDIO4_BE.Helper
     {
         new Claim("userId", user.Id.ToString()),
         new Claim("userName", user.Ten),
-        new Claim("role", user.Ten),
+        new Claim("role", user.Id_PhanQuyen.ToString()),
         new Claim("email", user.Email ?? ""),
         new Claim("phone", user.Sdt ?? ""),
         new Claim("status", user.TrangThai.ToString()),

@@ -32,6 +32,13 @@
         public int LuotXem { get; set; }
         public DateTime NgayTao { get; set; }
         public NguoiDungDto? NguoiTao { get; set; }
+        public ThongKeDto ThongKe { get; set; }
+        public string? CamXucCuaToi { get; set; }
+    }
+    public class ThongKeDto
+    {
+        public int LuotThich { get; set; }
+        public int LuotBinhLuan { get; set; }
     }
 
     public class TaoTacPhamDto
@@ -82,7 +89,10 @@
         public string TenCamXuc { get; set; } = string.Empty;
         public NguoiDungDto? NguoiCamXuc { get; set; }
     }
-
+    public class CamXucRequest
+    {
+        public int IdCamXuc { get; set; }
+    }
     public class UpsertCamXucDto
     {
         public int IdTacPham { get; set; }

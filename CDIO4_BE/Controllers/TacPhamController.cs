@@ -22,7 +22,25 @@ namespace CDIO4_BE.Controllers
             _tacPhamService = tacPhamService;
             _context = context;
         }
+        /// <summary>
+        /// Lấy danh sách tác phẩm (phân trang)
+        /// </summary>
+        [HttpGet("danhsach")]
+        public async Task<IActionResult> LayDanhSachTacPham([FromQuery] int trang = 1, [FromQuery] int soLuong = 10)
+        {
+            var result = await _tacPhamService.LayDanhSachTacPham(trang, soLuong);
+            return Ok(result);
+        }
 
+        /// <summary>
+        /// Lấy danh sách tác phẩm nổi bật
+        /// </summary>
+        [HttpGet("noibat")]
+        public async Task<IActionResult> LayDanhSachTacPhamNoiBat([FromQuery] int soLuong = 10)
+        {
+            var result = await _tacPhamService.LayDanhSachTacPhamNoiBat(soLuong);
+            return Ok(result);
+        }
         private int GetUserId()
         {
             var userIdClaim = User.FindFirst("userId");
@@ -40,6 +58,23 @@ namespace CDIO4_BE.Controllers
             var userId = GetUserId();
             var id = await _tacPhamService.TaoTacPham(dto, userId);
             return Ok(new { message = "Tác phẩm đã được tạo thành công", Id = id });
+        }
+        [HttpPost("{idTacPham}/upload-anh")]
+        [SwaggerOperation(Summary = "Upload ảnh cho tác phẩm")]
+        [Authorize] // nếu cần bắt buộc đăng nhập
+        public async Task<IActionResult> UploadAnh(int idTacPham, IFormFile file)
+        {
+            try
+            {
+                var fileName = await _tacPhamService.UploadAnhTacPham(idTacPham, file);
+
+                var url = $"{Request.Scheme}://{Request.Host}/uploads/{fileName}";
+                return Ok(new { message = "Upload thành công", url });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
 
         [HttpPut("{id}")]
@@ -235,38 +270,39 @@ namespace CDIO4_BE.Controllers
             }
         }
 
-        [HttpPost("{idTacPham}/camxuc")]
-        [SwaggerOperation(Summary = "Thêm/cập nhật cảm xúc  (cần đăng nhập)")]
+        [HttpGet("{idTacPham}/camxuc")]
+        [SwaggerOperation(Summary = "Lấy cảm xúc của tôi cho tác phẩm")]
         [Authorize]
-        public async Task<IActionResult> UpsertCamXuc(int idTacPham, [FromBody] int idCamXuc)
+        public async Task<IActionResult> GetCamXuc(int idTacPham)
         {
             var userId = GetUserId();
-            try
+            var camxuc = await _tacPhamService.LayCamXuc(userId, idTacPham);
+            if (camxuc == null) return Ok(new { camXuc = (object?)null });
+
+            return Ok(new
             {
-                await _tacPhamService.UpsertCamXuc(userId, idTacPham, idCamXuc);
-                return Ok(new { message = "Cảm xúc đã được ghi nhận/cập nhật" });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+                camXuc = new { camxuc.Id_CamXuc, camxuc.CamXuc?.Ten }
+            });
         }
 
-        [HttpDelete("camxuc/{idTacPham}")]
-        [SwaggerOperation(Summary = "Xóa cảm xúc (cần đăng nhập)")]
+        [HttpPost("{idTacPham}/camxuc")]
+        [SwaggerOperation(Summary = "Thêm/cập nhật cảm xúc (cần đăng nhập)")]
         [Authorize]
-        public async Task<IActionResult> XoaCamXuc(int idTacPham)
+        public async Task<IActionResult> UpsertCamXuc(int idTacPham, CamXucRequest cx)
         {
             var userId = GetUserId();
-            try
-            {
-                await _tacPhamService.XoaCamXuc(userId, idTacPham);
-                return Ok("Cảm xúc đã được xóa thành công.");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            await _tacPhamService.ThemSuaCamXuc(userId, idTacPham, cx);
+            return Ok(new { message = "Cảm xúc đã được ghi nhận/cập nhật" });
+        }
+
+        [HttpDelete("{idTacPham}/camxuc")]
+        [SwaggerOperation(Summary = "Xóa cảm xúc (soft delete)")]
+        [Authorize]
+        public async Task<IActionResult> DeleteCamXuc(int idTacPham)
+        {
+            var userId = GetUserId();
+            await _tacPhamService.XoaCamXuc(userId, idTacPham);
+            return Ok(new { message = "Cảm xúc đã được xóa (soft)" });
         }
     }
 }

@@ -7,10 +7,6 @@ namespace CDIO4_BE.Domain.Entities
     [Table("TACPHAM_CAMXUC")]
     public class TacPham_CamXuc
     {
-        [Key]
-        [Column("id")]
-        public int Id { get; set; }
-
         [Required]
         [Column("id_nguoidung")]
         public int Id_NguoiDung { get; set; }

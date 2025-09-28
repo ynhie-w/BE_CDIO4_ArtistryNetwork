@@ -17,6 +17,7 @@ builder.Logging.SetMinimumLevel(LogLevel.Information);
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
+builder.Services.AddHttpContextAccessor();
 
 // ===== Đăng ký các service =====
 builder.Services.AddScoped<INguoiDungService, NguoiDungService>();
@@ -129,9 +130,9 @@ if (app.Environment.IsDevelopment())
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "CDIO4_BE v1");
     });
 }
-
+app.UseStaticFiles();
 app.UseHttpsRedirection();
-app.UseCors(MyAllowSpecificOrigins); // ✅ Thêm CORS vào pipeline
+app.UseCors(MyAllowSpecificOrigins); 
 app.UseAuthentication();
 app.UseAuthorization();
 
