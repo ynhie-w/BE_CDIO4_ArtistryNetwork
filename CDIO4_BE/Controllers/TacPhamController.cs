@@ -23,7 +23,52 @@ namespace CDIO4_BE.Controllers
             _context = context;
         }
 
-        // GET: /api/tacPham
+        private int GetUserId()
+        {
+            var userIdClaim = User.FindFirst("userId");
+            if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+            {
+                throw new UnauthorizedAccessException("Không tìm thấy userId trong token");
+            }
+            return userId;
+        }
+        [HttpPost]
+        [Authorize]
+        [SwaggerOperation(Summary = "Tạo tác phẩm mới (cần đăng nhập)")]
+        public async Task<IActionResult> TaoTacPham([FromBody] TaoTacPhamDto dto)
+        {
+            var userId = GetUserId();
+            var id = await _tacPhamService.TaoTacPham(dto, userId);
+            return Ok(new { message = "Tác phẩm đã được tạo thành công", Id = id });
+        }
+
+        [HttpPut("{id}")]
+        [Authorize]
+        [SwaggerOperation(Summary = "Sửa tác phẩm (cần đăng nhập, chỉ chủ sở hữu mới được sửa)")]
+        public async Task<IActionResult> SuaTacPham(int id, [FromBody] SuaTacPhamDto dto)
+        {
+            var userId = GetUserId();
+            var result = await _tacPhamService.SuaTacPham(id, dto, userId);
+            if (!result)
+                return Forbid("Bạn không có quyền sửa tác phẩm này hoặc tác phẩm không tồn tại.");
+
+            return Ok("Tác phẩm đã được cập nhật thành công.");
+        }
+
+        [HttpDelete("{id}")]
+        [Authorize]
+        [SwaggerOperation(Summary = "Xóa tác phẩm (cần đăng nhập, chỉ chủ sở hữu mới được xóa)")]
+        public async Task<IActionResult> XoaTacPham(int id)
+        {
+            var userId = GetUserId();
+            var result = await _tacPhamService.XoaTacPham(id, userId);
+            if (!result)
+                return Forbid("Bạn không có quyền xóa tác phẩm này hoặc tác phẩm không tồn tại.");
+
+            return Ok("Tác phẩm đã được xóa thành công.");
+        }
+
+        // GET: /api/tacPham/{id}
         [HttpGet("{id}")]
         [SwaggerOperation(Summary = "Xem chi tiết tác phẩm, sẽ tăng lượt xem (không cần đăng nhập) ")]
         public async Task<IActionResult> LayChiTietTacPham(int id)
@@ -38,7 +83,6 @@ namespace CDIO4_BE.Controllers
                 var userIdClaim = User.FindFirst("userId");
                 if (userIdClaim != null && int.TryParse(userIdClaim.Value, out int userId))
                 {
-                    // So sánh userId trong token với chủ sở hữu tác phẩm
                     if (tp.NguoiTao.Id == userId)
                     {
                         chuSoHuu = true;
@@ -53,10 +97,6 @@ namespace CDIO4_BE.Controllers
             });
         }
 
-
-
-
-        // GET: /api/tacPham/search
         [HttpGet("Search")]
         [SwaggerOperation(Summary = "Tìm kiếm tác phẩm theo từ khóa (không cần đăng nhập)")]
         public async Task<IActionResult> TimKiemTacPham(string keyword)
@@ -65,45 +105,42 @@ namespace CDIO4_BE.Controllers
             return Ok(list);
         }
 
-        // GET: /api/tacPham/BoSuuTap
         [HttpGet("BoSuuTap")]
         [Authorize]
         [SwaggerOperation(Summary = "Lấy danh sách bộ sưu tập của người dùng đã đăng nhập (cần đăng nhập)")]
         public async Task<IActionResult> LayBoSuuTap()
         {
-            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var userId = GetUserId();
             var list = await _tacPhamService.LayBoSuuTap(userId);
             return Ok(list);
         }
 
-        // GET: /api/tacPham/My
         [HttpGet("My")]
         [Authorize]
         [SwaggerOperation(Summary = "Lấy danh sách tác phẩm của chính mình  (cần đăng nhập)")]
         public async Task<IActionResult> LayTacPhamCuaToi()
         {
-            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var userId = GetUserId();
             var list = await _tacPhamService.LayTacPhamCuaToi(userId);
             return Ok(list);
         }
 
-        // POST: /api/tacPham/ThemVaoBoSuuTap/{idTacPham}
         [HttpPost("ThemVaoBoSuuTap/{idTacPham}")]
         [Authorize]
         [SwaggerOperation(Summary = "Thêm tác phẩm vào bộ sưu tập của người dùng  (cần đăng nhập)")]
         public async Task<IActionResult> ThemVaoBoSuuTap(int idTacPham)
         {
-            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var userId = GetUserId();
             await _tacPhamService.ThemVaoBoSuuTap(userId, idTacPham);
             return Ok("Đã thêm vào bộ sưu tập");
         }
-        // Trong file TacPhamController.cs
+
         [HttpDelete("BoSuuTap/{idTacPham}")]
         [Authorize]
         [SwaggerOperation(Summary = "Xóa tác phẩm khỏi bộ sưu tập của người dùng  (cần đăng nhập)")]
         public async Task<IActionResult> XoaKhoiBoSuuTap(int idTacPham)
         {
-            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var userId = GetUserId();
             try
             {
                 await _tacPhamService.XoaKhoiBoSuuTap(userId, idTacPham);
@@ -115,21 +152,20 @@ namespace CDIO4_BE.Controllers
             }
         }
 
-        // POST: /api/tacPham/Mua/{idTacPham}
         [HttpPost("Mua/{idTacPham}")]
         [Authorize]
         [SwaggerOperation(Summary = "Mua tác phẩm (demo chỉ ghi nhận đánh giá 5 sao)  (cần đăng nhập)")]
         public async Task<IActionResult> MuaTacPham(int idTacPham)
         {
-            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var userId = GetUserId();
             await _tacPhamService.MuaTacPham(userId, idTacPham);
             return Ok("Đã mua tác phẩm");
         }
+
         [HttpGet("tacpham/{idTacPham}")]
         [SwaggerOperation(Summary = "Xem danh sách bình luận của tác phẩm (bao gồm trả lời)")]
         public async Task<IActionResult> XemDanhSachBinhLuanCuaTacPham(int idTacPham)
         {
-            // Lấy userId từ token
             int? currentUserId = null;
             if (User.Identity?.IsAuthenticated == true)
             {
@@ -140,10 +176,7 @@ namespace CDIO4_BE.Controllers
                 }
             }
 
-            // Gọi service để lấy danh sách bình luận (có gắn cờ ChuSoHuu cho từng bình luận)
             var binhLuans = await _tacPhamService.XemDanhSachBinhLuanCuaTacPham(idTacPham, currentUserId);
-
-            // Check xem user hiện tại có phải chủ sở hữu tác phẩm không
             var tacPham = await _tacPhamService.LayChiTietTacPham(idTacPham);
             bool chuSoHuuTacPham = tacPham?.NguoiTao?.Id == currentUserId;
 
@@ -154,15 +187,12 @@ namespace CDIO4_BE.Controllers
             });
         }
 
-
-        // POST: /api/tacPham/{idTacPham}/binhluan
         [HttpPost("{idTacPham}/binhluan")]
         [SwaggerOperation(Summary = "Thêm bình luận hoặc trả lời bình luận  (cần đăng nhập)")]
         [Authorize]
         public async Task<IActionResult> ThemBinhLuan(int idTacPham, [FromBody] ThemBinhLuanRequest request)
         {
-            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-
+            var userId = GetUserId();
             if (request.IdBinhLuanCha.HasValue)
                 await _tacPhamService.ThemTraLoiBinhLuan(userId, request.IdBinhLuanCha, request.NoiDung);
             else
@@ -170,12 +200,13 @@ namespace CDIO4_BE.Controllers
 
             return Ok("Bình luận đã được thêm");
         }
+
         [HttpPut("binhluan/sua")]
         [Authorize]
         [SwaggerOperation(Summary = "Sửa nội dung bình luận  (cần đăng nhập)")]
         public async Task<IActionResult> SuaBinhLuan([FromBody] SuaBinhLuanDto request)
         {
-            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var userId = GetUserId();
             try
             {
                 await _tacPhamService.SuaBinhLuan(userId, request.IdBinhLuan, request.NoiDungMoi);
@@ -192,7 +223,7 @@ namespace CDIO4_BE.Controllers
         [SwaggerOperation(Summary = "Xóa bình luận  (cần đăng nhập)")]
         public async Task<IActionResult> XoaBinhLuan(int idBinhLuan)
         {
-            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var userId = GetUserId();
             try
             {
                 await _tacPhamService.XoaBinhLuan(userId, idBinhLuan);
@@ -203,12 +234,13 @@ namespace CDIO4_BE.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
         [HttpPost("{idTacPham}/camxuc")]
         [SwaggerOperation(Summary = "Thêm/cập nhật cảm xúc  (cần đăng nhập)")]
         [Authorize]
         public async Task<IActionResult> UpsertCamXuc(int idTacPham, [FromBody] int idCamXuc)
         {
-            int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var userId = GetUserId();
             try
             {
                 await _tacPhamService.UpsertCamXuc(userId, idTacPham, idCamXuc);
@@ -219,12 +251,13 @@ namespace CDIO4_BE.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
         [HttpDelete("camxuc/{idTacPham}")]
         [SwaggerOperation(Summary = "Xóa cảm xúc (cần đăng nhập)")]
         [Authorize]
         public async Task<IActionResult> XoaCamXuc(int idTacPham)
         {
-            int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var userId = GetUserId();
             try
             {
                 await _tacPhamService.XoaCamXuc(userId, idTacPham);
@@ -236,6 +269,4 @@ namespace CDIO4_BE.Controllers
             }
         }
     }
-
-   
 }

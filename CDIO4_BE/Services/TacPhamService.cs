@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace CDIO4_BE.Services
@@ -18,6 +19,59 @@ namespace CDIO4_BE.Services
         {
             _context = context;
         }
+        public async Task<int> TaoTacPham(TaoTacPhamDto dto, int userId)
+        {
+            var tacPham = new TacPham
+            {
+                Ten = dto.Ten,
+                MoTa = dto.MoTa,
+                DanhSachAnh = dto.Anh,   
+                Id_NguoiTao = userId,
+                NgayTao = DateTime.UtcNow,
+                Gia = dto.Gia,
+                TrangThai = true
+            };
+
+            _context.TacPhams.Add(tacPham);
+            await _context.SaveChangesAsync();
+            return tacPham.Id;
+        }
+
+
+
+        public async Task<bool> SuaTacPham(int id, SuaTacPhamDto dto, int userId)
+        {
+            var tacPham = await _context.TacPhams
+                .FirstOrDefaultAsync(t => t.Id == id && t.Id_NguoiTao == userId);
+
+            if (tacPham == null) return false;
+
+            // cập nhật có điều kiện
+            if (!string.IsNullOrWhiteSpace(dto.Ten)) tacPham.Ten = dto.Ten;
+            if (!string.IsNullOrWhiteSpace(dto.MoTa)) tacPham.MoTa = dto.MoTa;
+            if (dto.Anh != null && dto.Anh.Any()) tacPham.DanhSachAnh = dto.Anh;
+            if (dto.Gia.HasValue) tacPham.Gia = dto.Gia.Value;
+            if (dto.Id_TheLoai.HasValue) tacPham.Id_TheLoai = dto.Id_TheLoai;
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+
+        public async Task<bool> XoaTacPham(int id, int userId)
+        {
+            var tacPham = await _context.TacPhams
+                .FirstOrDefaultAsync(t => t.Id == id && t.Id_NguoiTao == userId);
+
+            if (tacPham == null) return false;
+
+            // Soft delete (ẩn thay vì xóa hẳn)
+            tacPham.TrangThai = false;
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
         public async Task<List<TacPhamListDto>> LayDanhSachTacPham(int trang, int soLuong)
         {
             var query = _context.TacPhams
@@ -49,8 +103,6 @@ namespace CDIO4_BE.Services
                     LuotXem = tp.LuotXem
                 }).ToListAsync();
         }
-
-
         public async Task<TacPhamDto?> LayChiTietTacPham(int id)
         {
             var t = await _context.TacPhams
@@ -157,7 +209,6 @@ namespace CDIO4_BE.Services
             var boSuuTap = await _context.BoSuuTaps.FirstOrDefaultAsync(b => b.Id_NguoiDung == idNguoiDung && b.Id_TacPham == idTacPham);
             if (boSuuTap == null)
             {
-                // Hoặc ném ngoại lệ, tùy vào logic bạn muốn
                 throw new Exception("Không tìm thấy tác phẩm trong bộ sưu tập của bạn.");
             }
 
@@ -184,7 +235,6 @@ namespace CDIO4_BE.Services
                     Id = bl.NguoiBinhLuan.Id,
                     Ten = bl.NguoiBinhLuan.Ten
                 },
-                // ChuSoHuu = true nếu user hiện tại chính là người viết bình luận
                 ChuSoHuu = currentUserId != null && bl.NguoiBinhLuan.Id == currentUserId
             });
 

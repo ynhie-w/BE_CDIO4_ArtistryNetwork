@@ -10,15 +10,13 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using CDIO4_BE.Repository;
 using System.Text.RegularExpressions;
-/*Controller cho tài khoản / xác thực (TaiKhoanController)
-Chức năng liên quan đến đăng nhập, đăng ký, đổi/quên mật khẩu, quản lý thông tin cá nhân.*/
 namespace CDIO4_BE.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
     public class TaiKhoanController : ControllerBase
     {
-        
+
         public TaiKhoanController(ITaiKhoanService taiKhoanService, AppDbContext context)
         {
             _taiKhoanService = taiKhoanService;
@@ -27,7 +25,7 @@ namespace CDIO4_BE.Controllers
 
         private readonly ITaiKhoanService _taiKhoanService;
         private readonly AppDbContext _context;
-              
+
 
         // ===== ĐĂNG NHẬP =====
         [HttpPost("dangnhap")]
@@ -48,15 +46,25 @@ namespace CDIO4_BE.Controllers
         [SwaggerOperation(Summary = "Đăng ký tài khoản mới")]
         public async Task<IActionResult> DangKy([FromBody] DangKyDto yeuCau)
         {
-            if (string.IsNullOrEmpty(yeuCau.EmailSdt))
-                return BadRequest(new { ThongBao = "Email hoặc số điện thoại không được trống" });
-            if (string.IsNullOrEmpty(yeuCau.MatKhau))
-                return BadRequest(new { ThongBao = "Mật khẩu không được trống" });
-
-            var newUserId = await _taiKhoanService.DangKy(yeuCau);
-
-            return Ok(new { NewUserId = newUserId, ThongBao = "Đăng ký thành công" });
+            try
+            {
+                var newUserId = await _taiKhoanService.DangKy(yeuCau);
+                return Ok(new { NewUserId = newUserId, ThongBao = "Đăng ký thành công" });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { ThongBao = ex.Message });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { ThongBao = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { ThongBao = "Đã xảy ra lỗi hệ thống", ChiTiet = ex.Message });
+            }
         }
+
 
 
         // ===== ĐĂNG XUẤT =====
@@ -68,7 +76,7 @@ namespace CDIO4_BE.Controllers
             var ketQua = await _taiKhoanService.DangXuat();
             return Ok(new { ThongBao = ketQua ? "Đăng xuất thành công" : "Lỗi khi đăng xuất" });
         }
-        
+
         // ===== ĐỔI MẬT KHẨU =====
         [HttpPut("doimatkhau")]
         [Authorize]
@@ -117,132 +125,41 @@ namespace CDIO4_BE.Controllers
             return Ok(new { ThongBao = "Đặt lại mật khẩu thành công" });
         }
 
-        // ====== LẤY THÔNG TIN CÁ NHÂN (CHỈ NGƯỜI ĐÃ ĐĂNG NHẬP =======//
         [Authorize]
         [HttpGet("ThongTin")]
-        [SwaggerOperation(Summary = "Lấy thông tin cá nhân (chỉ thành viên) (cần đăng nhập)")]
+        [SwaggerOperation(Summary = "lấy thông tin cá nhân (đã đăng nhập)")]
         public async Task<IActionResult> ThongTin()
         {
-            // Lấy userId từ JWT
-            var userIdStr = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (string.IsNullOrEmpty(userIdStr) || !int.TryParse(userIdStr, out var userId))
-            {
-                return Unauthorized(new
-                {
-                    type = "https://tools.ietf.org/html/rfc9110#section-15.5.2",
-                    title = "Unauthorized",
-                    status = 401,
-                    detail = "Token không hợp lệ hoặc hết hạn",
-                    traceId = HttpContext.TraceIdentifier
-                });
-            }
-
-            var nguoiDung = await _context.NguoiDungs
-                .Where(u => u.Id == userId)
-                .Select(u => new CapNhatNguoiDungDto
-                {
-                    Id = u.Id,
-                    Ten = u.Ten,
-                    Email = u.Email,
-                    Sdt = u.Sdt,
-                    AnhDaiDien = u.AnhDaiDien,
-                    DiemThuong = u.DiemThuong,
-                    TrangThai = u.TrangThai
-                })
-                .FirstOrDefaultAsync();
-
-            if (nguoiDung == null)
-            {
-                return NotFound(new
-                {
-                    type = "https://tools.ietf.org/html/rfc9110#section-15.5.5",
-                    title = "Not Found",
-                    status = 404,
-                    detail = "Người dùng không tồn tại",
-                    traceId = HttpContext.TraceIdentifier
-                });
-            }
-
-            return Ok(nguoiDung);
+            var info = await _taiKhoanService.LayThongTin(User);
+            if (info == null) return Unauthorized();
+            return Ok(info);
         }
-        //===== CẬP NHẬT THÔNG TIN NGƯỜI DÙNG (CHỈ NGƯỜI ĐÃ ĐĂNG NHẬP) ======//
-        //===== CẬP NHẬT EMAIL (CHỈ NGƯỜI ĐÃ ĐĂNG NHẬP) ======//
+
         [HttpPatch("CapNhatEmail")]
-            [Authorize]
-        [SwaggerOperation(Summary = "Chỉnh sửa email  (cần đăng nhập)")]
-        
-            public async Task<IActionResult> CapNhatEmail([FromBody] CapNhatNguoiDungDto dto)
-            {
-                if (string.IsNullOrEmpty(dto?.Email))
-                    return BadRequest(new { message = "Vui lòng cung cấp email mới" });
-
-                // Validate định dạng email
-                var emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
-                if (!Regex.IsMatch(dto.Email, emailPattern))
-                    return BadRequest(new { message = "Email không hợp lệ" });
-
-                var userIdStr = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                if (string.IsNullOrEmpty(userIdStr) || !int.TryParse(userIdStr, out int userId))
-                    return Unauthorized(new { message = "Token không hợp lệ hoặc hết hạn" });
-
-                var nguoiDung = await _context.NguoiDungs.FindAsync(userId);
-                if (nguoiDung == null)
-                    return NotFound(new { message = "Người dùng không tồn tại" });
-
-                nguoiDung.Email = dto.Email;
-                await _context.SaveChangesAsync();
-
+        [SwaggerOperation(Summary = "Cap Nhat Email (đã đăng nhập)")]
+        public async Task<IActionResult> CapNhatEmail([FromBody] CapNhatNguoiDungDto dto)
+        {
+            if (await _taiKhoanService.CapNhatEmail(User, dto.Email))
                 return Ok(new { message = "Cập nhật email thành công" });
-            }
+            return BadRequest(new { message = "Email không hợp lệ hoặc đã tồn tại" });
+        }
 
-        //===== CẬP NHẬT SDT (CHỈ NGƯỜI ĐÃ ĐĂNG NHẬP) ======//
         [HttpPatch("CapNhatSdt")]
-        [Authorize]
-        [SwaggerOperation(Summary = "Chỉnh sửa số điện thoại (cần đăng nhập)")]
+        [SwaggerOperation(Summary = "Cap Nhat sdt (đã đăng nhập)")]
         public async Task<IActionResult> CapNhatSdt([FromBody] CapNhatNguoiDungDto dto)
         {
-            if (string.IsNullOrEmpty(dto?.Sdt))
-                return BadRequest(new { message = "Vui lòng cung cấp số điện thoại mới" });
-
-            // Validate sdt: chỉ 10 số, không chữ, không ký tự khác
-            var sdtPattern = @"^\d{10}$";
-            if (!Regex.IsMatch(dto.Sdt, sdtPattern))
-                return BadRequest(new { message = "Số điện thoại phải đủ 10 số" });
-
-            var userIdStr = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (string.IsNullOrEmpty(userIdStr) || !int.TryParse(userIdStr, out int userId))
-                return Unauthorized(new { message = "Token không hợp lệ hoặc hết hạn" });
-
-            var nguoiDung = await _context.NguoiDungs.FindAsync(userId);
-            if (nguoiDung == null)
-                return NotFound(new { message = "Người dùng không tồn tại" });
-
-            nguoiDung.Sdt = dto.Sdt;
-            await _context.SaveChangesAsync();
-
-            return Ok(new { message = "Cập nhật số điện thoại thành công" });
+            if (await _taiKhoanService.CapNhatSdt(User, dto.Sdt))
+                return Ok(new { message = "Cập nhật số điện thoại thành công" });
+            return BadRequest(new { message = "SĐT không hợp lệ hoặc đã tồn tại" });
         }
-        //===== CẬP NHẬT ẢNH ĐẠI DIỆN (CHỈ NGƯỜI ĐÃ ĐĂNG NHẬP) ======//
+
         [HttpPatch("CapNhatAnhDaiDien")]
-        [Authorize]
-        [SwaggerOperation(Summary = "Chỉnh sửa ảnh đại diện (cần đăng nhập)")]
+        [SwaggerOperation(Summary = "Cap Nhat anh dai dien (đã đăng nhập)")]
         public async Task<IActionResult> CapNhatAnhDaiDien([FromBody] CapNhatNguoiDungDto dto)
         {
-            if (string.IsNullOrEmpty(dto?.AnhDaiDien))
-                return BadRequest(new { message = "Vui lòng cung cấp link ảnh đại diện mới" });
-
-            var userIdStr = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (string.IsNullOrEmpty(userIdStr) || !int.TryParse(userIdStr, out int userId))
-                return Unauthorized(new { message = "Token không hợp lệ hoặc hết hạn" });
-
-            var nguoiDung = await _context.NguoiDungs.FindAsync(userId);
-            if (nguoiDung == null)
-                return NotFound(new { message = "Người dùng không tồn tại" });
-
-            nguoiDung.AnhDaiDien = dto.AnhDaiDien;
-            await _context.SaveChangesAsync();
-
-            return Ok(new { message = "Cập nhật ảnh đại diện thành công" });
+            if (await _taiKhoanService.CapNhatAnhDaiDien(User, dto.AnhDaiDien))
+                return Ok(new { message = "Cập nhật ảnh đại diện thành công" });
+            return BadRequest(new { message = "Link ảnh không hợp lệ" });
         }
 
     }

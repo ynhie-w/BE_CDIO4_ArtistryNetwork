@@ -6,6 +6,9 @@ namespace CDIO4_BE.Services.Interfaces
 {
     public interface ITacPhamService
     {
+        Task<int> TaoTacPham(TaoTacPhamDto dto, int userId);
+        Task<bool> SuaTacPham(int id, SuaTacPhamDto dto, int userId);
+        Task<bool> XoaTacPham(int id, int userId);
         Task<List<TacPhamListDto>> LayDanhSachTacPham(int trang, int soLuong);
 
         Task<TacPhamDto?> LayChiTietTacPham(int id);

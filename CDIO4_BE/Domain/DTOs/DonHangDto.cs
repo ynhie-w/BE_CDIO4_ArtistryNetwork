@@ -1,4 +1,6 @@
-﻿namespace CDIO4_BE.Domain.DTOs
+﻿using CDIO4_BE.Domain.Entities;
+
+namespace CDIO4_BE.Domain.DTOs
 {
     public class DonHangDto
     {
@@ -8,6 +10,7 @@
         public decimal TongTien { get; set; }
         public decimal GiamGia { get; set; }
         public List<DonHangChiTietDto> ChiTiets { get; set; } = new List<DonHangChiTietDto>();
+        public NguoiDung? NguoiMua { get; set; }
     }
     public class ChiTietDto
     {

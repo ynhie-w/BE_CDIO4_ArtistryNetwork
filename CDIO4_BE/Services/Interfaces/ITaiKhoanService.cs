@@ -6,7 +6,7 @@ namespace CDIO4_BE.Services.Interfaces
     public interface ITaiKhoanService
     {
         // Đăng nhập, trả về JWT token nếu thành công
-        Task<string> DangNhap(DangNhapDto yeuCau);
+        Task<DangNhapResponseDto?> DangNhap(DangNhapDto yeuCau);
 
         // Đăng xuất, xoá token hoặc session nếu cần
         Task<bool> DangXuat();
@@ -22,5 +22,16 @@ namespace CDIO4_BE.Services.Interfaces
 
         // Đặt lại mật khẩu bằng token reset
         Task<bool> DatLaiMatKhau(DatLaiMatKhauDto dto);
+        // Lấy thông tin người dùng
+        Task<CapNhatNguoiDungDto?> LayThongTin(ClaimsPrincipal user);
+
+        // Cập nhật email
+        Task<bool> CapNhatEmail(ClaimsPrincipal user, string email);
+
+        // Cập nhật số điện thoại
+        Task<bool> CapNhatSdt(ClaimsPrincipal user, string sdt);
+
+        // Cập nhật ảnh đại diện
+        Task<bool> CapNhatAnhDaiDien(ClaimsPrincipal user, string anhDaiDien);
     }
 }

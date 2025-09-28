@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 
 namespace CDIO4_BE.Services.Interfaces
 {
-    public interface IAdminService
+    public interface IQuanTriVienService
     {
-        // ===== Đăng nhập =====
-        Task<string> DangNhapAdmin(DangNhapDto yeuCau);
+
 
         // ===== Người dùng =====
-        Task<List<NguoiDung>> LayDanhSachNguoiDung(int trang, int soLuong);
-        Task<NguoiDung> LayThongTinNguoiDung(int id);
+        Task<object> LayDanhSachNguoiDung(int trang, int soLuong);
+        Task<object?> LayThongTinNguoiDung(int id);
         Task<int> TaoNguoiDung(TaoNguoiDungDto yeuCau);
         Task<bool> CapNhatNguoiDung(int id, CapNhatNguoiDungDto yeuCau);
         Task<bool> XoaNguoiDung(int id);
@@ -32,7 +31,7 @@ namespace CDIO4_BE.Services.Interfaces
         Task<object> LayTopSanPhamBanChay(int top);
 
         // ===== Đơn hàng =====
-        Task<List<DonHang>> LayDanhSachDonHang(int trang, int soLuong, string trangThai);
+        Task<object> LayDanhSachDonHang(int trang, int soLuong, string trangThai);
         Task<DonHangDto?> LayChiTietDonHang(int id);
         Task<bool> CapNhatTrangThaiDonHang(int id, CapNhatTrangThaiDonHangDto yeuCau);
         Task<bool> HuyDonHang(int id, string lyDoHuy);

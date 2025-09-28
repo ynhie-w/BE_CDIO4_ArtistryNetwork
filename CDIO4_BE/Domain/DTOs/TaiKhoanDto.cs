@@ -1,63 +1,55 @@
 ﻿namespace CDIO4_BE.Domain.DTOs
 {
-    /// <summary>
-    /// DTO cho đăng nhập
-    /// </summary>
+    // Đăng nhập
     public class DangNhapDto
     {
-        /// <summary>Email hoặc số điện thoại</summary>
         public string EmailSdt { get; set; }
-
-        /// <summary>Mật khẩu</summary>
         public string MatKhau { get; set; }
     }
-
-    /// <summary>
-    /// DTO cho đăng ký
-    /// </summary>
+    public class DangNhapResponseDto
+    {
+        public string Token { get; set; }
+        public CapNhatNguoiDungDto NguoiDung { get; set; }
+    }
+        public class CapNhatNguoiDungDto
+        {
+            public int Id { get; set; }
+            public string Ten { get; set; }
+            public string Email { get; set; }
+            public string Sdt { get; set; }
+            public string AnhDaiDien { get; set; }
+            public int Id_Quyen { get; set; }
+            public bool TrangThai { get; set; }
+            public DateTime NgayTao { get; set; }
+        }
+    // Đăng ký
     public class DangKyDto
     {
-        /// <summary>Họ và tên</summary>
-        public string Ten { get; set; }
-
-        /// <summary>Email hoặc Số điện thoại (có thể null)</summary>
-        public string EmailSdt { get; set; }
-
-        /// <summary>Mật khẩu (chưa hash, sẽ hash trong C#)</summary>
-        public string MatKhau { get; set; }
+        public string Ten { get; set; }             
+        public string EmailSdt { get; set; }        
+        public string MatKhau { get; set; } 
         public string NhapLaiMatKhau { get; set; }
     }
 
-    /// <summary>
-    /// DTO cho đổi mật khẩu
-    /// </summary>
+    // Đổi mật khẩu
     public class DoiMatKhauDto
     {
-        /// <summary>Mật khẩu cũ</summary>
         public string MatKhauCu { get; set; }
-
-        /// <summary>Mật khẩu mới</summary>
         public string MatKhauMoi { get; set; }
         public string MatKhauMoiNhapLai { get; set; }
     }
 
-
-    /// <summary>
-    /// DTO cho quên mật khẩu
-    /// </summary>
+    // Quên mật khẩu
     public class QuenMatKhauDto
     {
-        /// <summary>Email hoặc số điện thoại để reset mật khẩu</summary>
         public string EmailSdt { get; set; }
     }
 
+    // Đặt lại mật khẩu
     public class DatLaiMatKhauDto
     {
-        /// <summary>Token reset được gửi qua email</summary>
-        public string Token { get; set; }
-
-        /// <summary>Mật khẩu mới</summary>
+        public string Token { get; set; }  
         public string MatKhauMoi { get; set; }
     }
-
+  
 }

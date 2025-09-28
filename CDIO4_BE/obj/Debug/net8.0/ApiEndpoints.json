@@ -1,289 +1,5 @@
 [
   {
-    "ContainingType": "CDIO4_BE.Controllers.AdminController",
-    "Method": "DangNhapAdmin",
-    "RelativePath": "api/Admin/dangnhap",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "yeuCau",
-        "Type": "CDIO4_BE.Domain.DTOs.DangNhapDto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "CDIO4_BE.Controllers.AdminController",
-    "Method": "LayDanhSachDonHang",
-    "RelativePath": "api/Admin/donhang",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "trang",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "soLuong",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "trangThai",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "CDIO4_BE.Controllers.AdminController",
-    "Method": "LayChiTietDonHang",
-    "RelativePath": "api/Admin/donhang/{id}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "CDIO4_BE.Controllers.AdminController",
-    "Method": "CapNhatTrangThaiDonHang",
-    "RelativePath": "api/Admin/donhang/{id}/trang-thai",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "yeuCau",
-        "Type": "CDIO4_BE.Domain.DTOs.CapNhatTrangThaiDonHangDto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "CDIO4_BE.Controllers.AdminController",
-    "Method": "LayDanhSachNguoiDung",
-    "RelativePath": "api/Admin/nguoidung",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "trang",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "soLuong",
-        "Type": "System.Int32",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "CDIO4_BE.Controllers.AdminController",
-    "Method": "LayThongTinNguoiDung",
-    "RelativePath": "api/Admin/nguoidung/{id}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "CDIO4_BE.Controllers.AdminController",
-    "Method": "CapNhatNguoiDung",
-    "RelativePath": "api/Admin/nguoidung/{id}",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "yeuCau",
-        "Type": "CDIO4_BE.Domain.DTOs.CapNhatNguoiDungDto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "CDIO4_BE.Controllers.AdminController",
-    "Method": "XoaNguoiDung",
-    "RelativePath": "api/Admin/nguoidung/{id}",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "CDIO4_BE.Controllers.AdminController",
-    "Method": "KhoaTaiKhoan",
-    "RelativePath": "api/Admin/nguoidung/{id}/khoa",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "yeuCau",
-        "Type": "CDIO4_BE.Domain.DTOs.KhoaTaiKhoanDto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "CDIO4_BE.Controllers.AdminController",
-    "Method": "LayDanhSachBoSuuTap",
-    "RelativePath": "api/Admin/noidung/bosuutap",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "trang",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "soLuong",
-        "Type": "System.Int32",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "CDIO4_BE.Controllers.AdminController",
-    "Method": "LayDanhSachSanPham",
-    "RelativePath": "api/Admin/noidung/sanpham",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "trang",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "soLuong",
-        "Type": "System.Int32",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "CDIO4_BE.Controllers.AdminController",
-    "Method": "ThongKeDonHangTheoThoiGian",
-    "RelativePath": "api/Admin/thongke/donhang-theo-thoi-gian",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "tuNgay",
-        "Type": "System.DateTime",
-        "IsRequired": false
-      },
-      {
-        "Name": "denNgay",
-        "Type": "System.DateTime",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "CDIO4_BE.Controllers.AdminController",
-    "Method": "ThongKeNguoiDung",
-    "RelativePath": "api/Admin/thongke/nguoi-dung",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "tuNgay",
-        "Type": "System.DateTime",
-        "IsRequired": false
-      },
-      {
-        "Name": "denNgay",
-        "Type": "System.DateTime",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "CDIO4_BE.Controllers.AdminController",
-    "Method": "ThongKeSanPhamBanChay",
-    "RelativePath": "api/Admin/thongke/san-pham-ban-chay",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "top",
-        "Type": "System.Int32",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "CDIO4_BE.Controllers.AdminController",
-    "Method": "ThongKeTongQuan",
-    "RelativePath": "api/Admin/thongke/tong-quan",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
     "ContainingType": "CDIO4_BE.Controllers.DonHangController",
     "Method": "XemDonHang",
     "RelativePath": "api/DonHang",
@@ -347,6 +63,327 @@
         "Name": "sanPhamId",
         "Type": "System.Int32",
         "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CDIO4_BE.Controllers.QuanTriVienController",
+    "Method": "LayDanhSachDonHang",
+    "RelativePath": "api/quan-tri-vien/donhang",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "trang",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "soLuong",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "trangThai",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CDIO4_BE.Controllers.QuanTriVienController",
+    "Method": "LayChiTietDonHang",
+    "RelativePath": "api/quan-tri-vien/donhang/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CDIO4_BE.Controllers.QuanTriVienController",
+    "Method": "CapNhatTrangThaiDonHang",
+    "RelativePath": "api/quan-tri-vien/donhang/{id}/trang-thai",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "yeuCau",
+        "Type": "CDIO4_BE.Domain.DTOs.CapNhatTrangThaiDonHangDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CDIO4_BE.Controllers.QuanTriVienController",
+    "Method": "LayDanhSachNguoiDung",
+    "RelativePath": "api/quan-tri-vien/nguoidung",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "trang",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "soLuong",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CDIO4_BE.Controllers.QuanTriVienController",
+    "Method": "LayThongTinNguoiDung",
+    "RelativePath": "api/quan-tri-vien/nguoidung/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CDIO4_BE.Controllers.QuanTriVienController",
+    "Method": "CapNhatNguoiDung",
+    "RelativePath": "api/quan-tri-vien/nguoidung/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "yeuCau",
+        "Type": "CDIO4_BE.Domain.DTOs.CapNhatNguoiDungDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CDIO4_BE.Controllers.QuanTriVienController",
+    "Method": "XoaNguoiDung",
+    "RelativePath": "api/quan-tri-vien/nguoidung/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CDIO4_BE.Controllers.QuanTriVienController",
+    "Method": "KhoaTaiKhoan",
+    "RelativePath": "api/quan-tri-vien/nguoidung/{id}/khoa",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "yeuCau",
+        "Type": "CDIO4_BE.Domain.DTOs.KhoaTaiKhoanDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CDIO4_BE.Controllers.QuanTriVienController",
+    "Method": "LayDanhSachBoSuuTap",
+    "RelativePath": "api/quan-tri-vien/noidung/bosuutap",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "trang",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "soLuong",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CDIO4_BE.Controllers.QuanTriVienController",
+    "Method": "LayDanhSachSanPham",
+    "RelativePath": "api/quan-tri-vien/noidung/sanpham",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "trang",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "soLuong",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CDIO4_BE.Controllers.QuanTriVienController",
+    "Method": "ThongKeDonHangTheoThoiGian",
+    "RelativePath": "api/quan-tri-vien/thongke/donhang-theo-thoi-gian",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "tuNgay",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "denNgay",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CDIO4_BE.Controllers.QuanTriVienController",
+    "Method": "ThongKeNguoiDung",
+    "RelativePath": "api/quan-tri-vien/thongke/nguoi-dung",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "tuNgay",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "denNgay",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CDIO4_BE.Controllers.QuanTriVienController",
+    "Method": "ThongKeSanPhamBanChay",
+    "RelativePath": "api/quan-tri-vien/thongke/san-pham-ban-chay",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "top",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CDIO4_BE.Controllers.QuanTriVienController",
+    "Method": "ThongKeTongQuan",
+    "RelativePath": "api/quan-tri-vien/thongke/tong-quan",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CDIO4_BE.Controllers.TacPhamController",
+    "Method": "TaoTacPham",
+    "RelativePath": "api/TacPham",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "CDIO4_BE.Domain.DTOs.TaoTacPhamDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CDIO4_BE.Controllers.TacPhamController",
+    "Method": "SuaTacPham",
+    "RelativePath": "api/TacPham/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "CDIO4_BE.Domain.DTOs.SuaTacPhamDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CDIO4_BE.Controllers.TacPhamController",
+    "Method": "XoaTacPham",
+    "RelativePath": "api/TacPham/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []

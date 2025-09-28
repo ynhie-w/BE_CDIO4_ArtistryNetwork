@@ -11,44 +11,34 @@ using Microsoft.EntityFrameworkCore;
 namespace CDIO4_BE.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
-    [Authorize(Roles = "Admin")] // Chỉ Admin mới có quyền truy cập
-    public class AdminController : ControllerBase
+    [Route("api/quan-tri-vien")]
+    public class QuanTriVienController : ControllerBase
     {
-        private readonly IAdminService _adminService;
+        private readonly IQuanTriVienService _adminService;
         private readonly ITaiKhoanService _taiKhoanService;
 
-        public AdminController(IAdminService adminService, ITaiKhoanService taiKhoanService)
+        public QuanTriVienController(IQuanTriVienService adminService, ITaiKhoanService taiKhoanService)
         {
             _adminService = adminService;
             _taiKhoanService = taiKhoanService;
         }
-
-        // ===== ĐĂNG NHẬP ADMIN =====
-        [HttpPost("dangnhap")]
-        [AllowAnonymous]
-        [SwaggerOperation(Summary = "Đăng nhập admin bằng email hoặc số điện thoại, trả về JWT Token")]
-        public async Task<IActionResult> DangNhapAdmin([FromBody] DangNhapDto yeuCau)
+        private bool LaQuanTriVien()
         {
-            var token = await _adminService.DangNhapAdmin(yeuCau);
-            if (token == null)
-                return Unauthorized(new { ThongBao = "Sai email/sdt hoặc mật khẩu, hoặc không có quyền admin" });
-
-            return Ok(new { Token = token, ThongBao = "Đăng nhập admin thành công" });
+            var permissionId = User.FindFirst("id_phanquyen")?.Value;
+            return permissionId == "2";
         }
 
         // ===== QUẢN LÝ NGƯỜI DÙNG =====
         [HttpGet("nguoidung")]
-        [Authorize(Roles = "Admin")]
         [SwaggerOperation(Summary = "Lấy danh sách tất cả người dùng (có phân trang)")]
         public async Task<IActionResult> LayDanhSachNguoiDung([FromQuery] int trang = 1, [FromQuery] int soLuong = 10)
         {
+            if (!LaQuanTriVien()) return Forbid("Không đủ quyền truy cập");
             var danhSach = await _adminService.LayDanhSachNguoiDung(trang, soLuong);
             return Ok(danhSach);
         }
 
         [HttpGet("nguoidung/{id}")]
-        [Authorize(Roles = "Admin")]
         [SwaggerOperation(Summary = "Lấy thông tin chi tiết một người dùng")]
         public async Task<IActionResult> LayThongTinNguoiDung(int id)
         {
@@ -59,7 +49,6 @@ namespace CDIO4_BE.Controllers
             return Ok(nguoiDung);
         }
         [HttpPut("nguoidung/{id}")]
-        [Authorize(Roles = "Admin")]
         [SwaggerOperation(Summary = "Cập nhật thông tin người dùng")]
         public async Task<IActionResult> CapNhatNguoiDung(int id, [FromBody] CapNhatNguoiDungDto yeuCau)
         {
@@ -71,7 +60,6 @@ namespace CDIO4_BE.Controllers
         }
 
         [HttpDelete("nguoidung/{id}")]
-        [Authorize(Roles = "Admin")]
         [SwaggerOperation(Summary = "Xóa người dùng")]
         public async Task<IActionResult> XoaNguoiDung(int id)
         {
@@ -83,7 +71,6 @@ namespace CDIO4_BE.Controllers
         }
 
         [HttpPut("nguoidung/{id}/khoa")]
-        [Authorize(Roles = "Admin")]
         [SwaggerOperation(Summary = "Khóa/Mở khóa tài khoản người dùng")]
         public async Task<IActionResult> KhoaTaiKhoan(int id, [FromBody] KhoaTaiKhoanDto yeuCau)
         {
@@ -96,7 +83,6 @@ namespace CDIO4_BE.Controllers
 
         // ===== QUẢN LÝ NỘI DUNG =====
         [HttpGet("noidung/sanpham")]
-        [Authorize(Roles = "Admin")]
         [SwaggerOperation(Summary = "Lấy danh sách tất cả sản phẩm")]
         public async Task<IActionResult> LayDanhSachSanPham([FromQuery] int trang = 1, [FromQuery] int soLuong = 10)
         {
@@ -105,7 +91,6 @@ namespace CDIO4_BE.Controllers
         }
 
         [HttpGet("noidung/bosuutap")]
-        [Authorize(Roles = "Admin")]
         [SwaggerOperation(Summary = "Lấy danh sách tất cả bộ sưu tập")]
         public async Task<IActionResult> LayDanhSachBoSuuTap([FromQuery] int trang = 1, [FromQuery] int soLuong = 10)
         {
@@ -115,7 +100,6 @@ namespace CDIO4_BE.Controllers
 
         // ===== THỐNG KÊ =====
         [HttpGet("thongke/tong-quan")]
-        [Authorize(Roles = "Admin")]
         [SwaggerOperation(Summary = "Thống kê tổng quan hệ thống")]
         public async Task<IActionResult> ThongKeTongQuan()
         {
@@ -134,7 +118,6 @@ namespace CDIO4_BE.Controllers
 
 
         [HttpGet("thongke/nguoi-dung")]
-        [Authorize(Roles = "Admin")]
         [SwaggerOperation(Summary = "Thống kê người dùng mới theo thời gian")]
         public async Task<IActionResult> ThongKeNguoiDung([FromQuery] DateTime tuNgay, [FromQuery] DateTime denNgay)
         {
@@ -143,7 +126,6 @@ namespace CDIO4_BE.Controllers
         }
 
         [HttpGet("thongke/san-pham-ban-chay")]
-        [Authorize(Roles = "Admin")]
         [SwaggerOperation(Summary = "Top sản phẩm bán chạy nhất")]
         public async Task<IActionResult> ThongKeSanPhamBanChay([FromQuery] int top = 10)
         {
@@ -151,9 +133,8 @@ namespace CDIO4_BE.Controllers
             return Ok(thongKe);
         }
 
-        // ===== QUẢN LÝ ĐỖN HÀNG =====
+        // ===== QUẢN LÝ ĐƠN HÀNG =====
         [HttpGet("donhang")]
-        [Authorize(Roles = "Admin")]
         [SwaggerOperation(Summary = "Lấy danh sách tất cả đơn hàng")]
         public async Task<IActionResult> LayDanhSachDonHang([FromQuery] int trang = 1, [FromQuery] int soLuong = 10, [FromQuery] string trangThai = "")
         {

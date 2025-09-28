@@ -22,7 +22,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<INguoiDungService, NguoiDungService>();
 builder.Services.AddScoped<ITaiKhoanService, TaiKhoanService>();
 builder.Services.AddScoped<ITacPhamService, TacPhamService>();
-builder.Services.AddScoped<IAdminService, AdminService>();
+builder.Services.AddScoped<IQuanTriVienService, QuanTriVienService>();
 builder.Services.AddScoped<IDonHangService, DonHangService>();
 builder.Services.AddScoped<IGioHangService, GioHangService>();
 
@@ -99,7 +99,6 @@ builder.Services.AddAuthentication(options =>
         ClockSkew = TimeSpan.Zero
     };
 
-    // Tùy chỉnh xử lý lỗi 401
     options.Events = new JwtBearerEvents
     {
         OnChallenge = context =>
@@ -110,11 +109,8 @@ builder.Services.AddAuthentication(options =>
 
             var result = System.Text.Json.JsonSerializer.Serialize(new
             {
-                type = "https://tools.ietf.org/html/rfc9110#section-15.5.2",
-                title = "Unauthorized",
-                status = 401,
-                detail = "Token không hợp lệ hoặc đã hết hạn",
-                traceId = context.HttpContext.TraceIdentifier
+                ThongBao = "Bạn chưa đăng nhập",
+                KetQua = "Token không hợp lệ hoặc đã hết hạn"                
             });
 
             return context.Response.WriteAsync(result);
